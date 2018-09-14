@@ -25,7 +25,7 @@ namespace IO.Proximax.SDK.Upload
         }
         
         private byte[] GetStringByteArray(string @string, Encoding encoding) {
-            return encoding != null ? Encoding.UTF8.GetBytes(@string) : encoding.GetBytes(@string);
+            return encoding == null ? Encoding.UTF8.GetBytes(@string) : encoding.GetBytes(@string);
         }
 
         public static StringParameterData Create(string @string, Encoding encoding = null, string description = null, 

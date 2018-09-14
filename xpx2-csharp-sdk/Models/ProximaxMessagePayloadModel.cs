@@ -4,11 +4,11 @@ namespace IO.Proximax.SDK.Models
 {
     public class ProximaxMessagePayloadModel
     {
-        [JsonProperty("privacyType")]
+        [JsonProperty("privacyType", NullValueHandling=NullValueHandling.Ignore)]
         public int PrivacyType { get; }
-        [JsonProperty("version")]
+        [JsonProperty("version", NullValueHandling=NullValueHandling.Ignore)]
         public string Version { get; }
-        [JsonProperty("data")]
+        [JsonProperty("data", NullValueHandling=NullValueHandling.Ignore)]
         public ProximaxDataModel Data { get; }
 
         public ProximaxMessagePayloadModel(int privacyType, string version, ProximaxDataModel data)

@@ -19,10 +19,12 @@ namespace IO.Proximax.SDK.Upload
 
         public override Stream GetByteStream()
         {
-            var req = (HttpWebRequest)WebRequest.Create(Url);
-            var resp = (HttpWebResponse)req.GetResponse();
-
-            return resp.GetResponseStream();
+//            var req = (HttpWebRequest)WebRequest.Create(Url);
+//            var resp = (HttpWebResponse)req.GetResponse();
+//
+//            return resp.GetResponseStream();
+            var client = new WebClient();
+            return client.OpenRead(Url);
         }
         
         public static UrlResourceParameterData Create(string url, string description = null, string name = null, 

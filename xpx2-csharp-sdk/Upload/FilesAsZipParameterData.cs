@@ -40,7 +40,7 @@ namespace IO.Proximax.SDK.Upload
                 {
                     foreach (var file in files)
                     {
-                        using (var csvStream = File.Open(file, FileMode.Open, FileAccess.Read))
+                        using (var csvStream = new FileStream(file, FileMode.Open, FileAccess.Read))
                         {
 
                             var fileEntry = archive.CreateEntry(Path.GetFileName(file));

@@ -5,11 +5,11 @@ namespace IO.Proximax.SDK.Models
 {
     public class ProximaxDataModel: IDataInfoModel
     {
-        [JsonProperty("digest")]
+        [JsonProperty("digest", NullValueHandling=NullValueHandling.Ignore)]
         public string Digest { get; }
-        [JsonProperty("dataHash")]
+        [JsonProperty("dataHash", NullValueHandling=NullValueHandling.Ignore)]
         public string DataHash { get; }
-        [JsonProperty("timestamp")]
+        [JsonProperty("timestamp", NullValueHandling=NullValueHandling.Ignore)]
         public long Timestamp { get; }
 
         public ProximaxDataModel(string digest, string dataHash, string description, IDictionary<string, string> metadata,

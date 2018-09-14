@@ -6,9 +6,9 @@ namespace IO.Proximax.SDK.Connections
     {
         public IpfsClient Ipfs { get; }
 
-        public IpfsConnection(string multiAddress)
+        public IpfsConnection(string ipfsUrl)
         {
-            Ipfs = new IpfsClient(multiAddress);
+            Ipfs = new IpfsClient(ipfsUrl);
         }
     }
 }

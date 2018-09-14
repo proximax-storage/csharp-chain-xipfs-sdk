@@ -20,14 +20,14 @@ namespace IO.Proximax.SDK.Upload
 
         public override Stream GetByteStream()
         {
-            return File.Open(Filename, FileMode.Open, FileAccess.Read);
+            return new FileStream(Filename, FileMode.Open, FileAccess.Read);
         }
         
         public static FileParameterData Create(string filename, string description = null, string name = null, string contentType = null, IDictionary<string, string> metadata = null) {
             return new FileParameterData(filename, description, name, contentType, metadata);
         }
         
-        private static string GetDefaultName(string filename, String name) {
+        private static string GetDefaultName(string filename, string name) {
             return name == null && filename != null ? Path.GetFileName(filename) : name;
         }
     }

@@ -5,6 +5,10 @@ VisualStudioVersion = 15.0.28010.2003
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "xpx2-csharp-sdk", "xpx2-csharp-sdk\io.proximax.sdk.csproj", "{73F2D530-DE69-446A-A898-B44ED30C0732}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "integration-test", "integration-test\integration-test.csproj", "{13CE7CFD-7644-4C68-991F-5CAB4D7EBC89}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "unit-test", "unit-test\unit-test.csproj", "{ABBC7840-94ED-446E-B506-6543AD0A0B0E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{73F2D530-DE69-446A-A898-B44ED30C0732}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{73F2D530-DE69-446A-A898-B44ED30C0732}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{73F2D530-DE69-446A-A898-B44ED30C0732}.Release|Any CPU.Build.0 = Release|Any CPU
+		{13CE7CFD-7644-4C68-991F-5CAB4D7EBC89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13CE7CFD-7644-4C68-991F-5CAB4D7EBC89}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13CE7CFD-7644-4C68-991F-5CAB4D7EBC89}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13CE7CFD-7644-4C68-991F-5CAB4D7EBC89}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ABBC7840-94ED-446E-B506-6543AD0A0B0E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ABBC7840-94ED-446E-B506-6543AD0A0B0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ABBC7840-94ED-446E-B506-6543AD0A0B0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ABBC7840-94ED-446E-B506-6543AD0A0B0E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

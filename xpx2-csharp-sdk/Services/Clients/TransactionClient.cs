@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reactive.Linq;
+using System.Security.Cryptography.X509Certificates;
 using io.nem2.sdk.Infrastructure.Buffers.Model;
 using io.nem2.sdk.Infrastructure.HttpRepositories;
 using io.nem2.sdk.Infrastructure.Listeners;
@@ -16,21 +17,22 @@ namespace IO.Proximax.SDK.Services.Clients
         private const string STATUS_FOR_SUCCESSFUL_UNCONFIRMED_TRANSACTION = "SUCCESS";
         
         private TransactionHttp TransactionHttp { get; set; }
-        private string BlockchainNetworkEndpointUrl { get; set; }
+        private string BlockchainRestApiHost { get; set; }
+        private int BlockchainRestApiPort { get; set; }
         private Listener Listener { get; set; }
 
         public TransactionClient(BlockchainNetworkConnection blockchainNetworkConnection)
         {
-            TransactionHttp = new TransactionHttp(blockchainNetworkConnection.EndpointUrl);
-            BlockchainNetworkEndpointUrl = blockchainNetworkConnection.EndpointUrl;
-            Listener = null;
+            TransactionHttp = new TransactionHttp(blockchainNetworkConnection.RestApiUrl);
+            var uri = new Uri(blockchainNetworkConnection.RestApiUrl);
+            BlockchainRestApiHost = uri.Host;
+            BlockchainRestApiPort = uri.Port;
         }
 
         internal TransactionClient(TransactionHttp transactionHttp, Listener listener)
         {
             TransactionHttp = transactionHttp;
             Listener = listener;
-            BlockchainNetworkEndpointUrl = null;
         }
 
         public IObservable<TransactionAnnounceResponse> Announce(SignedTransaction signedTransaction)
@@ -52,28 +54,35 @@ namespace IO.Proximax.SDK.Services.Clients
             CheckParameter(address != null, "address is required");
             CheckParameter(transactionHash != null, "transactionHash is required");
 
-            Listener listener = GetListener();
+            var listener = GetListener();
             lock (listener)
             {
                 listener.Open().Wait();
+                try
+                {
+                    var failedTransactionStatusOb = GetAddedFailedTransactionStatus(address, transactionHash, listener);
+                    var unconfirmedTransactionStatusOb = GetAddedUnconfirmedTransactionStatus(address, transactionHash, listener);
 
-                var failedTransactionStatusOb = GetAddedFailedTransactionStatus(address, transactionHash, listener);
-                var unconfirmedTransactionStatusOb = GetAddedUnconfirmedTransactionStatus(address, transactionHash, listener);
-
-                return failedTransactionStatusOb.Merge(unconfirmedTransactionStatusOb).Select(status => {
-                    if (status.Equals(STATUS_FOR_SUCCESSFUL_UNCONFIRMED_TRANSACTION))
-                        return status;
-                    else
-                        throw new AnnounceBlockchainTransactionFailureException(
+                    return failedTransactionStatusOb.Merge(unconfirmedTransactionStatusOb).Select(status => {
+                        if (status.Equals(STATUS_FOR_SUCCESSFUL_UNCONFIRMED_TRANSACTION))
+                            return status;
+                        else
+                            throw new AnnounceBlockchainTransactionFailureException(
                                 $"Failed to announce transaction with status {status}");
-                }).FirstAsync().Wait();
+                    }).FirstAsync().Wait();
+                }
+                finally
+                {
+                    // TODO REENABLE once listener is closing cleanly
+                    // https://github.com/nemtech/nem2-sdk-csharp/issues/4
+//                    listener.Close();                
+                }                               
             }
-
         }
 
         private Listener GetListener()
         {
-            return Listener ?? new Listener(BlockchainNetworkEndpointUrl);
+            return Listener ?? new Listener(BlockchainRestApiHost, BlockchainRestApiPort);
         }
 
         private IObservable<string> GetAddedUnconfirmedTransactionStatus(Address address, string transactionHash, Listener listener)

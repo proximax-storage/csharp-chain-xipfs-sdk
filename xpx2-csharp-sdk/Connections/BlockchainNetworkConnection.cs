@@ -6,12 +6,12 @@ namespace IO.Proximax.SDK.Connections
     public class BlockchainNetworkConnection
     {
         public NetworkType.Types NetworkType { get; }
-        public string EndpointUrl { get; }
+        public string RestApiUrl { get; }
 
-        public BlockchainNetworkConnection(BlockchainNetworkType blockchainNetworkType, string endpointUrl)
+        public BlockchainNetworkConnection(BlockchainNetworkType blockchainNetworkType, string restApiUrl)
         {
             NetworkType = blockchainNetworkType.GetNetworkType();
-            EndpointUrl = endpointUrl;
+            RestApiUrl = restApiUrl;
         }
 
     }
