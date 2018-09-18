@@ -8,7 +8,6 @@ using IO.Proximax.SDK.Services;
 using IO.Proximax.SDK.Utils;
 using static IO.Proximax.SDK.Utils.ParameterValidationUtils;
 
-// TODO 
 namespace IO.Proximax.SDK.Upload
 {
     public class Uploader
@@ -40,12 +39,12 @@ namespace IO.Proximax.SDK.Upload
             return DoUpload(uploadParam).Wait();
         }
         
-        public AsyncTask UploadAsync(UploadParameter uploadParam, AsyncCallback<UploadResult> asyncCallback) {
+        public AsyncTask UploadAsync(UploadParameter uploadParam, AsyncCallbacks<UploadResult> asyncCallbacks) {
             CheckParameter(uploadParam != null, "uploadParam is required");
 
             var asyncTask = new AsyncTask();
 
-            AsyncUtils.ProcessFirstItem(DoUpload(uploadParam), asyncCallback, asyncTask);
+            AsyncUtils.ProcessFirstItem(DoUpload(uploadParam), asyncCallbacks, asyncTask);
 
             return asyncTask;
         }

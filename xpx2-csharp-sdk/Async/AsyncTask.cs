@@ -22,6 +22,16 @@
             if (!Done)
                 Cancelled = true;
         }
-        
+
+        public bool IsDone()
+        {
+            return Done;
+        }
+
+        public bool IsCancelled()
+        {
+            return Cancelled;
+        }
+
     }
 }

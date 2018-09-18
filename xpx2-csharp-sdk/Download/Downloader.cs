@@ -41,12 +41,12 @@ namespace IO.Proximax.SDK.Download
             return DoCompleteDownload(downloadParam).Wait();
         }
 
-        public AsyncTask DownloadAsync(DownloadParameter downloadParam, AsyncCallback<DownloadResult> asyncCallback) {
+        public AsyncTask DownloadAsync(DownloadParameter downloadParam, AsyncCallbacks<DownloadResult> asyncCallbacks) {
             CheckParameter(downloadParam != null, "downloadParam is required");
 
             var asyncTask = new AsyncTask();
 
-            AsyncUtils.ProcessFirstItem(DoCompleteDownload(downloadParam), asyncCallback, asyncTask);
+            AsyncUtils.ProcessFirstItem(DoCompleteDownload(downloadParam), asyncCallbacks, asyncTask);
 
             return asyncTask;
         }
@@ -57,12 +57,12 @@ namespace IO.Proximax.SDK.Download
             return DoDirectDownload(directDownloadParameter).Wait();
         }
         
-        public AsyncTask DirectDownloadAsync(DirectDownloadParameter directDownloadParameter, AsyncCallback<Stream> asyncCallback) {
+        public AsyncTask DirectDownloadAsync(DirectDownloadParameter directDownloadParameter, AsyncCallbacks<Stream> asyncCallbacks) {
             CheckParameter(directDownloadParameter != null, "directDownloadParameter is required");
 
             var asyncTask = new AsyncTask();
 
-            AsyncUtils.ProcessFirstItem(DoDirectDownload(directDownloadParameter), asyncCallback, asyncTask);
+            AsyncUtils.ProcessFirstItem(DoDirectDownload(directDownloadParameter), asyncCallbacks, asyncTask);
 
             return asyncTask;
         }

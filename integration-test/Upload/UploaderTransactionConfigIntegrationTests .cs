@@ -8,7 +8,8 @@ using IO.Proximax.SDK.Connections;
 using IO.Proximax.SDK.Models;
 using IO.Proximax.SDK.Upload;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using static IntegrationTests.Resources.Config;
+using static IntegrationTests.IntegrationTestConfig;
+using static IntegrationTests.TestDataRepository;
 using static IntegrationTests.TestSupport.Constants;
 
 namespace IntegrationTests.Upload
@@ -41,6 +42,8 @@ namespace IntegrationTests.Upload
 			var transaction = WaitForTransactionConfirmation(PrivateKey1, result.TransactionHash);
 			Assert.IsTrue(transaction is TransferTransaction);
 			Assert.AreEqual((transaction as TransferTransaction).Address.Plain, Address1);
+			
+			LogAndSaveResult(result, GetType().Name + ".ShouldUploadWithSignerAsRecipientByDefault");
 		}
 
 
@@ -59,6 +62,8 @@ namespace IntegrationTests.Upload
 			var transaction = WaitForTransactionConfirmation(PrivateKey1, result.TransactionHash);
 			Assert.IsTrue(transaction is TransferTransaction);
 			Assert.AreEqual((transaction as TransferTransaction).Address.Plain, Address2);
+			
+			LogAndSaveResult(result, GetType().Name + ".ShouldUploadWithRecipientPublicKeyProvided");
 		}
 
 		[TestMethod, Timeout(30000)]
@@ -75,6 +80,8 @@ namespace IntegrationTests.Upload
 			var transaction = WaitForTransactionConfirmation(PrivateKey1, result.TransactionHash);
 			Assert.IsTrue(transaction is TransferTransaction);
 			Assert.AreEqual((transaction as TransferTransaction).Address.Plain, Address2);
+			
+			LogAndSaveResult(result, GetType().Name + ".ShouldUploadWithRecipientAddressProvided");
 		}
 
 		[TestMethod, Timeout(10000)]
@@ -88,6 +95,8 @@ namespace IntegrationTests.Upload
 
 			Assert.IsNotNull(result);
 			Assert.IsNotNull(result.TransactionHash);
+			
+			LogAndSaveResult(result, GetType().Name + ".ShouldUploadWithTransactionDeadlinesProvided");
 		}
 
 		[TestMethod, Timeout(10000)]
@@ -100,7 +109,9 @@ namespace IntegrationTests.Upload
 			var result = UnitUnderTest.Upload(param);
 
 			Assert.IsNotNull(result);
-			Assert.IsNotNull(result.TransactionHash);	
+			Assert.IsNotNull(result.TransactionHash);
+			
+			LogAndSaveResult(result, GetType().Name + ".ShouldUploadWithUseBlockchainSecureMessageProvided");
 		}
 		
 		private Transaction WaitForTransactionConfirmation(string senderPrivateKey, string transactionHash) {

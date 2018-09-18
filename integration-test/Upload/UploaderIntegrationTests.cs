@@ -8,14 +8,15 @@ using IO.Proximax.SDK.Upload;
 using IO.Proximax.SDK.Utils;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using static IO.Proximax.SDK.Models.Constants;
-using static IntegrationTests.Resources.Config;
+using static IntegrationTests.IntegrationTestConfig;
+using static IntegrationTests.TestDataRepository;
 using static IntegrationTests.TestSupport.Constants;
 using static IntegrationTests.TestSupport.FileHelper;
 
 namespace IntegrationTests.Upload
 {
 	[TestClass]
-	public class Uploader_IntegrationTests
+	public class UploaderIntegrationTests
 	{
 		private Uploader UnitUnderTest { get; set; }
 
@@ -41,7 +42,7 @@ namespace IntegrationTests.Upload
 			Assert.IsNotNull(result);
 			Assert.AreEqual(result.Version, SchemaVersion);
 
-			Console.WriteLine(JsonUtils.ToJson(result));
+			LogAndSaveResult(result, GetType().Name + ".ShouldReturnVersion");
 		}
 
 		[TestMethod, Timeout(10000)]
@@ -62,7 +63,7 @@ namespace IntegrationTests.Upload
 			Assert.IsNull(result.Data.Metadata);
 			Assert.IsNotNull(result.Data.Timestamp);
 
-			Console.WriteLine(JsonUtils.ToJson(result));
+			LogAndSaveResult(result, GetType().Name + ".ShouldUploadByteArray");
 		}
 
 		// TODO REENABLE once message can hold more than 255 characters
@@ -98,7 +99,7 @@ namespace IntegrationTests.Upload
 			Assert.AreEqual(result.Data.Metadata, new Dictionary<string, string> {{"bytearraykey", "bytearrayval"}});
 			Assert.IsNotNull(result.Data.Timestamp);
 
-			Console.WriteLine(JsonUtils.ToJson(result));
+			LogAndSaveResult(result, GetType().Name + ".ShouldUploadByteArrayWithCompleteDetails");
 		}
 
 		[TestMethod, Timeout(10000)]
@@ -118,7 +119,7 @@ namespace IntegrationTests.Upload
 			Assert.IsNull(result.Data.Metadata);
 			Assert.IsNotNull(result.Data.Timestamp);
 
-			Console.WriteLine(JsonUtils.ToJson(result));
+			LogAndSaveResult(result, GetType().Name + ".ShouldUploadFile");
 		}
 
 		[TestMethod, Timeout(10000), Ignore]
@@ -141,7 +142,7 @@ namespace IntegrationTests.Upload
 			Assert.AreEqual(result.Data.Metadata, new Dictionary<string, string> {{"filekey", "filename"}});
 			Assert.IsNotNull(result.Data.Timestamp);
 
-			Console.WriteLine(JsonUtils.ToJson(result));
+			LogAndSaveResult(result, GetType().Name + ".ShouldUploadFileWithCompleteDetails");
 		}
 
 		[TestMethod, Timeout(10000)]
@@ -162,7 +163,7 @@ namespace IntegrationTests.Upload
 			Assert.IsNull(result.Data.Metadata);
 			Assert.IsNotNull(result.Data.Timestamp);
 
-			Console.WriteLine(JsonUtils.ToJson(result));
+			LogAndSaveResult(result, GetType().Name + ".ShouldUploadUrlResource");
 		}
 
 		[TestMethod, Timeout(10000), Ignore]
@@ -184,7 +185,7 @@ namespace IntegrationTests.Upload
 			Assert.AreEqual(result.Data.Metadata, new Dictionary<string, string> {{"urlkey", "urlval"}});
 			Assert.IsNotNull(result.Data.Timestamp);
 
-			Console.WriteLine(JsonUtils.ToJson(result));
+			LogAndSaveResult(result, GetType().Name + ".ShouldUploadUrlResourceWithCompleteDetails");
 		}
 
 		[TestMethod, Timeout(10000)]
@@ -205,7 +206,7 @@ namespace IntegrationTests.Upload
 			Assert.IsNull(result.Data.Metadata);
 			Assert.IsNotNull(result.Data.Timestamp);
 
-			Console.WriteLine(JsonUtils.ToJson(result));
+			LogAndSaveResult(result, GetType().Name + ".ShouldUploadFilesAsZip");
 		}
 
 		[TestMethod, Timeout(10000), Ignore]
@@ -227,7 +228,7 @@ namespace IntegrationTests.Upload
 			Assert.AreEqual(result.Data.Metadata, new Dictionary<string, string> {{"zipkey", "zipvalue"}});
 			Assert.IsNotNull(result.Data.Timestamp);
 
-			Console.WriteLine(JsonUtils.ToJson(result));
+			LogAndSaveResult(result, GetType().Name + ".ShouldUploadFilesAsZipWithCompleteDetails");
 		}
 
 		[TestMethod, Timeout(10000)]
@@ -247,7 +248,7 @@ namespace IntegrationTests.Upload
 			Assert.IsNull(result.Data.Metadata);
 			Assert.IsNotNull(result.Data.Timestamp);
 
-			Console.WriteLine(JsonUtils.ToJson(result));
+			LogAndSaveResult(result, GetType().Name + ".ShouldUploadString");
 		}
 
 		[TestMethod, Timeout(10000), Ignore]
@@ -269,7 +270,7 @@ namespace IntegrationTests.Upload
 			Assert.AreEqual(result.Data.Metadata, new Dictionary<string, string> {{"keystring", "valstring"}});
 			Assert.IsNotNull(result.Data.Timestamp);
 
-			Console.WriteLine(JsonUtils.ToJson(result));
+			LogAndSaveResult(result, GetType().Name + ".ShouldUploadStringWithCompleteDetails");
 		}
 
 		[TestMethod, Timeout(10000)]
@@ -289,7 +290,7 @@ namespace IntegrationTests.Upload
 			Assert.IsNull(result.Data.Metadata);
 			Assert.IsNotNull(result.Data.Timestamp);
 
-			Console.WriteLine(JsonUtils.ToJson(result));
+			LogAndSaveResult(result, GetType().Name + ".ShouldUploadPath");
 		}
 
 		[TestMethod, Timeout(10000), Ignore]
@@ -311,7 +312,7 @@ namespace IntegrationTests.Upload
 			Assert.AreEqual(result.Data.Metadata, new Dictionary<string, string> {{"pathkey", "pathval"}});
 			Assert.IsNotNull(result.Data.Timestamp);
 
-			Console.WriteLine(JsonUtils.ToJson(result));
+			LogAndSaveResult(result, GetType().Name + ".ShouldUploadPathWithCompleteDetails");
 		}
 	}
 }

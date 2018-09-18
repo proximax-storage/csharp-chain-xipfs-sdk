@@ -13,7 +13,7 @@ namespace IO.Proximax.SDK.Download
 
         public DownloadParameterBuilder(string transactionHash)
         {
-            CheckParameter(transactionHash == null, "transactionHash is required");
+            CheckParameter(transactionHash != null, "transactionHash is required");
 
             TransactionHash = transactionHash;
         }

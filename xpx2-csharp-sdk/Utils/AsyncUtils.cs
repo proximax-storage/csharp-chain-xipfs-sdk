@@ -8,7 +8,7 @@ namespace IO.Proximax.SDK.Utils
 {
     public static class AsyncUtils
     {
-        public static void ProcessFirstItem<T>(IObservable<T> observable, AsyncCallback<T> asyncCallback, AsyncTask asyncTask)
+        public static void ProcessFirstItem<T>(IObservable<T> observable, AsyncCallbacks<T> asyncCallbacks, AsyncTask asyncTask)
         {
             CheckParameter(observable != null, "observable is required");
             CheckParameter(asyncTask != null, "asyncTask is required");
@@ -16,10 +16,10 @@ namespace IO.Proximax.SDK.Utils
             observable.FirstAsync()
                 .Subscribe(
                     result => {
-                        asyncCallback?.OnSuccess(result);
+                        asyncCallbacks?.OnSuccess(result);
                         asyncTask.SetToDone();
                     }, exception => {
-                        asyncCallback?.OnFailure(exception);
+                        asyncCallbacks?.OnFailure(exception);
                         asyncTask.SetToDone();
                     });
         }
