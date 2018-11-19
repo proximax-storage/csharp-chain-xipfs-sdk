@@ -81,12 +81,12 @@ namespace IO.Proximax.SDK.Upload
         }
         
         public UploadParameterBuilder WithNemKeysPrivacy(string privateKey, string publicKey) {
-            PrivacyStrategy = SecuredWithNemKeysPrivacyStrategy.Create(privateKey, publicKey);
+            PrivacyStrategy = NemKeysPrivacyStrategy.Create(privateKey, publicKey);
             return this;
         }
 
         public UploadParameterBuilder WithPasswordPrivacy(string password) {
-            PrivacyStrategy = SecuredWithPasswordPrivacyStrategy.Create(password);
+            PrivacyStrategy = PasswordPrivacyStrategy.Create(password);
             return this;
         }
 

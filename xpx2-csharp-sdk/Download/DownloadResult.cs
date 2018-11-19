@@ -14,8 +14,10 @@
             Version = version;
             Data = data;
         }
-        
-        internal static DownloadResult Create(string transactionHash, int privacyType, string version, DownloadResultData data) {
+
+        internal static DownloadResult Create(string transactionHash, int privacyType, string version,
+            DownloadResultData data)
+        {
             return new DownloadResult(transactionHash, privacyType, version, data);
         }
     }

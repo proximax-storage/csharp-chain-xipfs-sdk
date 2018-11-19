@@ -44,25 +44,26 @@ namespace IO.Proximax.SDK.Download
             PrivacyStrategy = PlainPrivacyStrategy.Create();
             return this;
         }
-        
-        public DownloadParameterBuilder WithNemKeysPrivacy(string privateKey, string publicKey) {
-            PrivacyStrategy = SecuredWithNemKeysPrivacyStrategy.Create(privateKey, publicKey);
+
+        public DownloadParameterBuilder WithNemKeysPrivacy(string privateKey, string publicKey)
+        {
+            PrivacyStrategy = NemKeysPrivacyStrategy.Create(privateKey, publicKey);
             return this;
         }
 
-        public DownloadParameterBuilder WithPasswordPrivacy(string password) {
-            PrivacyStrategy = SecuredWithPasswordPrivacyStrategy.Create(password);
+        public DownloadParameterBuilder WithPasswordPrivacy(string password)
+        {
+            PrivacyStrategy = PasswordPrivacyStrategy.Create(password);
             return this;
         }
 
         public DownloadParameter Build()
         {
-            if (PrivacyStrategy == null)
-                PrivacyStrategy = PlainPrivacyStrategy.Create();
-            return new DownloadParameter(TransactionHash, AccountPrivateKey, 
-                PrivacyStrategy ?? PlainPrivacyStrategy.Create(), 
+            return new DownloadParameter(
+                TransactionHash,
+                AccountPrivateKey,
+                PrivacyStrategy ?? PlainPrivacyStrategy.Create(),
                 ValidateDigest ?? false);
         }
-
     }
 }

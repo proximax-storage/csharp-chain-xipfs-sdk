@@ -24,9 +24,9 @@ namespace IntegrationTests.Upload
 		public void TestInitialize()
 		{
 			UnitUnderTest = new Uploader(
-				ConnectionConfig.Create(
-					new BlockchainNetworkConnection(BlockchainNetworkType.Mijin_Test, BlockchainRestApiUrl),
-					new IpfsConnection(IpfsUrl))
+				ConnectionConfig.CreateWithLocalIpfsConnection(
+					new BlockchainNetworkConnection(BlockchainNetworkType.MijinTest, BlockchainApiHost, BlockchainApiPort, BlockchainApiProtocol),
+					new IpfsConnection(IpfsApiHost, IpfsApiPort, BlockchainApiProtocol))
 			);
 		}
 

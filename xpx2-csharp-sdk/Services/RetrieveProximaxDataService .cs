@@ -1,11 +1,7 @@
 ﻿using System;
 using System.IO;
-using System.Reactive.Linq;
 using IO.Proximax.SDK.Connections;
-using IO.Proximax.SDK.Exceptions;
 using IO.Proximax.SDK.PrivacyStrategies;
-using IO.Proximax.SDK.Services.Clients;
-using IO.Proximax.SDK.Utils;
 using static IO.Proximax.SDK.Models.Constants;
 using static IO.Proximax.SDK.Utils.ParameterValidationUtils;
 
@@ -13,41 +9,36 @@ namespace IO.Proximax.SDK.Services
 {
     public class RetrieveProximaxDataService
     {
-        private IpfsApiClient IpfsApiClient { get; }
-        private DigestUtils DigestUtils { get; }
+        private FileDownloadService FileDownloadService { get; }
 
-        public RetrieveProximaxDataService(IpfsConnection ipfsConnection)
+        public RetrieveProximaxDataService(IFileStorageConnection fileStorageConnection)
         {
-            IpfsApiClient = new IpfsApiClient(ipfsConnection);
-            DigestUtils = new DigestUtils();
+            FileDownloadService = new FileDownloadService(fileStorageConnection);
         }
 
-        internal RetrieveProximaxDataService(IpfsApiClient ipfsApiClient, DigestUtils digestUtils)
+        internal RetrieveProximaxDataService(FileDownloadService fileDownloadService)
         {
-            IpfsApiClient = ipfsApiClient;
-            DigestUtils = digestUtils;
+            FileDownloadService = fileDownloadService;
         }
 
-        public IObservable<Stream> GetDataByteStream(string dataHash, IPrivacyStrategy privacyStrategy, bool validateDigest,
-            string digest, string contentType) {
-            
+        public IObservable<Stream> GetDataByteStream(string dataHash, IPrivacyStrategy privacyStrategy,
+            bool validateDigest,
+            string digest, string contentType)
+        {
             CheckParameter(dataHash != null, "dataHash is required");
             CheckParameter(privacyStrategy != null, "privacyStrategy is required");
 
-            if (contentType != null && contentType.Equals(PathUploadContentType)) { // path
-                throw new DownloadForDataTypeNotSupportedException("download of path is not yet supported");
-            } else { // byte array
-                return IpfsApiClient.GetByteStream(dataHash)
-                    .SelectMany(undecryptedStream => ValidateDigest(validateDigest, digest, dataHash)
-                        .Select(result => undecryptedStream))
-                    .Select(privacyStrategy.DecryptStream);
+            if (contentType != null && contentType.Equals(PathUploadContentType))
+            {
+                // path
+                throw new NotSupportedException("download of path is not yet supported");
+            }
+            else
+            {
+                // byte array
+                var digestToUse = validateDigest ? digest : null;
+                return FileDownloadService.GetByteStream(dataHash, privacyStrategy, digestToUse);
             }
         }
-
-        private IObservable<bool> ValidateDigest(bool validateDigest, string digest, string dataHash) {
-            return validateDigest ? IpfsApiClient.GetByteStream(dataHash)
-                .SelectMany(undecryptedStream => DigestUtils.ValidateDigest(undecryptedStream, digest)) : Observable.Return(true);
-        }
-
     }
 }

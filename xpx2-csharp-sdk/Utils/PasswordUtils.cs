@@ -10,11 +10,11 @@ namespace IO.Proximax.SDK.Utils
         private const string AlphaNumeric = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         private const string SpecialCharacters = "~!@#$%^&*()-_=+[]{};:'\",./<>?";
 
-        public static string generatePassword(int length = SecuredWithPasswordPrivacyStrategy.MinimumPasswordLength,
+        public static string GeneratePassword(int length = PasswordPrivacyStrategy.MinimumPasswordLength,
             bool allowSpecialCharacters = false) {
 
-            CheckParameter(length >= SecuredWithPasswordPrivacyStrategy.MinimumPasswordLength,
-                $"Password length should be longer than {SecuredWithPasswordPrivacyStrategy.MinimumPasswordLength}. " +
+            CheckParameter(length >= PasswordPrivacyStrategy.MinimumPasswordLength,
+                $"Password length should be longer than {PasswordPrivacyStrategy.MinimumPasswordLength}. " +
                 $"{length} was provided");
 
             var random = new SecureRandom();

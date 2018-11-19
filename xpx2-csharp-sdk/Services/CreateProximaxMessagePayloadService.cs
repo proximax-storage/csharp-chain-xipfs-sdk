@@ -8,13 +8,15 @@ namespace IO.Proximax.SDK.Services
 {
     public class CreateProximaxMessagePayloadService
     {
-        public IObservable<ProximaxMessagePayloadModel> CreateMessagePayload(UploadParameter uploadParameter, ProximaxDataModel uploadedData) {
+        public IObservable<ProximaxMessagePayloadModel> CreateMessagePayload(UploadParameter uploadParameter,
+            ProximaxDataModel uploadedData)
+        {
             CheckParameter(uploadParameter != null, "uploadParameter is required");
             CheckParameter(uploadedData != null, "uploadedData is required");
 
-            return Observable.Return(ProximaxMessagePayloadModel.Create(uploadParameter.PrivacyStrategy.GetPrivacyType(),
+            return Observable.Return(ProximaxMessagePayloadModel.Create(
+                uploadParameter.PrivacyStrategy.GetPrivacyType(),
                 uploadParameter.Version, uploadedData));
         }
-
     }
 }

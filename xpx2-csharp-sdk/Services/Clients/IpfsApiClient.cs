@@ -5,11 +5,12 @@ using System.Linq;
 using System.Reactive.Linq;
 using System.Reactive.Threading.Tasks;
 using IO.Proximax.SDK.Connections;
+using IO.Proximax.SDK.Services.Repositories;
 using static IO.Proximax.SDK.Utils.ParameterValidationUtils;
 
 namespace IO.Proximax.SDK.Services.Clients
 {
-    public class IpfsApiClient
+    public class IpfsApiClient : IFileRepository
     {
         private IpfsConnection IpfsConnection { get; set; }
 
@@ -18,7 +19,7 @@ namespace IO.Proximax.SDK.Services.Clients
             IpfsConnection = ipfsConnection;
         }
 
-        public IObservable<string> AddByteStream(Stream byteStream)
+        public override IObservable<string> AddByteStream(Stream byteStream)
         {
             CheckParameter(byteStream != null, "byteStream is required");
 
@@ -26,10 +27,11 @@ namespace IO.Proximax.SDK.Services.Clients
                 .Select(node => node.Id.Hash.ToBase58());
         }
 
-        public IObservable<string> AddPath(string path)
+        public override IObservable<string> AddPath(string path)
         {
             CheckParameter(path != null, "path is required");
-            CheckParameter(File.GetAttributes(path).HasFlag(FileAttributes.Directory), "path should be directory/folder");
+            CheckParameter(File.GetAttributes(path).HasFlag(FileAttributes.Directory),
+                "path should be directory/folder");
 
             return IpfsConnection.Ipfs.FileSystem.AddDirectoryAsync(path).ToObservable()
                 .Select(node => node.Id.Hash.ToBase58());
@@ -43,7 +45,7 @@ namespace IO.Proximax.SDK.Services.Clients
                 .Select(enumerable => enumerable.Select(cid => cid.Hash.ToBase58()));
         }
 
-        public IObservable<Stream> GetByteStream(string dataHash)
+        public override IObservable<Stream> GetByteStream(string dataHash)
         {
             CheckParameter(dataHash != null, "dataHash is required");
 

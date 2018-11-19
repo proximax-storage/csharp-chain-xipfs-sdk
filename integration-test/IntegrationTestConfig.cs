@@ -1,18 +1,25 @@
+using System;
+using IO.Proximax.SDK.Connections;
+
 namespace IntegrationTests
 {
     public static class IntegrationTestConfig
     {
-        //public const string IpfsMultiAddress = "/ip4/127.0.0.1/tcp/5001";
-        public const string IpfsUrl = "http://localhost:5001";
-        public const string BlockchainRestApiUrl = "http://127.0.0.1:3000";
+        public const string IpfsApiHost = "ipfs1.dev.proximax.io";
+        public const int IpfsApiPort = 5001;
+        public const HttpProtocol IpfsApiProtocol = HttpProtocol.Http;
+        public const string BlockchainApiHost = "privatetest2.proximax.io";
+        public const int BlockchainApiPort = 3000;
+        public const HttpProtocol BlockchainApiProtocol = HttpProtocol.Http;
+        public static readonly string BlockchainRestApiUrl = new UriBuilder("http", BlockchainApiHost, BlockchainApiPort).Uri.AbsoluteUri;
     
-        public const string PrivateKey1 = "8374B5915AEAB6308C34368B15ABF33C79FD7FEFC0DEAF9CC51BA57F120F1190";
-        public const string PublicKey1 = "9E7930144DA0845361F650BF78A36791ABF2577E251706ECA45480998FE61D18";
-        public const string Address1 = "SBI5EBRHONTC6FSO4DNKKBDI7SBUNU4L2W76WUUD";
+        public const string PrivateKey1 = "97226FCCBD876D399BA2A70E640AD2C2C97AD5CE57A40EE9455C226D3C39AD49";
+        public const string PublicKey1 = "632479641258F56F961473CD729F6357563D276CE7B68D5AD8F9F7FA071BB963";
+        public const string Address1 = "SDB5DP6VGVNPSQJYEC2X3QIWKAFJ3DCMNQCIF6OA";
     
-        public const string PrivateKey2 = "369CB3195F88A16F8326DABBD37DA5F8458B55AA5DA6F7E2F756A12BE6CAA546";
-        public const string PublicKey2 = "8E1A94D534EA6A3B02B0B967701549C21724C7644B2E4C20BF15D01D50097ACB";
-        public const string Address2 = "SCW3N4V7LQ4UQBJK3PZGV3YGKMC67LLXYADF765M";
+        public const string PrivateKey2 = "D19EDBF7C5F4665BBB168F8BFF3DC1CA85766080B10AABD60DDE5D6D7E893D5B";
+        public const string PublicKey2 = "D1869362F4FAA5F683AEF78FC0D6E04B976833000F3958862A09CC7B6DF347C2";
+        public const string Address2 = "SDUCJBPMHXWEWJL6KI4GVW3X4EKWSINM3WBVUDQ2";
 
     }
 }

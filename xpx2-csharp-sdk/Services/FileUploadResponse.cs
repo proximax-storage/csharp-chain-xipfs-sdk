@@ -1,14 +1,16 @@
 ﻿namespace IO.Proximax.SDK.Services
 {
-    public class IpfsUploadResponse
+    public class FileUploadResponse
     {
         public string DataHash { get; }
         public long Timestamp { get; }
+        public string Digest { get; }
 
-        public IpfsUploadResponse(string dataHash, long timestamp)
+        public FileUploadResponse(string dataHash, long timestamp, string digest = null)
         {
             DataHash = dataHash;
             Timestamp = timestamp;
+            Digest = digest;
         }
     }
 }

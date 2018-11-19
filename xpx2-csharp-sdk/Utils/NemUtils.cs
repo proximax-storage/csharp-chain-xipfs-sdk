@@ -18,7 +18,7 @@ namespace IO.Proximax.SDK.Utils
         {
             CheckParameter(address != null, "address is required");
 
-            return Address.CreateFromEncoded(address);
+            return Address.CreateFromRawAddress(address);
         }
 
         public Address GetAddressFromPublicKey(string publicKey)

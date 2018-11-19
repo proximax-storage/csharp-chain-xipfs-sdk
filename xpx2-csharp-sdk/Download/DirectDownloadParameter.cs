@@ -11,7 +11,7 @@ namespace IO.Proximax.SDK.Download
         public IPrivacyStrategy PrivacyStrategy { get; }
         public string Digest { get; }
 
-        internal DirectDownloadParameter(string transactionHash, string accountPrivateKey, string dataHash, 
+        internal DirectDownloadParameter(string transactionHash, string accountPrivateKey, string dataHash,
             bool validateDigest, IPrivacyStrategy privacyStrategy, string digest)
         {
             TransactionHash = transactionHash;
@@ -22,14 +22,16 @@ namespace IO.Proximax.SDK.Download
             Digest = digest;
         }
 
-        public static DirectDownloadParameterBuilder CreateFromTransactionHash(string transactionHash, 
-            string accountPrivateKey = null, bool? validateDigest = null) {
-            return DirectDownloadParameterBuilder.CreateFromTransactionHash(transactionHash, accountPrivateKey, validateDigest);
-        }
-               
-        public static DirectDownloadParameterBuilder CreateFromDataHash(string dataHash, string digest = null) {
-            return DirectDownloadParameterBuilder.CreateFromDataHash(dataHash, digest);
+        public static DirectDownloadParameterBuilder CreateFromTransactionHash(string transactionHash,
+            string accountPrivateKey = null, bool? validateDigest = null)
+        {
+            return DirectDownloadParameterBuilder.CreateFromTransactionHash(transactionHash, accountPrivateKey,
+                validateDigest);
         }
 
+        public static DirectDownloadParameterBuilder CreateFromDataHash(string dataHash, string digest = null)
+        {
+            return DirectDownloadParameterBuilder.CreateFromDataHash(dataHash, digest);
+        }
     }
 }

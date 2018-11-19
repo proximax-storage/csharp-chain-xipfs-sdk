@@ -9,7 +9,8 @@ namespace IO.Proximax.SDK.Download
         public IPrivacyStrategy PrivacyStrategy { get; }
         public bool ValidateDigest { get; }
 
-        internal DownloadParameter(string transactionHash, string accountPrivateKey, IPrivacyStrategy privacyStrategy, bool validateDigest)
+        internal DownloadParameter(string transactionHash, string accountPrivateKey, IPrivacyStrategy privacyStrategy,
+            bool validateDigest)
         {
             TransactionHash = transactionHash;
             AccountPrivateKey = accountPrivateKey;

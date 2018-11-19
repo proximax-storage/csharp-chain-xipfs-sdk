@@ -19,7 +19,7 @@ namespace IO.Proximax.SDK.Upload
 
         public Uploader(ConnectionConfig connectionConfig)
         {
-            CreateProximaxDataService = new CreateProximaxDataService(connectionConfig.IpfsConnection);
+            CreateProximaxDataService = new CreateProximaxDataService(connectionConfig.FileStorageConnection);
             CreateProximaxMessagePayloadService = new CreateProximaxMessagePayloadService();
             BlockchainTransactionService = new BlockchainTransactionService(connectionConfig.BlockchainNetworkConnection);
         }

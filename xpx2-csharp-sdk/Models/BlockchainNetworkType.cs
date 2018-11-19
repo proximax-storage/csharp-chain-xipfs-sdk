@@ -5,27 +5,29 @@ namespace IO.Proximax.SDK.Models
 {
     public enum BlockchainNetworkType
     {
-        Main_Net = NetworkType.Types.MAIN_NET,
-        Test_Net = NetworkType.Types.TEST_NET,
+        MainNet = NetworkType.Types.MAIN_NET,
+        TestNet = NetworkType.Types.TEST_NET,
+        Private = NetworkType.Types.PRIVATE,
+        PrivateTest = NetworkType.Types.PRIVATE_TEST,
         Mijin = NetworkType.Types.MIJIN,
-        Mijin_Test = NetworkType.Types.MIJIN_TEST
+        MijinTest = NetworkType.Types.MIJIN_TEST
     }
-    
+
     static class BlockchainNetworkTypeMethods
     {
         public static NetworkType.Types GetNetworkType(this BlockchainNetworkType type)
         {
             switch (type)
             {
-                case BlockchainNetworkType.Main_Net: return NetworkType.Types.MAIN_NET;
-                case BlockchainNetworkType.Test_Net: return NetworkType.Types.TEST_NET;
+                case BlockchainNetworkType.MainNet: return NetworkType.Types.MAIN_NET;
+                case BlockchainNetworkType.TestNet: return NetworkType.Types.TEST_NET;
+                case BlockchainNetworkType.Private: return NetworkType.Types.PRIVATE;
+                case BlockchainNetworkType.PrivateTest: return NetworkType.Types.PRIVATE_TEST;
                 case BlockchainNetworkType.Mijin: return NetworkType.Types.MIJIN;
-                case BlockchainNetworkType.Mijin_Test: return NetworkType.Types.MIJIN_TEST;
+                case BlockchainNetworkType.MijinTest: return NetworkType.Types.MIJIN_TEST;
                 default:
                     throw new NetworkTypeInvalidException("Invalid network type");
             }
-            
         }
     }
-    
 }

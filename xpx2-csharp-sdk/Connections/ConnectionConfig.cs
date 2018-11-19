@@ -3,17 +3,31 @@
     public class ConnectionConfig
     {
         public BlockchainNetworkConnection BlockchainNetworkConnection { get; }
-        public IpfsConnection IpfsConnection { get; }
+        public IFileStorageConnection FileStorageConnection { get; }
 
-        private ConnectionConfig(BlockchainNetworkConnection blockchainNetworkConnection, IpfsConnection ipfsConnection)
+        private ConnectionConfig(BlockchainNetworkConnection blockchainNetworkConnection,
+            IFileStorageConnection fileStorageConnection)
         {
             BlockchainNetworkConnection = blockchainNetworkConnection;
-            IpfsConnection = ipfsConnection;
+            FileStorageConnection = fileStorageConnection;
         }
 
-        public static ConnectionConfig Create(BlockchainNetworkConnection blockchainNetworkConnection, IpfsConnection ipfsConnection)
+        public static ConnectionConfig CreateWithLocalIpfsConnection(
+            BlockchainNetworkConnection blockchainNetworkConnection, IpfsConnection ipfsConnection)
         {
             return new ConnectionConfig(blockchainNetworkConnection, ipfsConnection);
+        }
+
+        public static ConnectionConfig CreateWithStorageConnection(StorageConnection storageConnection)
+        {
+            // TODO
+            return new ConnectionConfig(null, storageConnection);
+        }
+
+        public static ConnectionConfig CreateWithStorageConnection(
+            BlockchainNetworkConnection blockchainNetworkConnection, StorageConnection storageConnection)
+        {
+            return new ConnectionConfig(blockchainNetworkConnection, storageConnection);
         }
     }
 }

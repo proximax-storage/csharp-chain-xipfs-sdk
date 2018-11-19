@@ -7,17 +7,18 @@ using static IO.Proximax.SDK.Utils.ParameterValidationUtils;
 // TODO
 namespace IO.Proximax.SDK.PrivacyStrategies
 {
-    public sealed class SecuredWithNemKeysPrivacyStrategy : IPrivacyStrategy
+    public sealed class NemKeysPrivacyStrategy : IPrivacyStrategy
     {
         private BlockchainKeysCipherEncryptor BlockchainKeysCipherEncryptor { get; set; }
         private KeyPair KeyPairOfPrivateKey { get; set; }
         private string PublicKey { get; set; }
 
-        internal SecuredWithNemKeysPrivacyStrategy(BlockchainKeysCipherEncryptor blockchainKeysCipherEncryptor,
-            string privateKey, string publicKey) {
+        internal NemKeysPrivacyStrategy(BlockchainKeysCipherEncryptor blockchainKeysCipherEncryptor,
+            string privateKey, string publicKey)
+        {
             CheckParameter(privateKey != null, "private key is required");
             CheckParameter(publicKey != null, "public key is required");
-            
+
             BlockchainKeysCipherEncryptor = blockchainKeysCipherEncryptor;
             KeyPairOfPrivateKey = KeyPair.CreateFromPrivateKey(privateKey);
             PublicKey = publicKey;
@@ -34,9 +35,10 @@ namespace IO.Proximax.SDK.PrivacyStrategies
         {
             throw new NotImplementedException();
         }
-        
-        public static SecuredWithNemKeysPrivacyStrategy Create(string privateKey, string publicKey) {
-            return new SecuredWithNemKeysPrivacyStrategy(new BlockchainKeysCipherEncryptor(), privateKey, publicKey);
+
+        public static NemKeysPrivacyStrategy Create(string privateKey, string publicKey)
+        {
+            return new NemKeysPrivacyStrategy(new BlockchainKeysCipherEncryptor(), privateKey, publicKey);
         }
     }
 }
