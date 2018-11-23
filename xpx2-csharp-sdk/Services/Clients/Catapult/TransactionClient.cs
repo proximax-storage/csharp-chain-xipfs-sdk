@@ -119,6 +119,7 @@ namespace IO.Proximax.SDK.Services.Clients.Catapult
             }
             catch (Exception e)
             {
+                Console.WriteLine("failed to close listener");
                 // ignore exception
             }
         }

@@ -16,9 +16,9 @@ namespace IntegrationTests
             Console.WriteLine("data hash: " + result.Data.DataHash);
             Console.WriteLine("data digest: " + result.Data.Digest);
 
-            TestDataMap.Add(testMethodName + ".transactionHash", result.TransactionHash);
-            TestDataMap.Add(testMethodName + ".dataHash", result.Data.DataHash);
-            TestDataMap.Add(testMethodName + ".digest", result.Data.Digest);
+            TestDataMap.TryAdd(testMethodName + ".transactionHash", result.TransactionHash);
+            TestDataMap.TryAdd(testMethodName + ".dataHash", result.Data.DataHash);
+            TestDataMap.TryAdd(testMethodName + ".digest", result.Data.Digest);
 
             SaveTestDataMap();
         }
@@ -28,22 +28,43 @@ namespace IntegrationTests
         }
 
         private static void SaveTestDataMap() {
-            try {
-                var streamWriter = new StreamWriter(new FileStream(TestDataJsonFile, FileMode.OpenOrCreate));
-                streamWriter.WriteLine(JsonUtils.ToJson(TestDataMap));
-                streamWriter.Close();
-            } catch (Exception e) {
-                Console.WriteLine(e);
+            lock (TestDataJsonFile)
+            {
+                StreamWriter streamWriter = null;
+                try
+                {
+                    streamWriter = new StreamWriter(new FileStream(TestDataJsonFile, FileMode.OpenOrCreate));
+                    streamWriter.WriteLine(JsonUtils.ToJson(TestDataMap));
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                }
+                finally
+                {
+                    streamWriter?.Close();
+                }
             }
         }
 
         private static Dictionary<string, string> LoadTestDataMap() {
-            try {
-                var testDataJson = new StreamReader(new FileStream(TestDataJsonFile, FileMode.Open));
-                return JsonUtils.FromJson<Dictionary<string, string>>(testDataJson.ReadToEndAsync().Result);
-            } catch (IOException e) {
-                Console.WriteLine(e);
-                return new Dictionary<string, string>();
+            lock (TestDataJsonFile)
+            {
+                StreamReader streamReader = null;
+                try
+                {
+                    streamReader = new StreamReader(new FileStream(TestDataJsonFile, FileMode.Open));
+                    return JsonUtils.FromJson<Dictionary<string, string>>(streamReader.ReadToEndAsync().Result);
+                }
+                catch (IOException e)
+                {
+                    Console.WriteLine(e);
+                    return new Dictionary<string, string>();
+                }
+                finally
+                {
+                    streamReader?.Close();
+                }
             }
         }
     }

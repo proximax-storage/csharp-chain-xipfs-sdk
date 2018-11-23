@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using IO.Proximax.SDK.Connections;
@@ -66,9 +68,7 @@ namespace IntegrationTests.Upload
 			LogAndSaveResult(result, GetType().Name + ".ShouldUploadByteArray");
 		}
 
-		// TODO REENABLE once message can hold more than 255 characters
-		// https://github.com/nemtech/nem2-sdk-csharp/issues/3
-		[TestMethod, Timeout(10000), Ignore]
+		[TestMethod, Timeout(10000)]
 		public void ShouldUploadByteArrayWithCompleteDetails()
 		{
 			var param = UploadParameter.CreateForByteArrayUpload(
@@ -76,17 +76,6 @@ namespace IntegrationTests.Upload
 						"text/plain", new Dictionary<string, string> {{"bytearraykey", "bytearrayval"}}),
 					PrivateKey1)
 				.Build();
-			/*
-			var param = UploadParameter.CreateForByteArrayUpload(
-					ByteArrayParameterData.Create(ByteArrayTest, "byte array description", "byte array",
-						"text/plain"),
-					PrivateKey1)
-				.Build();
-			var param = UploadParameter.CreateForByteArrayUpload(
-					ByteArrayParameterData.Create(ByteArrayTest, null, null, null, new Dictionary<string, string>{ {"bytearraykey", "bytearrayval"}}),
-					PrivateKey1)
-				.Build();
-				*/
 
 			var result = UnitUnderTest.Upload(param);
 
@@ -96,7 +85,8 @@ namespace IntegrationTests.Upload
 			Assert.IsNotNull(result.Data.DataHash);
 			Assert.AreEqual(result.Data.Description, "byte array description");
 			Assert.AreEqual(result.Data.Name, "byte array");
-			Assert.AreEqual(result.Data.Metadata, new Dictionary<string, string> {{"bytearraykey", "bytearrayval"}});
+			Assert.AreEqual(result.Data.Metadata.Count, 1);
+			Assert.IsFalse(result.Data.Metadata.Except(new Dictionary<string, string> {{"bytearraykey", "bytearrayval"}}).Any());
 			Assert.IsNotNull(result.Data.Timestamp);
 
 			LogAndSaveResult(result, GetType().Name + ".ShouldUploadByteArrayWithCompleteDetails");
@@ -122,7 +112,7 @@ namespace IntegrationTests.Upload
 			LogAndSaveResult(result, GetType().Name + ".ShouldUploadFile");
 		}
 
-		[TestMethod, Timeout(10000), Ignore]
+		[TestMethod, Timeout(10000)]
 		public void ShouldUploadFileWithCompleteDetails()
 		{
 			var param = UploadParameter.CreateForFileUpload(
@@ -139,13 +129,14 @@ namespace IntegrationTests.Upload
 			Assert.IsNotNull(result.Data.DataHash);
 			Assert.AreEqual(result.Data.Description, "file description");
 			Assert.AreEqual(result.Data.Name, "file name");
-			Assert.AreEqual(result.Data.Metadata, new Dictionary<string, string> {{"filekey", "filename"}});
+			Assert.AreEqual(result.Data.Metadata.Count, 1);
+			Assert.IsFalse(result.Data.Metadata.Except(new Dictionary<string, string> {{"filekey", "filename"}}).Any());
 			Assert.IsNotNull(result.Data.Timestamp);
 
 			LogAndSaveResult(result, GetType().Name + ".ShouldUploadFileWithCompleteDetails");
 		}
 
-		[TestMethod, Timeout(10000)]
+		[TestMethod, Timeout(30000)]
 		public void ShouldUploadUrlResource()
 		{
 			var param = UploadParameter.CreateForUrlResourceUpload(
@@ -166,7 +157,7 @@ namespace IntegrationTests.Upload
 			LogAndSaveResult(result, GetType().Name + ".ShouldUploadUrlResource");
 		}
 
-		[TestMethod, Timeout(10000), Ignore]
+		[TestMethod, Timeout(30000)]
 		public void ShouldUploadUrlResourceWithCompleteDetails()
 		{
 			var param = UploadParameter.CreateForUrlResourceUpload(
@@ -182,7 +173,8 @@ namespace IntegrationTests.Upload
 			Assert.IsNotNull(result.Data.DataHash);
 			Assert.AreEqual(result.Data.Description, "url description");
 			Assert.AreEqual(result.Data.Name, "url name");
-			Assert.AreEqual(result.Data.Metadata, new Dictionary<string, string> {{"urlkey", "urlval"}});
+			Assert.AreEqual(result.Data.Metadata.Count, 1);
+			Assert.IsFalse(result.Data.Metadata.Except(new Dictionary<string, string> {{"urlkey", "urlval"}}).Any());
 			Assert.IsNotNull(result.Data.Timestamp);
 
 			LogAndSaveResult(result, GetType().Name + ".ShouldUploadUrlResourceWithCompleteDetails");
@@ -209,7 +201,7 @@ namespace IntegrationTests.Upload
 			LogAndSaveResult(result, GetType().Name + ".ShouldUploadFilesAsZip");
 		}
 
-		[TestMethod, Timeout(10000), Ignore]
+		[TestMethod, Timeout(10000)]
 		public void ShouldUploadFilesAsZipWithCompleteDetails()
 		{
 			var param = UploadParameter.CreateForFilesAsZipUpload(
@@ -225,7 +217,8 @@ namespace IntegrationTests.Upload
 			Assert.IsNotNull(result.Data.DataHash);
 			Assert.AreEqual(result.Data.Description, "zip description");
 			Assert.AreEqual(result.Data.Name, "zip name");
-			Assert.AreEqual(result.Data.Metadata, new Dictionary<string, string> {{"zipkey", "zipvalue"}});
+			Assert.AreEqual(result.Data.Metadata.Count, 1);
+			Assert.IsFalse(result.Data.Metadata.Except(new Dictionary<string, string> {{"zipkey", "zipvalue"}}).Any());
 			Assert.IsNotNull(result.Data.Timestamp);
 
 			LogAndSaveResult(result, GetType().Name + ".ShouldUploadFilesAsZipWithCompleteDetails");
@@ -251,7 +244,7 @@ namespace IntegrationTests.Upload
 			LogAndSaveResult(result, GetType().Name + ".ShouldUploadString");
 		}
 
-		[TestMethod, Timeout(10000), Ignore]
+		[TestMethod, Timeout(10000)]
 		public void ShouldUploadStringWithCompleteDetails()
 		{
 			var param = UploadParameter.CreateForStringUpload(
@@ -267,7 +260,8 @@ namespace IntegrationTests.Upload
 			Assert.IsNotNull(result.Data.DataHash);
 			Assert.AreEqual(result.Data.Description, "string description");
 			Assert.AreEqual(result.Data.Name, "string name");
-			Assert.AreEqual(result.Data.Metadata, new Dictionary<string, string> {{"keystring", "valstring"}});
+			Assert.AreEqual(result.Data.Metadata.Count, 1);
+			Assert.IsFalse(result.Data.Metadata.Except(new Dictionary<string, string> {{"keystring", "valstring"}}).Any());
 			Assert.IsNotNull(result.Data.Timestamp);
 
 			LogAndSaveResult(result, GetType().Name + ".ShouldUploadStringWithCompleteDetails");
@@ -293,7 +287,7 @@ namespace IntegrationTests.Upload
 			LogAndSaveResult(result, GetType().Name + ".ShouldUploadPath");
 		}
 
-		[TestMethod, Timeout(10000), Ignore]
+		[TestMethod, Timeout(10000)]
 		public void ShouldUploadPathWithCompleteDetails()
 		{
 			var param = UploadParameter.CreateForPathUpload(
@@ -309,7 +303,8 @@ namespace IntegrationTests.Upload
 			Assert.IsNotNull(result.Data.DataHash);
 			Assert.AreEqual(result.Data.Description, "path description");
 			Assert.AreEqual(result.Data.Name, "path name");
-			Assert.AreEqual(result.Data.Metadata, new Dictionary<string, string> {{"pathkey", "pathval"}});
+			Assert.AreEqual(result.Data.Metadata.Count, 1);
+			Assert.IsFalse(result.Data.Metadata.Except(new Dictionary<string, string> {{"pathkey", "pathval"}}).Any());
 			Assert.IsNotNull(result.Data.Timestamp);
 
 			LogAndSaveResult(result, GetType().Name + ".ShouldUploadPathWithCompleteDetails");

@@ -101,7 +101,7 @@ namespace IO.Proximax.SDK.Services
                 BlockchainNetworkConnection.NetworkType,
                 Deadline.CreateHours(transactionDeadline),
                 recipientAddress,
-                new List<Mosaic> {new Mosaic(Xem.CreateRelative(1).MosaicId, 1)},
+                new List<Mosaic> {new Mosaic(new MosaicId("prx:xpx"), 1)},
                 message);
         }
 

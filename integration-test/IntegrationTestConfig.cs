@@ -5,10 +5,11 @@ namespace IntegrationTests
 {
     public static class IntegrationTestConfig
     {
-        public const string IpfsApiHost = "ipfs1.dev.proximax.io";
+//        public const string IpfsApiHost = "ipfs1.dev.proximax.io";
+        public const string IpfsApiHost = "localhost";
         public const int IpfsApiPort = 5001;
         public const HttpProtocol IpfsApiProtocol = HttpProtocol.Http;
-        public const string BlockchainApiHost = "privatetest2.proximax.io";
+        public const string BlockchainApiHost = "privatetest1.proximax.io";
         public const int BlockchainApiPort = 3000;
         public const HttpProtocol BlockchainApiProtocol = HttpProtocol.Http;
         public static readonly string BlockchainRestApiUrl = new UriBuilder("http", BlockchainApiHost, BlockchainApiPort).Uri.AbsoluteUri;
