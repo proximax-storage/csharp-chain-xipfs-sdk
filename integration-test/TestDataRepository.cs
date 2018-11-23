@@ -16,9 +16,9 @@ namespace IntegrationTests
             Console.WriteLine("data hash: " + result.Data.DataHash);
             Console.WriteLine("data digest: " + result.Data.Digest);
 
-            TestDataMap.TryAdd(testMethodName + ".transactionHash", result.TransactionHash);
-            TestDataMap.TryAdd(testMethodName + ".dataHash", result.Data.DataHash);
-            TestDataMap.TryAdd(testMethodName + ".digest", result.Data.Digest);
+            TestDataMap[testMethodName + ".transactionHash"] = result.TransactionHash;
+            TestDataMap[testMethodName + ".dataHash"] = result.Data.DataHash;
+            TestDataMap[testMethodName + ".digest"] = result.Data.Digest;
 
             SaveTestDataMap();
         }

@@ -114,12 +114,12 @@ namespace IO.Proximax.SDK.Services
             var recipient = transferTransaction.Address;
             var retrieverAddress = Address.CreateFromPublicKey(retrieverKeyPair.PublicKeyString, NetworkType);
 
-            if (retrieverAddress.Equals(recipient))
+            if (retrieverAddress.Plain.Equals(recipient.Plain))
             {
                 // retriever is the recipient, use sender public key
                 return senderAccount.PublicKey;
             }
-            else if (retrieverAddress.Equals(senderAccount.Address))
+            else if (retrieverAddress.Plain.Equals(senderAccount.Address.Plain))
             {
                 // retriever is the sender, use recipient public key
                 return AccountClient.GetPublicKey(recipient.Plain);
