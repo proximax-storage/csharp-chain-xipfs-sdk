@@ -5,8 +5,8 @@ namespace IntegrationTests
 {
     public static class IntegrationTestConfig
     {
-//        public const string IpfsApiHost = "ipfs1.dev.proximax.io";
-        public const string IpfsApiHost = "localhost";
+        public const string IpfsApiHost = "ipfs1.dev.proximax.io";
+//        public const string IpfsApiHost = "localhost";
         public const int IpfsApiPort = 5001;
         public const HttpProtocol IpfsApiProtocol = HttpProtocol.Http;
         public const string BlockchainApiHost = "privatetest1.proximax.io";

@@ -23,7 +23,7 @@ namespace IntegrationTests.Upload
 			);
 		}
 
-		[TestMethod, Timeout(10000)]
+		[TestMethod, Timeout(30000)]
 		public void ShouldUploadWithEnabledDetectContentType() {
 			var param = UploadParameter
 				.CreateForFileUpload(TestPdfFile2, PrivateKey1)
@@ -38,7 +38,7 @@ namespace IntegrationTests.Upload
 			LogAndSaveResult(result, GetType().Name + ".shouldUploadWithEnabledDetectContentType");
 		}
 
-		[TestMethod, Timeout(10000)]
+		[TestMethod, Timeout(30000)]
 		public void ShouldUploadWithDisabledDetectContentType() {
 			var param = UploadParameter
 				.CreateForFileUpload(TestPdfFile2, PrivateKey1)

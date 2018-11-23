@@ -28,7 +28,7 @@ namespace IntegrationTests.Upload
 			);
 		}
 
-		[TestMethod, Timeout(10000)]
+		[TestMethod, Timeout(30000)]
 		public void ShouldUploadAsynchronouslyWithoutCallback() {
 			var param = UploadParameter
 				.CreateForFileUpload(TestPdfFile2, PrivateKey1)
@@ -42,7 +42,7 @@ namespace IntegrationTests.Upload
 			Assert.IsTrue(asyncTask.IsDone());
 		}
 
-		[TestMethod, Timeout(10000)]
+		[TestMethod, Timeout(30000)]
 		public void ShouldUploadAsynchronouslyWithSuccessCallback() {
 			var param = UploadParameter
 				.CreateForFileUpload(TestTextFile, PrivateKey1)

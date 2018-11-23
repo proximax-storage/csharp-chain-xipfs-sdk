@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using IO.Proximax.SDK.Connections;
 using IO.Proximax.SDK.Download;
 using IO.Proximax.SDK.Exceptions;
@@ -44,215 +47,223 @@ namespace IntegrationTests.Download
 		    Assert.AreEqual(result.Version, SchemaVersion);
 		}
 	
-//	@Test
-//	public void shouldDownloadByteArray() throws IOException {
-//		final String transactionHash = TestDataRepository
-//				.getData("Uploader_integrationTest.shouldUploadByteArray", "transactionHash");
-//		final DownloadParameter param = DownloadParameter.create(transactionHash).build();
-//
-//		final DownloadResult result = unitUnderTest.download(param);
-//
-//		assertThat(result, is(notNullValue()));
-//		assertThat(result.getTransactionHash(), is(transactionHash));
-//		assertThat(result.getData().getByteStream(), is(notNullValue()));
-//		assertThat(IOUtils.toByteArray(result.getData().getByteStream()), is(notNullValue()));
-//		assertThat(result.getData().getContentType(), is(nullValue()));
-//		assertThat(result.getData().getDataHash(), is(notNullValue()));
-//		assertThat(result.getData().getDescription(), is(nullValue()));
-//		assertThat(result.getData().getName(), is(nullValue()));
-//		assertThat(result.getData().getMetadata(), is(emptyMap()));
-//		assertThat(result.getData().getTimestamp(), is(notNullValue()));
-//	}
-//
-//	@Test
-//	public void shouldDownloadByteArrayWithCompleteDetails() throws IOException {
-//		final String transactionHash = TestDataRepository
-//				.getData("Uploader_integrationTest.shouldUploadByteArrayWithCompleteDetails", "transactionHash");
-//		final DownloadParameter param = DownloadParameter.create(transactionHash).build();
-//
-//		final DownloadResult result = unitUnderTest.download(param);
-//
-//		assertThat(result, is(notNullValue()));
-//		assertThat(result.getTransactionHash(), is(transactionHash));
-//		assertThat(result.getData().getByteStream(), is(notNullValue()));
-//		assertThat(IOUtils.toByteArray(result.getData().getByteStream()), is(notNullValue()));
-//		assertThat(result.getData().getContentType(), is("application/pdf"));
-//		assertThat(result.getData().getDataHash(), is(notNullValue()));
-//		assertThat(result.getData().getDescription(), is("byte array description"));
-//		assertThat(result.getData().getName(), is("byte array"));
-//		assertThat(result.getData().getMetadata(), is(singletonMap("bytearraykey", "bytearrayval")));
-//		assertThat(result.getData().getTimestamp(), is(notNullValue()));
-//	}
-//
-//	@Test
-//	public void shouldDownloadFile() throws IOException {
-//		final String transactionHash = TestDataRepository
-//				.getData("Uploader_integrationTest.shouldUploadFile", "transactionHash");
-//		final DownloadParameter param = DownloadParameter.create(transactionHash).build();
-//
-//		final DownloadResult result = unitUnderTest.download(param);
-//
-//		assertThat(result, is(notNullValue()));
-//		assertThat(result.getTransactionHash(), is(transactionHash));
-//		assertThat(result.getData().getByteStream(), is(notNullValue()));
-//		assertThat(IOUtils.toByteArray(result.getData().getByteStream()), is(notNullValue()));
-//		assertThat(result.getData().getContentType(), is(nullValue()));
-//		assertThat(result.getData().getDataHash(), is(notNullValue()));
-//		assertThat(result.getData().getDescription(), is(nullValue()));
-//		assertThat(result.getData().getName(), is("test_text_file.txt"));
-//		assertThat(result.getData().getMetadata(), is(emptyMap()));
-//		assertThat(result.getData().getTimestamp(), is(notNullValue()));
-//	}
-//
-//	@Test
-//	public void shouldDownloadFileWithCompleteDetails() throws IOException {
-//		final String transactionHash = TestDataRepository
-//				.getData("Uploader_integrationTest.shouldUploadFileWithCompleteDetails", "transactionHash");
-//		final DownloadParameter param = DownloadParameter.create(transactionHash).build();
-//
-//		final DownloadResult result = unitUnderTest.download(param);
-//
-//		assertThat(result, is(notNullValue()));
-//		assertThat(result.getTransactionHash(), is(transactionHash));
-//		assertThat(result.getData().getByteStream(), is(notNullValue()));
-//		assertThat(IOUtils.toByteArray(result.getData().getByteStream()), is(notNullValue()));
-//		assertThat(result.getData().getContentType(), is("text/plain"));
-//		assertThat(result.getData().getDataHash(), is(notNullValue()));
-//		assertThat(result.getData().getDescription(), is("file description"));
-//		assertThat(result.getData().getName(), is("file name"));
-//		assertThat(result.getData().getMetadata(), is(singletonMap("filekey", "filename")));
-//		assertThat(result.getData().getTimestamp(), is(notNullValue()));
-//	}
-//
-//	@Test
-//	public void shouldDownloadUrlResource() throws IOException {
-//		final String transactionHash = TestDataRepository
-//				.getData("Uploader_integrationTest.shouldUploadUrlResource", "transactionHash");
-//		final DownloadParameter param = DownloadParameter.create(transactionHash).build();
-//
-//		final DownloadResult result = unitUnderTest.download(param);
-//
-//		assertThat(result, is(notNullValue()));
-//		assertThat(result.getTransactionHash(), is(transactionHash));
-//		assertThat(result.getData().getByteStream(), is(notNullValue()));
-//		assertThat(IOUtils.toByteArray(result.getData().getByteStream()), is(notNullValue()));
-//		assertThat(result.getData().getContentType(), is(nullValue()));
-//		assertThat(result.getData().getDataHash(), is(notNullValue()));
-//		assertThat(result.getData().getDescription(), is(nullValue()));
-//		assertThat(result.getData().getName(), is(nullValue()));
-//		assertThat(result.getData().getMetadata(), is(emptyMap()));
-//		assertThat(result.getData().getTimestamp(), is(notNullValue()));
-//	}
-//
-//	@Test
-//	public void shouldDownloadUrlResourceWithCompleteDetails() throws IOException {
-//		final String transactionHash = TestDataRepository
-//				.getData("Uploader_integrationTest.shouldUploadUrlResourceWithCompleteDetails", "transactionHash");
-//		final DownloadParameter param = DownloadParameter.create(transactionHash).build();
-//
-//		final DownloadResult result = unitUnderTest.download(param);
-//
-//		assertThat(result, is(notNullValue()));
-//		assertThat(result.getTransactionHash(), is(transactionHash));
-//		assertThat(result.getData().getByteStream(), is(notNullValue()));
-//		assertThat(IOUtils.toByteArray(result.getData().getByteStream()), is(notNullValue()));
-//		assertThat(result.getData().getContentType(), is("image/png"));
-//		assertThat(result.getData().getDataHash(), is(notNullValue()));
-//		assertThat(result.getData().getDescription(), is("url description"));
-//		assertThat(result.getData().getName(), is("url name"));
-//		assertThat(result.getData().getMetadata(), is(singletonMap("urlkey", "urlval")));
-//		assertThat(result.getData().getTimestamp(), is(notNullValue()));
-//	}
-//
-//	@Test
-//	public void shouldDownloadFilesAsZip() throws IOException {
-//		final String transactionHash = TestDataRepository
-//				.getData("Uploader_integrationTest.shouldUploadFilesAsZip", "transactionHash");
-//		final DownloadParameter param = DownloadParameter.create(transactionHash).build();
-//
-//		final DownloadResult result = unitUnderTest.download(param);
-//
-//		assertThat(result, is(notNullValue()));
-//		assertThat(result.getTransactionHash(), is(transactionHash));
-//		assertThat(result.getData().getByteStream(), is(notNullValue()));
-//		assertThat(IOUtils.toByteArray(result.getData().getByteStream()), is(notNullValue()));
-//		assertThat(result.getData().getContentType(), is("application/zip"));
-//		assertThat(result.getData().getDataHash(), is(notNullValue()));
-//		assertThat(result.getData().getDescription(), is(nullValue()));
-//		assertThat(result.getData().getName(), is(nullValue()));
-//		assertThat(result.getData().getMetadata(), is(emptyMap()));
-//		assertThat(result.getData().getTimestamp(), is(notNullValue()));
-//	}
-//
-//	@Test
-//	public void shouldDownloadFilesAsZipWithCompleteDetails() throws IOException {
-//		final String transactionHash = TestDataRepository
-//				.getData("Uploader_integrationTest.shouldUploadFilesAsZipWithCompleteDetails", "transactionHash");
-//		final DownloadParameter param = DownloadParameter.create(transactionHash).build();
-//
-//		final DownloadResult result = unitUnderTest.download(param);
-//
-//		assertThat(result, is(notNullValue()));
-//		assertThat(result.getTransactionHash(), is(transactionHash));
-//		assertThat(result.getData().getByteStream(), is(notNullValue()));
-//		assertThat(IOUtils.toByteArray(result.getData().getByteStream()), is(notNullValue()));
-//		assertThat(result.getData().getContentType(), is("application/zip"));
-//		assertThat(result.getData().getDataHash(), is(notNullValue()));
-//		assertThat(result.getData().getDescription(), is("zip description"));
-//		assertThat(result.getData().getName(), is("zip name"));
-//		assertThat(result.getData().getMetadata(), is(singletonMap("zipkey", "zipvalue")));
-//		assertThat(result.getData().getTimestamp(), is(notNullValue()));
-//	}
-//
-//	@Test
-//	public void shouldDownloadString() throws IOException {
-//		final String transactionHash = TestDataRepository
-//				.getData("Uploader_integrationTest.shouldUploadString", "transactionHash");
-//		final DownloadParameter param = DownloadParameter.create(transactionHash).build();
-//
-//		final DownloadResult result = unitUnderTest.download(param);
-//
-//		assertThat(result, is(notNullValue()));
-//		assertThat(result.getTransactionHash(), is(transactionHash));
-//		assertThat(result.getData().getByteStream(), is(notNullValue()));
-//		assertThat(IOUtils.toByteArray(result.getData().getByteStream()), is(notNullValue()));
-//		assertThat(result.getData().getContentType(), is(nullValue()));
-//		assertThat(result.getData().getDataHash(), is(notNullValue()));
-//		assertThat(result.getData().getDescription(), is(nullValue()));
-//		assertThat(result.getData().getName(), is(nullValue()));
-//		assertThat(result.getData().getMetadata(), is(emptyMap()));
-//		assertThat(result.getData().getTimestamp(), is(notNullValue()));
-//	}
-//
-//	@Test
-//	public void shouldDownloadStringpWithCompleteDetails() throws IOException {
-//		final String transactionHash = TestDataRepository
-//				.getData("Uploader_integrationTest.shouldUploadStringWithCompleteDetails", "transactionHash");
-//		final DownloadParameter param = DownloadParameter.create(transactionHash).build();
-//
-//		final DownloadResult result = unitUnderTest.download(param);
-//
-//		assertThat(result, is(notNullValue()));
-//		assertThat(result.getTransactionHash(), is(transactionHash));
-//		assertThat(result.getData().getByteStream(), is(notNullValue()));
-//		assertThat(IOUtils.toByteArray(result.getData().getByteStream()), is(notNullValue()));
-//		assertThat(result.getData().getContentType(), is("text/plain"));
-//		assertThat(result.getData().getDataHash(), is(notNullValue()));
-//		assertThat(result.getData().getDescription(), is("string description"));
-//		assertThat(result.getData().getName(), is("string name"));
-//		assertThat(result.getData().getMetadata(), is(singletonMap("keystring", "valstring")));
-//		assertThat(result.getData().getTimestamp(), is(notNullValue()));
-//	}
-//
-//	@Test(expected = DownloadForDataTypeNotSupportedException.class)
-//	public void failDownloadOnGetByteStreamWhenContentTypeIsDirectory() {
-//		final String transactionHash = TestDataRepository
-//				.getData("Uploader_integrationTest.shouldUploadPath", "transactionHash");
-//		final DownloadParameter param = DownloadParameter.create(transactionHash).build();
-//
-//		final DownloadResult download = unitUnderTest.download(param);
-//		download.getData().getByteStream();
-//	}
-//
+	    [TestMethod, Timeout(10000)]
+		public void ShouldDownloadByteArray() {
+			var transactionHash = TestDataRepository
+					.GetData("UploaderIntegrationTests.ShouldUploadByteArray", "transactionHash");
+			var param = DownloadParameter.Create(transactionHash).Build();
+	
+			var result = UnitUnderTest.Download(param);
+	
+		    Assert.IsNotNull(result);
+		    Assert.AreEqual(result.TransactionHash, transactionHash);
+		    Assert.IsNotNull(result.Data);
+		    Assert.IsNotNull(result.Data.GetByteStream());
+		    Assert.IsNull(result.Data.ContentType);
+		    Assert.IsNotNull(result.Data.DataHash);
+		    Assert.IsNull(result.Data.Description);
+		    Assert.IsNull(result.Data.Name);
+		    Assert.IsNotNull(result.Data.Metadata);
+		    Assert.AreEqual(result.Data.Metadata.Count, 0);
+		    Assert.IsNotNull(result.Data.Timestamp);
+		}
+
+	    [TestMethod, Timeout(10000)]
+		public void ShouldDownloadByteArrayWithCompleteDetails() {
+			var transactionHash = TestDataRepository
+					.GetData("UploaderIntegrationTests.ShouldUploadByteArrayWithCompleteDetails", "transactionHash");
+			var param = DownloadParameter.Create(transactionHash).Build();
+	
+			var result = UnitUnderTest.Download(param);
+	
+		    Assert.IsNotNull(result);
+		    Assert.AreEqual(result.TransactionHash, transactionHash);
+		    Assert.IsNotNull(result.Data);
+		    Assert.IsNotNull(result.Data.GetByteStream());
+		    Assert.AreEqual(result.Data.ContentType, "text/plain");
+		    Assert.IsNotNull(result.Data.DataHash);
+		    Assert.AreEqual(result.Data.Description, "byte array description");
+		    Assert.AreEqual(result.Data.Name, "byte array");
+		    Assert.IsNotNull(result.Data.Metadata);
+		    Assert.AreEqual(result.Data.Metadata.Count, 1);
+		    Assert.IsFalse(result.Data.Metadata.Except(new Dictionary<string, string> {{"bytearraykey", "bytearrayval"}}).Any());
+		    Assert.IsNotNull(result.Data.Timestamp);
+		}
+
+	    [TestMethod, Timeout(10000)]
+	    public void ShouldDownloadFile() {
+		    var transactionHash = TestDataRepository
+			    .GetData("UploaderIntegrationTests.ShouldUploadFile", "transactionHash");
+		    var param = DownloadParameter.Create(transactionHash).Build();
+	
+		    var result = UnitUnderTest.Download(param);
+	
+		    Assert.IsNotNull(result);
+		    Assert.AreEqual(result.TransactionHash, transactionHash);
+		    Assert.IsNotNull(result.Data);
+		    Assert.IsNotNull(result.Data.GetByteStream());
+		    Assert.IsNull(result.Data.ContentType);
+		    Assert.IsNotNull(result.Data.DataHash);
+		    Assert.IsNull(result.Data.Description);
+		    Assert.AreEqual(result.Data.Name, "test_text_file.txt");
+		    Assert.IsNotNull(result.Data.Metadata);
+		    Assert.AreEqual(result.Data.Metadata.Count, 0);
+		    Assert.IsNotNull(result.Data.Timestamp);
+	    }
+
+	    [TestMethod, Timeout(10000)]
+	    public void ShouldDownloadFileWithCompleteDetails() {
+		    var transactionHash = TestDataRepository
+			    .GetData("UploaderIntegrationTests.ShouldUploadFileWithCompleteDetails", "transactionHash");
+		    var param = DownloadParameter.Create(transactionHash).Build();
+	
+		    var result = UnitUnderTest.Download(param);
+	
+		    Assert.IsNotNull(result);
+		    Assert.AreEqual(result.TransactionHash, transactionHash);
+		    Assert.IsNotNull(result.Data);
+		    Assert.IsNotNull(result.Data.GetByteStream());
+		    Assert.AreEqual(result.Data.ContentType, "text/plain");
+		    Assert.IsNotNull(result.Data.DataHash);
+		    Assert.AreEqual(result.Data.Description, "file description");
+		    Assert.AreEqual(result.Data.Name, "file name");
+		    Assert.AreEqual(result.Data.Metadata.Count, 1);
+		    Assert.IsFalse(result.Data.Metadata.Except(new Dictionary<string, string> {{"filekey", "filename"}}).Any());
+		    Assert.IsNotNull(result.Data.Timestamp);
+	    }
+
+	    [TestMethod, Timeout(10000)]
+	    public void ShouldDownloadUrlResource() {
+		    var transactionHash = TestDataRepository
+			    .GetData("UploaderIntegrationTests.ShouldUploadUrlResource", "transactionHash");
+		    var param = DownloadParameter.Create(transactionHash).Build();
+	
+		    var result = UnitUnderTest.Download(param);
+	
+		    Assert.IsNotNull(result);
+		    Assert.AreEqual(result.TransactionHash, transactionHash);
+		    Assert.IsNotNull(result.Data);
+		    Assert.IsNotNull(result.Data.GetByteStream());
+		    Assert.IsNull(result.Data.ContentType);
+		    Assert.IsNotNull(result.Data.DataHash);
+		    Assert.IsNull(result.Data.Description);
+		    Assert.IsNull(result.Data.Name);
+		    Assert.IsNotNull(result.Data.Metadata);
+		    Assert.AreEqual(result.Data.Metadata.Count, 0);
+		    Assert.IsNotNull(result.Data.Timestamp);
+	    }
+
+	    [TestMethod, Timeout(10000)]
+	    public void ShouldDownloadUrlResourceWithCompleteDetails() {
+		    var transactionHash = TestDataRepository
+			    .GetData("UploaderIntegrationTests.ShouldUploadUrlResourceWithCompleteDetails", "transactionHash");
+		    var param = DownloadParameter.Create(transactionHash).Build();
+	
+		    var result = UnitUnderTest.Download(param);
+	
+		    Assert.IsNotNull(result);
+		    Assert.AreEqual(result.TransactionHash, transactionHash);
+		    Assert.IsNotNull(result.Data);
+		    Assert.IsNotNull(result.Data.GetByteStream());
+		    Assert.AreEqual(result.Data.ContentType, "image/png");
+		    Assert.IsNotNull(result.Data.DataHash);
+		    Assert.AreEqual(result.Data.Description, "url description");
+		    Assert.AreEqual(result.Data.Name, "url name");
+		    Assert.AreEqual(result.Data.Metadata.Count, 1);
+		    Assert.IsFalse(result.Data.Metadata.Except(new Dictionary<string, string> {{"urlkey", "urlval"}}).Any());
+		    Assert.IsNotNull(result.Data.Timestamp);
+	    }
+
+	    [TestMethod, Timeout(10000)]
+	    public void ShouldDownloadFilesAsZip() {
+		    var transactionHash = TestDataRepository
+			    .GetData("UploaderIntegrationTests.ShouldUploadFilesAsZip", "transactionHash");
+		    var param = DownloadParameter.Create(transactionHash).Build();
+	
+		    var result = UnitUnderTest.Download(param);
+	
+		    Assert.IsNotNull(result);
+		    Assert.AreEqual(result.TransactionHash, transactionHash);
+		    Assert.IsNotNull(result.Data);
+		    Assert.IsNotNull(result.Data.GetByteStream());
+		    Assert.AreEqual(result.Data.ContentType, "application/zip");
+		    Assert.IsNotNull(result.Data.DataHash);
+		    Assert.IsNull(result.Data.Description);
+		    Assert.IsNull(result.Data.Name);
+		    Assert.AreEqual(result.Data.Metadata.Count, 0);
+		    Assert.IsNotNull(result.Data.Timestamp);
+	    }
+
+	    [TestMethod, Timeout(10000)]
+	    public void ShouldDownloadFilesAsZipWithCompleteDetails() {
+		    var transactionHash = TestDataRepository
+			    .GetData("UploaderIntegrationTests.ShouldUploadFilesAsZipWithCompleteDetails", "transactionHash");
+		    var param = DownloadParameter.Create(transactionHash).Build();
+	
+		    var result = UnitUnderTest.Download(param);
+	
+		    Assert.IsNotNull(result);
+		    Assert.AreEqual(result.TransactionHash, transactionHash);
+		    Assert.IsNotNull(result.Data);
+		    Assert.IsNotNull(result.Data.GetByteStream());
+		    Assert.AreEqual(result.Data.ContentType, "application/zip");
+		    Assert.IsNotNull(result.Data.DataHash);
+		    Assert.AreEqual(result.Data.Description, "zip description");
+		    Assert.AreEqual(result.Data.Name, "zip name");
+		    Assert.AreEqual(result.Data.Metadata.Count, 1);
+		    Assert.IsFalse(result.Data.Metadata.Except(new Dictionary<string, string> {{"zipkey", "zipvalue"}}).Any());
+		    Assert.IsNotNull(result.Data.Timestamp);
+	    }
+	    
+	    [TestMethod, Timeout(10000)]
+	    public void ShouldDownloadString() {
+		    var transactionHash = TestDataRepository
+			    .GetData("UploaderIntegrationTests.ShouldUploadString", "transactionHash");
+		    var param = DownloadParameter.Create(transactionHash).Build();
+	
+		    var result = UnitUnderTest.Download(param);
+	
+		    Assert.IsNotNull(result);
+		    Assert.AreEqual(result.TransactionHash, transactionHash);
+		    Assert.IsNotNull(result.Data);
+		    Assert.IsNotNull(result.Data.GetByteStream());
+		    Assert.IsNull(result.Data.ContentType);
+		    Assert.IsNotNull(result.Data.DataHash);
+		    Assert.IsNull(result.Data.Description);
+		    Assert.IsNull(result.Data.Name);
+		    Assert.AreEqual(result.Data.Metadata.Count, 0);
+		    Assert.IsNotNull(result.Data.Timestamp);
+	    }
+	    
+	    [TestMethod, Timeout(10000)]
+	    public void ShouldDownloadStringWithCompleteDetails() {
+		    var transactionHash = TestDataRepository
+			    .GetData("UploaderIntegrationTests.ShouldUploadStringWithCompleteDetails", "transactionHash");
+		    var param = DownloadParameter.Create(transactionHash).Build();
+	
+		    var result = UnitUnderTest.Download(param);
+	
+		    Assert.IsNotNull(result);
+		    Assert.AreEqual(result.TransactionHash, transactionHash);
+		    Assert.IsNotNull(result.Data);
+		    Assert.IsNotNull(result.Data.GetByteStream());
+		    Assert.AreEqual(result.Data.ContentType, "text/plain");
+		    Assert.IsNotNull(result.Data.DataHash);
+		    Assert.AreEqual(result.Data.Description, "string description");
+		    Assert.AreEqual(result.Data.Name, "string name");
+		    Assert.AreEqual(result.Data.Metadata.Count, 1);
+		    Assert.IsFalse(result.Data.Metadata.Except(new Dictionary<string, string> {{"keystring", "valstring"}}).Any());
+		    Assert.IsNotNull(result.Data.Timestamp);
+	    }
+
+	    [TestMethod, Timeout(10000), ExpectedException(typeof(NotSupportedException))]
+	    public void FailDownloadOnGetByteStreamWhenContentTypeIsDirectory() {
+		    var transactionHash = TestDataRepository
+			    .GetData("UploaderIntegrationTests.ShouldUploadPath", "transactionHash");
+		    var param = DownloadParameter.Create(transactionHash).Build();
+	
+		    var result = UnitUnderTest.Download(param);
+		    result.Data.GetByteStream();
+	    }
     }
 }
