@@ -1,7 +1,6 @@
-﻿using System;
-using System.IO;
-using io.nem2.sdk.Model.Accounts;
+﻿using System.IO;
 using IO.Proximax.SDK.Ciphers;
+using IO.Proximax.SDK.Models;
 using static IO.Proximax.SDK.Utils.ParameterValidationUtils;
 
 // TODO
@@ -10,7 +9,7 @@ namespace IO.Proximax.SDK.PrivacyStrategies
     public sealed class NemKeysPrivacyStrategy : IPrivacyStrategy
     {
         private BlockchainKeysCipherEncryptor BlockchainKeysCipherEncryptor { get; set; }
-        private KeyPair KeyPairOfPrivateKey { get; set; }
+        private string PrivateKey { get; set; }
         private string PublicKey { get; set; }
 
         internal NemKeysPrivacyStrategy(BlockchainKeysCipherEncryptor blockchainKeysCipherEncryptor,
@@ -20,20 +19,20 @@ namespace IO.Proximax.SDK.PrivacyStrategies
             CheckParameter(publicKey != null, "public key is required");
 
             BlockchainKeysCipherEncryptor = blockchainKeysCipherEncryptor;
-            KeyPairOfPrivateKey = KeyPair.CreateFromPrivateKey(privateKey);
+            PrivateKey = privateKey;
             PublicKey = publicKey;
         }
 
-        public override int GetPrivacyType() => (int) Models.PrivacyType.NemKeys;
+        public override int GetPrivacyType() => (int) PrivacyType.NemKeys;
 
         public override Stream DecryptStream(Stream data)
         {
-            throw new NotImplementedException();
+            return BlockchainKeysCipherEncryptor.DecryptStream(data, PrivateKey, PublicKey);
         }
 
         public override Stream EncryptStream(Stream data)
         {
-            throw new NotImplementedException();
+            return BlockchainKeysCipherEncryptor.EncryptStream(data, PrivateKey, PublicKey);
         }
 
         public static NemKeysPrivacyStrategy Create(string privateKey, string publicKey)

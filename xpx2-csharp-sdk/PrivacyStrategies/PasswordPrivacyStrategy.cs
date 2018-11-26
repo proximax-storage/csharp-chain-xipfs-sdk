@@ -26,12 +26,12 @@ namespace IO.Proximax.SDK.PrivacyStrategies
 
         public override Stream DecryptStream(Stream data)
         {
-            throw new NotImplementedException();
+            return PbeCipherEncryptor.DecryptStream(data, Password);
         }
 
         public override Stream EncryptStream(Stream data)
         {
-            throw new NotImplementedException();
+            return PbeCipherEncryptor.EncryptStream(data, Password);
         }
         
         public static PasswordPrivacyStrategy Create(string password) {
