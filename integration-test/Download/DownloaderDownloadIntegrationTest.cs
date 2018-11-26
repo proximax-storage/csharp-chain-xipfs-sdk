@@ -178,6 +178,48 @@ namespace IntegrationTests.Download
 	    }
 
 	    [TestMethod, Timeout(10000)]
+	    public void ShouldDownloadStream() {
+		    var transactionHash = TestDataRepository
+			    .GetData("UploaderIntegrationTests.ShouldUploadStream", "transactionHash");
+		    var param = DownloadParameter.Create(transactionHash).Build();
+	
+		    var result = UnitUnderTest.Download(param);
+	
+		    Assert.IsNotNull(result);
+		    Assert.AreEqual(result.TransactionHash, transactionHash);
+		    Assert.IsNotNull(result.Data);
+		    Assert.AreEqual(new StreamReader(result.Data.GetByteStream()).ReadToEnd(), new StreamReader(new FileStream(TestTextFile, FileMode.Open, FileAccess.Read)).ReadToEnd());
+		    Assert.IsNull(result.Data.ContentType);
+		    Assert.IsNotNull(result.Data.DataHash);
+		    Assert.IsNull(result.Data.Description);
+		    Assert.IsNull(result.Data.Name);
+		    Assert.IsNotNull(result.Data.Metadata);
+		    Assert.AreEqual(result.Data.Metadata.Count, 0);
+		    Assert.IsNotNull(result.Data.Timestamp);
+	    }
+
+	    [TestMethod, Timeout(10000)]
+	    public void ShouldDownloadStreamWithCompleteDetails() {
+		    var transactionHash = TestDataRepository
+			    .GetData("UploaderIntegrationTests.ShouldUploadStreamWithCompleteDetails", "transactionHash");
+		    var param = DownloadParameter.Create(transactionHash).Build();
+	
+		    var result = UnitUnderTest.Download(param);
+	
+		    Assert.IsNotNull(result);
+		    Assert.AreEqual(result.TransactionHash, transactionHash);
+		    Assert.IsNotNull(result.Data);
+		    Assert.AreEqual(new StreamReader(result.Data.GetByteStream()).ReadToEnd(), new StreamReader(new FileStream(TestTextFile, FileMode.Open, FileAccess.Read)).ReadToEnd());
+		    Assert.AreEqual(result.Data.ContentType, "text/plain");
+		    Assert.IsNotNull(result.Data.DataHash);
+		    Assert.AreEqual(result.Data.Description, "stream description");
+		    Assert.AreEqual(result.Data.Name, "stream name");
+		    Assert.AreEqual(result.Data.Metadata.Count, 1);
+		    Assert.IsFalse(result.Data.Metadata.Except(new Dictionary<string, string> {{"streamkey", "streamval"}}).Any());
+		    Assert.IsNotNull(result.Data.Timestamp);
+	    }
+
+	    [TestMethod, Timeout(10000)]
 	    public void ShouldDownloadFilesAsZip() {
 		    var transactionHash = TestDataRepository
 			    .GetData("UploaderIntegrationTests.ShouldUploadFilesAsZip", "transactionHash");

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -178,6 +179,51 @@ namespace IntegrationTests.Upload
 			Assert.IsNotNull(result.Data.Timestamp);
 
 			LogAndSaveResult(result, GetType().Name + ".ShouldUploadUrlResourceWithCompleteDetails");
+		}
+		
+		[TestMethod, Timeout(30000)]
+		public void ShouldUploadStream()
+		{
+			var param = UploadParameter.CreateForStreamUpload(
+					() => new FileStream(TestTextFile, FileMode.Open, FileAccess.Read), PrivateKey1)
+				.Build();
+
+			var result = UnitUnderTest.Upload(param);
+
+			Assert.IsNotNull(result);
+			Assert.IsNotNull(result.TransactionHash);
+			Assert.IsNull(result.Data.ContentType);
+			Assert.IsNotNull(result.Data.DataHash);
+			Assert.IsNull(result.Data.Description);
+			Assert.IsNull(result.Data.Name);
+			Assert.IsNull(result.Data.Metadata);
+			Assert.IsNotNull(result.Data.Timestamp);
+
+			LogAndSaveResult(result, GetType().Name + ".ShouldUploadStream");
+		}
+
+		[TestMethod, Timeout(30000)]
+		public void ShouldUploadStreamWithCompleteDetails()
+		{
+			var param = UploadParameter.CreateForStreamUpload(
+					StreamParameterData.Create(() => new FileStream(TestTextFile, FileMode.Open, FileAccess.Read), 
+						"stream description",
+						"stream name", "text/plain", new Dictionary<string, string> {{"streamkey", "streamval"}}),
+					PrivateKey1)
+				.Build();
+
+			var result = UnitUnderTest.Upload(param);
+
+			Assert.IsNotNull(result.TransactionHash);
+			Assert.AreEqual(result.Data.ContentType, "text/plain");
+			Assert.IsNotNull(result.Data.DataHash);
+			Assert.AreEqual(result.Data.Description, "stream description");
+			Assert.AreEqual(result.Data.Name, "stream name");
+			Assert.AreEqual(result.Data.Metadata.Count, 1);
+			Assert.IsFalse(result.Data.Metadata.Except(new Dictionary<string, string> {{"streamkey", "streamval"}}).Any());
+			Assert.IsNotNull(result.Data.Timestamp);
+
+			LogAndSaveResult(result, GetType().Name + ".ShouldUploadStreamWithCompleteDetails");
 		}
 
 		[TestMethod, Timeout(10000)]

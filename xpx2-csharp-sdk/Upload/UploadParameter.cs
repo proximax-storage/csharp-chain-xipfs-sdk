@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using io.nem2.sdk.Model.Mosaics;
 using IO.Proximax.SDK.PrivacyStrategies;
 using static IO.Proximax.SDK.Models.Constants;
@@ -65,6 +67,14 @@ namespace IO.Proximax.SDK.Upload
         }
 
         public static UploadParameterBuilder CreateForUrlResourceUpload(UrlResourceParameterData parameterData, string signerPrivateKey) {
+            return new UploadParameterBuilder(parameterData, signerPrivateKey);
+        }
+
+        public static UploadParameterBuilder CreateForStreamUpload(Func<Stream> streamSupplier, string signerPrivateKey) {
+            return CreateForStreamUpload(StreamParameterData.Create(streamSupplier), signerPrivateKey);
+        }
+
+        public static UploadParameterBuilder CreateForStreamUpload(StreamParameterData parameterData, string signerPrivateKey) {
             return new UploadParameterBuilder(parameterData, signerPrivateKey);
         }
 

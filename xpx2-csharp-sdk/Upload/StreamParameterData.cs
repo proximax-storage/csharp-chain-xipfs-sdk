@@ -13,7 +13,7 @@ namespace IO.Proximax.SDK.Upload
             IDictionary<string, string> metadata)
             : base(description, name, contentType, metadata)
         {
-            CheckParameter(streamSupplier != streamSupplier, "file is required");
+            CheckParameter(streamSupplier != null, "streamSupplier is required");
 
             StreamSupplier = streamSupplier;
         }

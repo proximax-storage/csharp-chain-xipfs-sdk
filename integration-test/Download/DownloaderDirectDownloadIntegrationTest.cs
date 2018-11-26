@@ -75,6 +75,18 @@ namespace IntegrationTests.Download
 	    }
 
 	    [TestMethod, Timeout(10000)]
+	    public void ShouldDownloadStreamByTransactionHash() {
+		    var transactionHash = TestDataRepository
+			    .GetData("UploaderIntegrationTests.ShouldUploadStream", "transactionHash");
+		    var param = DirectDownloadParameter.CreateFromTransactionHash(transactionHash).Build();
+	
+		    var result = UnitUnderTest.DirectDownload(param);
+	
+		    Assert.IsNotNull(result);
+			Assert.AreEqual(new StreamReader(result).ReadToEnd(), new StreamReader(new FileStream(TestTextFile, FileMode.Open, FileAccess.Read)).ReadToEnd());
+	    }
+
+	    [TestMethod, Timeout(10000)]
 	    public void ShouldDownloadFilesAsZipByTransactionHash() {
 		    var transactionHash = TestDataRepository
 			    .GetData("UploaderIntegrationTests.ShouldUploadFilesAsZip", "transactionHash");
@@ -150,6 +162,18 @@ namespace IntegrationTests.Download
 	
 		    Assert.IsNotNull(result);
 			Assert.AreEqual(new StreamReader(result).ReadToEnd(), new StreamReader(new FileStream(TestImagePngFile, FileMode.Open, FileAccess.Read)).ReadToEnd());
+	    }
+
+	    [TestMethod, Timeout(10000)]
+	    public void ShouldDownloadStreamByDataHash() {
+		    var dataHash = TestDataRepository
+			    .GetData("UploaderIntegrationTests.ShouldUploadStream", "dataHash");
+		    var param = DirectDownloadParameter.CreateFromDataHash(dataHash).Build();
+	
+		    var result = UnitUnderTest.DirectDownload(param);
+	
+		    Assert.IsNotNull(result);
+			Assert.AreEqual(new StreamReader(result).ReadToEnd(), new StreamReader(new FileStream(TestTextFile, FileMode.Open, FileAccess.Read)).ReadToEnd());
 	    }
 
 	    [TestMethod, Timeout(10000)]
