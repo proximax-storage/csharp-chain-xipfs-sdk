@@ -18,7 +18,7 @@
   <ItemGroup>
     <PackageReference Include="Ipfs.Api" Version="0.23.2" />
     <PackageReference Include="Mime-Detective" Version="0.0.6-beta4" />
-    <PackageReference Include="proximax.nem2.sdk" Version="0.8.8" />
+    <PackageReference Include="proximax.nem2.sdk" Version="0.8.9" />
   </ItemGroup>
 
 </Project>

@@ -127,9 +127,7 @@ namespace IntegrationTests.Upload
 			}
 			finally
 			{
-				// Unable to read data from the transport connection:
-				// An existing connection was forcibly closed by the remote host.
-//				listener?.Close();
+				listener?.Close();
 			}
 		}
 	}
