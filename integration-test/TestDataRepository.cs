@@ -33,7 +33,7 @@ namespace IntegrationTests
                 StreamWriter streamWriter = null;
                 try
                 {
-                    streamWriter = new StreamWriter(new FileStream(TestDataJsonFile, FileMode.OpenOrCreate));
+                    streamWriter = new StreamWriter(new FileStream(TestDataJsonFile, FileMode.OpenOrCreate, FileAccess.Write));
                     streamWriter.WriteLine(JsonUtils.ToJson(TestDataMap));
                 }
                 catch (Exception e)
@@ -53,7 +53,7 @@ namespace IntegrationTests
                 StreamReader streamReader = null;
                 try
                 {
-                    streamReader = new StreamReader(new FileStream(TestDataJsonFile, FileMode.Open));
+                    streamReader = new StreamReader(new FileStream(TestDataJsonFile, FileMode.Open, FileAccess.Read));
                     return JsonUtils.FromJson<Dictionary<string, string>>(streamReader.ReadToEndAsync().Result);
                 }
                 catch (IOException e)

@@ -46,7 +46,7 @@ namespace IO.Proximax.SDK.Download
             return DoCompleteDownload(downloadParam).Wait();
         }
 
-        public AsyncTask DownloadAsync(DownloadParameter downloadParam, AsyncCallbacks<DownloadResult> asyncCallbacks)
+        public AsyncTask DownloadAsync(DownloadParameter downloadParam, AsyncCallbacks<DownloadResult> asyncCallbacks = null)
         {
             CheckParameter(downloadParam != null, "downloadParam is required");
 
@@ -65,7 +65,7 @@ namespace IO.Proximax.SDK.Download
         }
 
         public AsyncTask DirectDownloadAsync(DirectDownloadParameter directDownloadParameter,
-            AsyncCallbacks<Stream> asyncCallbacks)
+            AsyncCallbacks<Stream> asyncCallbacks = null)
         {
             CheckParameter(directDownloadParameter != null, "directDownloadParameter is required");
 

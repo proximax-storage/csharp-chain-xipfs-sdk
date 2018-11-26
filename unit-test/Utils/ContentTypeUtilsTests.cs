@@ -21,7 +21,7 @@ namespace UnitTests.Utils
         [TestMethod, Timeout(10000), Ignore] 
         public void ShouldIdentifyContentTypeBasedOnDataWhenText()
         {
-            var result = UnitUnderTest.DetectContentType(new FileStream(TestTextFile, FileMode.Open)).Wait();
+            var result = UnitUnderTest.DetectContentType(new FileStream(TestTextFile, FileMode.Open, FileAccess.Read)).Wait();
 
             Assert.IsNotNull(result);
             Assert.AreEqual(result, "text/plain");
@@ -31,7 +31,7 @@ namespace UnitTests.Utils
         [TestMethod, Timeout(10000), Ignore] 
         public void ShouldIdentifyContentTypeBasedOnDataWhenHtml()
         {
-            var result = UnitUnderTest.DetectContentType(new FileStream(TestHtmlFile, FileMode.Open)).Wait();
+            var result = UnitUnderTest.DetectContentType(new FileStream(TestHtmlFile, FileMode.Open, FileAccess.Read)).Wait();
 
             Assert.IsNotNull(result);
             Assert.AreEqual(result, "text/html");
@@ -39,7 +39,7 @@ namespace UnitTests.Utils
         
         [TestMethod, Timeout(10000)]
         public void ShouldIdentifyContentTypeBasedOnDataWhenMov() {
-            var result = UnitUnderTest.DetectContentType(new FileStream(TestVideoMovFile, FileMode.Open)).Wait();
+            var result = UnitUnderTest.DetectContentType(new FileStream(TestVideoMovFile, FileMode.Open, FileAccess.Read)).Wait();
 
             Assert.IsNotNull(result);
             //Assert.AreEqual(result, "video/quicktime");
@@ -49,7 +49,7 @@ namespace UnitTests.Utils
         [TestMethod, Timeout(10000)]
         public void ShouldIdentifyContentTypeBasedOnDataWhenImage()
         {
-            var result = UnitUnderTest.DetectContentType(new FileStream(TestImagePngFile, FileMode.Open)).Wait();
+            var result = UnitUnderTest.DetectContentType(new FileStream(TestImagePngFile, FileMode.Open, FileAccess.Read)).Wait();
 
             Assert.IsNotNull(result);
             Assert.AreEqual(result, "image/png");
@@ -58,7 +58,7 @@ namespace UnitTests.Utils
         [TestMethod, Timeout(10000)]
         public void ShouldIdentifyContentTypeBasedOnDataWhenPdf()
         {
-            var result = UnitUnderTest.DetectContentType(new FileStream(TestPdfFile2, FileMode.Open)).Wait();
+            var result = UnitUnderTest.DetectContentType(new FileStream(TestPdfFile2, FileMode.Open, FileAccess.Read)).Wait();
 
             Assert.IsNotNull(result);
             Assert.AreEqual(result, "application/pdf");
@@ -67,7 +67,7 @@ namespace UnitTests.Utils
         [TestMethod, Timeout(10000)]
         public void shouldIdentifyContentTypeBasedOnDataWhenZip()
         {
-            var result = UnitUnderTest.DetectContentType(new FileStream(TestZipFile, FileMode.Open)).Wait();
+            var result = UnitUnderTest.DetectContentType(new FileStream(TestZipFile, FileMode.Open, FileAccess.Read)).Wait();
 
             Assert.IsNotNull(result);
 //            Assert.AreEqual(result, "application/zip");
@@ -77,7 +77,7 @@ namespace UnitTests.Utils
         [TestMethod, Timeout(10000)]
         public void ShouldIdentifyContentTypeBasedOnDataWhenMp3()
         {
-            var result = UnitUnderTest.DetectContentType(new FileStream(TestAudioMp3File, FileMode.Open)).Wait();
+            var result = UnitUnderTest.DetectContentType(new FileStream(TestAudioMp3File, FileMode.Open, FileAccess.Read)).Wait();
 
             Assert.IsNotNull(result);
             Assert.AreEqual(result, "audio/mpeg");
@@ -86,7 +86,7 @@ namespace UnitTests.Utils
         [TestMethod, Timeout(10000)]
         public void ShouldIdentifyContentTypeBasedOnDataWhenMp4()
         {
-            var result = UnitUnderTest.DetectContentType(new FileStream(TestVideoMp4File, FileMode.Open)).Wait();
+            var result = UnitUnderTest.DetectContentType(new FileStream(TestVideoMp4File, FileMode.Open, FileAccess.Read)).Wait();
 
             Assert.IsNotNull(result);
 //            Assert.AreEqual(result, "video/mp4");

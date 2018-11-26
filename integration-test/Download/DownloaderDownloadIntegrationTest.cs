@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text;
 using IO.Proximax.SDK.Connections;
 using IO.Proximax.SDK.Download;
 using IO.Proximax.SDK.Exceptions;
@@ -8,6 +10,7 @@ using IO.Proximax.SDK.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using static IntegrationTests.IntegrationTestConfig;
 using static IO.Proximax.SDK.Models.Constants;
+using static IntegrationTests.TestSupport.Constants;
 
 namespace IntegrationTests.Download
 {
@@ -58,7 +61,7 @@ namespace IntegrationTests.Download
 		    Assert.IsNotNull(result);
 		    Assert.AreEqual(result.TransactionHash, transactionHash);
 		    Assert.IsNotNull(result.Data);
-		    Assert.IsNotNull(result.Data.GetByteStream());
+		    Assert.AreEqual(new StreamReader(result.Data.GetByteStream()).ReadToEnd(), Encoding.UTF8.GetString(TestByteArray));
 		    Assert.IsNull(result.Data.ContentType);
 		    Assert.IsNotNull(result.Data.DataHash);
 		    Assert.IsNull(result.Data.Description);
@@ -79,7 +82,7 @@ namespace IntegrationTests.Download
 		    Assert.IsNotNull(result);
 		    Assert.AreEqual(result.TransactionHash, transactionHash);
 		    Assert.IsNotNull(result.Data);
-		    Assert.IsNotNull(result.Data.GetByteStream());
+		    Assert.AreEqual(new StreamReader(result.Data.GetByteStream()).ReadToEnd(), Encoding.UTF8.GetString(TestByteArray));
 		    Assert.AreEqual(result.Data.ContentType, "text/plain");
 		    Assert.IsNotNull(result.Data.DataHash);
 		    Assert.AreEqual(result.Data.Description, "byte array description");
@@ -101,7 +104,7 @@ namespace IntegrationTests.Download
 		    Assert.IsNotNull(result);
 		    Assert.AreEqual(result.TransactionHash, transactionHash);
 		    Assert.IsNotNull(result.Data);
-		    Assert.IsNotNull(result.Data.GetByteStream());
+		    Assert.AreEqual(new StreamReader(result.Data.GetByteStream()).ReadToEnd(), new StreamReader(new FileStream(TestTextFile, FileMode.Open, FileAccess.Read)).ReadToEnd());
 		    Assert.IsNull(result.Data.ContentType);
 		    Assert.IsNotNull(result.Data.DataHash);
 		    Assert.IsNull(result.Data.Description);
@@ -122,7 +125,7 @@ namespace IntegrationTests.Download
 		    Assert.IsNotNull(result);
 		    Assert.AreEqual(result.TransactionHash, transactionHash);
 		    Assert.IsNotNull(result.Data);
-		    Assert.IsNotNull(result.Data.GetByteStream());
+		    Assert.AreEqual(new StreamReader(result.Data.GetByteStream()).ReadToEnd(), new StreamReader(new FileStream(TestTextFile, FileMode.Open, FileAccess.Read)).ReadToEnd());
 		    Assert.AreEqual(result.Data.ContentType, "text/plain");
 		    Assert.IsNotNull(result.Data.DataHash);
 		    Assert.AreEqual(result.Data.Description, "file description");
@@ -143,7 +146,7 @@ namespace IntegrationTests.Download
 		    Assert.IsNotNull(result);
 		    Assert.AreEqual(result.TransactionHash, transactionHash);
 		    Assert.IsNotNull(result.Data);
-		    Assert.IsNotNull(result.Data.GetByteStream());
+		    Assert.AreEqual(new StreamReader(result.Data.GetByteStream()).ReadToEnd(), new StreamReader(new FileStream(TestImagePngFile, FileMode.Open, FileAccess.Read)).ReadToEnd());
 		    Assert.IsNull(result.Data.ContentType);
 		    Assert.IsNotNull(result.Data.DataHash);
 		    Assert.IsNull(result.Data.Description);
@@ -164,7 +167,7 @@ namespace IntegrationTests.Download
 		    Assert.IsNotNull(result);
 		    Assert.AreEqual(result.TransactionHash, transactionHash);
 		    Assert.IsNotNull(result.Data);
-		    Assert.IsNotNull(result.Data.GetByteStream());
+		    Assert.AreEqual(new StreamReader(result.Data.GetByteStream()).ReadToEnd(), new StreamReader(new FileStream(TestImagePngFile, FileMode.Open, FileAccess.Read)).ReadToEnd());
 		    Assert.AreEqual(result.Data.ContentType, "image/png");
 		    Assert.IsNotNull(result.Data.DataHash);
 		    Assert.AreEqual(result.Data.Description, "url description");
@@ -185,7 +188,7 @@ namespace IntegrationTests.Download
 		    Assert.IsNotNull(result);
 		    Assert.AreEqual(result.TransactionHash, transactionHash);
 		    Assert.IsNotNull(result.Data);
-		    Assert.IsNotNull(result.Data.GetByteStream());
+		    Assert.IsNotNull(new StreamReader(result.Data.GetByteStream()).ReadToEnd());
 		    Assert.AreEqual(result.Data.ContentType, "application/zip");
 		    Assert.IsNotNull(result.Data.DataHash);
 		    Assert.IsNull(result.Data.Description);
@@ -205,7 +208,7 @@ namespace IntegrationTests.Download
 		    Assert.IsNotNull(result);
 		    Assert.AreEqual(result.TransactionHash, transactionHash);
 		    Assert.IsNotNull(result.Data);
-		    Assert.IsNotNull(result.Data.GetByteStream());
+		    Assert.IsNotNull(new StreamReader(result.Data.GetByteStream()).ReadToEnd());
 		    Assert.AreEqual(result.Data.ContentType, "application/zip");
 		    Assert.IsNotNull(result.Data.DataHash);
 		    Assert.AreEqual(result.Data.Description, "zip description");
@@ -226,7 +229,7 @@ namespace IntegrationTests.Download
 		    Assert.IsNotNull(result);
 		    Assert.AreEqual(result.TransactionHash, transactionHash);
 		    Assert.IsNotNull(result.Data);
-		    Assert.IsNotNull(result.Data.GetByteStream());
+		    Assert.AreEqual(new StreamReader(result.Data.GetByteStream()).ReadToEnd(), TestString);
 		    Assert.IsNull(result.Data.ContentType);
 		    Assert.IsNotNull(result.Data.DataHash);
 		    Assert.IsNull(result.Data.Description);
@@ -246,7 +249,7 @@ namespace IntegrationTests.Download
 		    Assert.IsNotNull(result);
 		    Assert.AreEqual(result.TransactionHash, transactionHash);
 		    Assert.IsNotNull(result.Data);
-		    Assert.IsNotNull(result.Data.GetByteStream());
+		    Assert.AreEqual(new StreamReader(result.Data.GetByteStream()).ReadToEnd(), TestString);
 		    Assert.AreEqual(result.Data.ContentType, "text/plain");
 		    Assert.IsNotNull(result.Data.DataHash);
 		    Assert.AreEqual(result.Data.Description, "string description");
