@@ -1,8 +1,11 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reactive.Linq;
 using io.nem2.sdk.Infrastructure.Listeners;
 using io.nem2.sdk.Model.Accounts;
 using io.nem2.sdk.Model.Blockchain;
+using io.nem2.sdk.Model.Mosaics;
 using io.nem2.sdk.Model.Transactions;
 using IO.Proximax.SDK.Connections;
 using IO.Proximax.SDK.Exceptions;
@@ -47,6 +50,14 @@ namespace IntegrationTests.Upload
 			LogAndSaveResult(result, GetType().Name + ".ShouldUploadWithSignerAsRecipientByDefault");
 		}
 
+		[TestMethod, Timeout(10000), ExpectedException(typeof(UploadFailureException))]
+		public void FailUploadWhenSignerHasNoFunds() {
+			var param = UploadParameter
+				.CreateForStringUpload(TestString, "345247BEEE41EAF0658530777EC49BA2F74CA849B6A24FDF558B83ABEB8D9DC8")
+				.Build();
+
+			UnitUnderTest.Upload(param);
+		}
 
 		[TestMethod, Timeout(60000)]
 		public void ShouldUploadWithRecipientPublicKeyProvided() {
@@ -96,19 +107,47 @@ namespace IntegrationTests.Upload
 
 			Assert.IsNotNull(result);
 			Assert.IsNotNull(result.TransactionHash);
+			var transaction = WaitForTransactionConfirmation(PrivateKey1, result.TransactionHash);
+			Assert.IsTrue(transaction is TransferTransaction);
+			Assert.IsTrue((transaction as TransferTransaction).Deadline.GetInstant() <= Deadline.CreateHours(2).GetInstant());
 			
 			LogAndSaveResult(result, GetType().Name + ".ShouldUploadWithTransactionDeadlinesProvided");
 		}
 		
-		[TestMethod, Timeout(10000), ExpectedException(typeof(UploadFailureException))]
-		public void FailUploadWhenSignerHasNoFunds() {
+		[TestMethod, Timeout(30000)]
+		public void ShouldUploadWithTransactionMosaicsProvided() {
 			var param = UploadParameter
-				.CreateForStringUpload(TestString, "345247BEEE41EAF0658530777EC49BA2F74CA849B6A24FDF558B83ABEB8D9DC8")
+				.CreateForStringUpload(TestString, PrivateKey1)
+				.WithTransactionMosaics(new List<Mosaic> {new Mosaic(new MosaicId("prx:xpx"), 2)})
 				.Build();
 
-			UnitUnderTest.Upload(param);
-		}
+			var result = UnitUnderTest.Upload(param);
 
+			var transaction = WaitForTransactionConfirmation(PrivateKey1, result.TransactionHash);
+			Assert.IsTrue(transaction is TransferTransaction);
+			Assert.AreEqual((transaction as TransferTransaction).Mosaics.Count, 1);
+			Assert.AreEqual((transaction as TransferTransaction).Mosaics[0].MosaicId, new MosaicId("prx:xpx"));
+			Assert.AreEqual((transaction as TransferTransaction).Mosaics[0].Amount, (ulong) 2);
+			
+			LogAndSaveResult(result, GetType().Name + ".ShouldUploadWithTransactionMosaicsProvided");
+		}
+		
+		[TestMethod, Timeout(30000)]
+		public void ShouldUploadWithEmptyTransactionMosaicsProvided() {
+			var param = UploadParameter
+				.CreateForStringUpload(TestString, PrivateKey1)
+				.WithTransactionMosaics(new List<Mosaic>())
+				.Build();
+
+			var result = UnitUnderTest.Upload(param);
+
+			var transaction = WaitForTransactionConfirmation(PrivateKey1, result.TransactionHash);
+			Assert.IsTrue(transaction is TransferTransaction);
+			Assert.AreEqual((transaction as TransferTransaction).Mosaics.Count, 0);
+			
+			LogAndSaveResult(result, GetType().Name + ".ShouldUploadWithEmptyTransactionMosaicsProvided");
+		}
+		
 		private Transaction WaitForTransactionConfirmation(string senderPrivateKey, string transactionHash) {
 			var listener = new Listener(new Uri(BlockchainRestApiUrl).Host);
 			try

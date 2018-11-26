@@ -69,7 +69,7 @@ namespace IO.Proximax.SDK.Upload
         private IObservable<string> CreateAndAnnounceTransaction(UploadParameter uploadParam, ProximaxMessagePayloadModel messagePayload) {
             return BlockchainTransactionService.CreateAndAnnounceTransaction(
                 messagePayload, uploadParam.SignerPrivateKey, uploadParam.RecipientPublicKey, uploadParam.RecipientAddress,
-                uploadParam.TransactionDeadline, uploadParam.UseBlockchainSecureMessage);
+                uploadParam.TransactionDeadline, uploadParam.TransactionMosaics, uploadParam.UseBlockchainSecureMessage);
         }
 
         private UploadResult CreateUploadResult(ProximaxMessagePayloadModel messagePayload, string transactionHash) {

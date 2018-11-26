@@ -62,7 +62,7 @@ namespace IO.Proximax.SDK.Services
         public IObservable<string> CreateAndAnnounceTransaction(ProximaxMessagePayloadModel messagePayload,
             string signerPrivateKey,
             string recipientPublicKey, string recipientAddress, int transactionDeadline,
-            bool useBlockchainSecureMessage)
+            List<Mosaic> transactionMosaics, bool useBlockchainSecureMessage)
         {
             CheckParameter(signerPrivateKey != null, "signerPrivateKey is required");
             CheckParameter(messagePayload != null, "messagePayload is required");
@@ -70,7 +70,7 @@ namespace IO.Proximax.SDK.Services
             var message = BlockchainMessageService.CreateMessage(messagePayload, signerPrivateKey,
                 recipientPublicKey, recipientAddress, useBlockchainSecureMessage);
             var recipient = GetRecipient(signerPrivateKey, recipientPublicKey, recipientAddress);
-            var transaction = CreateTransaction(recipient, transactionDeadline, message);
+            var transaction = CreateTransaction(recipient, transactionDeadline, transactionMosaics, message);
             var signedTransaction = NemUtils.SignTransaction(signerPrivateKey, transaction);
 
             TransactionClient.Announce(signedTransaction, NemUtils.GetAddressFromPrivateKey(signerPrivateKey));
@@ -95,13 +95,13 @@ namespace IO.Proximax.SDK.Services
         }
 
         private TransferTransaction CreateTransaction(Address recipientAddress, int transactionDeadline,
-            IMessage message)
+            List<Mosaic> transactionMosaics, IMessage message)
         {
             return TransferTransaction.Create(
                 BlockchainNetworkConnection.NetworkType,
                 Deadline.CreateHours(transactionDeadline),
                 recipientAddress,
-                new List<Mosaic> {new Mosaic(new MosaicId("prx:xpx"), 1)},
+                transactionMosaics ?? new List<Mosaic> {new Mosaic(new MosaicId("prx:xpx"), 1)},
                 message);
         }
 

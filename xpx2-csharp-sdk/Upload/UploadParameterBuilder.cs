@@ -1,4 +1,6 @@
-﻿using io.nem2.sdk.Model.Accounts;
+﻿using System.Collections.Generic;
+using io.nem2.sdk.Model.Accounts;
+using io.nem2.sdk.Model.Mosaics;
 using IO.Proximax.SDK.PrivacyStrategies;
 using static IO.Proximax.SDK.Utils.ParameterValidationUtils;
 
@@ -13,6 +15,7 @@ namespace IO.Proximax.SDK.Upload
         private bool? ComputeDigest { get; set; }
         private bool? DetectContentType { get; set; }
         private int? TransactionDeadline { get; set; }
+        private List<Mosaic> TransactionMosaics { get; set; }
         private bool? UseBlockchainSecureMessage { get; set; }
         private IPrivacyStrategy PrivacyStrategy { get; set; }
 
@@ -68,6 +71,12 @@ namespace IO.Proximax.SDK.Upload
             return this;
         }
 
+        public UploadParameterBuilder WithTransactionMosaics(List<Mosaic> transactionMosaics)
+        {
+            TransactionMosaics = transactionMosaics;
+            return this;
+        }
+
         public UploadParameterBuilder WithPrivacyStrategy(IPrivacyStrategy privacyStrategy)
         {
             PrivacyStrategy = privacyStrategy;
@@ -96,6 +105,7 @@ namespace IO.Proximax.SDK.Upload
                 ComputeDigest ?? false, 
                 DetectContentType ?? false,
                 TransactionDeadline ?? 12, 
+                TransactionMosaics,
                 UseBlockchainSecureMessage ?? false, 
                 PrivacyStrategy ?? PlainPrivacyStrategy.Create());        
         }

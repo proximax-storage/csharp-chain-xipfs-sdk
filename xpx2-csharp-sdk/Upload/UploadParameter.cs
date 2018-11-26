@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using io.nem2.sdk.Model.Mosaics;
 using IO.Proximax.SDK.PrivacyStrategies;
 using static IO.Proximax.SDK.Models.Constants;
 
@@ -13,12 +14,14 @@ namespace IO.Proximax.SDK.Upload
         public bool ComputeDigest { get; }
         public bool DetectContentType { get; }
         public int TransactionDeadline { get; }
+        public List<Mosaic> TransactionMosaics { get; }
         public bool UseBlockchainSecureMessage { get; }
         public IPrivacyStrategy PrivacyStrategy { get; }
         public string Version { get; }
 
         public UploadParameter(IUploadParameterData data, string signerPrivateKey, string recipientPublicKey, 
-            string recipientAddress, bool computeDigest, bool detectContentType, int transactionDeadline, bool useBlockchainSecureMessage, IPrivacyStrategy privacyStrategy)
+            string recipientAddress, bool computeDigest, bool detectContentType, int transactionDeadline, 
+            List<Mosaic> transactionMosaics, bool useBlockchainSecureMessage, IPrivacyStrategy privacyStrategy)
         {
             Data = data;
             SignerPrivateKey = signerPrivateKey;
@@ -27,6 +30,7 @@ namespace IO.Proximax.SDK.Upload
             ComputeDigest = computeDigest;
             DetectContentType = detectContentType;
             TransactionDeadline = transactionDeadline;
+            TransactionMosaics = transactionMosaics;
             UseBlockchainSecureMessage = useBlockchainSecureMessage;
             PrivacyStrategy = privacyStrategy;
             Version = SchemaVersion;
