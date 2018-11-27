@@ -30,19 +30,21 @@ namespace IntegrationTests
         private static void SaveTestDataMap() {
             lock (TestDataJsonFile)
             {
-                StreamWriter streamWriter = null;
-                try
+                using (var streamWriter =
+                    new StreamWriter(new FileStream(TestDataJsonFile, FileMode.OpenOrCreate, FileAccess.Write)))
                 {
-                    streamWriter = new StreamWriter(new FileStream(TestDataJsonFile, FileMode.OpenOrCreate, FileAccess.Write));
-                    streamWriter.WriteLine(JsonUtils.ToJson(TestDataMap));
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
-                }
-                finally
-                {
-                    streamWriter?.Close();
+                    try
+                    {
+                        streamWriter.WriteLine(TestDataMap.ToJson());
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e);
+                    }
+                    finally
+                    {
+                        streamWriter?.Close();
+                    }
                 }
             }
         }
@@ -50,20 +52,22 @@ namespace IntegrationTests
         private static Dictionary<string, string> LoadTestDataMap() {
             lock (TestDataJsonFile)
             {
-                StreamReader streamReader = null;
-                try
+                using (var streamReader =
+                    new StreamReader(new FileStream(TestDataJsonFile, FileMode.Open, FileAccess.Read)))
                 {
-                    streamReader = new StreamReader(new FileStream(TestDataJsonFile, FileMode.Open, FileAccess.Read));
-                    return JsonUtils.FromJson<Dictionary<string, string>>(streamReader.ReadToEndAsync().Result);
-                }
-                catch (IOException e)
-                {
-                    Console.WriteLine(e);
-                    return new Dictionary<string, string>();
-                }
-                finally
-                {
-                    streamReader?.Close();
+                    try
+                    {
+                        return streamReader.ReadToEndAsync().Result.FromJson<Dictionary<string, string>>();
+                    }
+                    catch (IOException e)
+                    {
+                        Console.WriteLine(e);
+                        return new Dictionary<string, string>();
+                    }
+                    finally
+                    {
+                        streamReader?.Close();
+                    }
                 }
             }
         }

@@ -3,6 +3,7 @@ using System.Security.Cryptography;
 using IO.Proximax.SDK.Connections;
 using IO.Proximax.SDK.Download;
 using IO.Proximax.SDK.Models;
+using IO.Proximax.SDK.Utils;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using static IntegrationTests.IntegrationTestConfig;
 using static IntegrationTests.TestSupport.Constants;
@@ -36,7 +37,7 @@ namespace IntegrationTests.Download
 	
 		    Assert.IsNotNull(result);
 		    Assert.AreEqual(result.PrivacyType, (int) PrivacyType.Plain);
-		    Assert.AreEqual(new StreamReader(result.Data.GetByteStream()).ReadToEnd(), new StreamReader(new FileStream(TestTextFile, FileMode.Open, FileAccess.Read)).ReadToEnd());
+		    Assert.AreEqual(result.Data.GetByteStream().GetContentAsString(), new FileStream(TestTextFile, FileMode.Open, FileAccess.Read).GetContentAsString());
 	    }
 	    
 	    [TestMethod, Timeout(10000)]
@@ -51,7 +52,7 @@ namespace IntegrationTests.Download
 	
 		    Assert.IsNotNull(result);
 		    Assert.AreEqual(result.PrivacyType, (int) PrivacyType.NemKeys);
-		    Assert.AreEqual(new StreamReader(result.Data.GetByteStream()).ReadToEnd(), new StreamReader(new FileStream(TestTextFile, FileMode.Open, FileAccess.Read)).ReadToEnd());
+		    Assert.AreEqual(result.Data.GetByteStream().GetContentAsString(), new FileStream(TestTextFile, FileMode.Open, FileAccess.Read).GetContentAsString());
 	    }
 	    
 	    [TestMethod, Timeout(10000), ExpectedException(typeof(CryptographicException))]
@@ -64,7 +65,7 @@ namespace IntegrationTests.Download
 	
 		    var result = UnitUnderTest.Download(param);
 	
-		    new StreamReader(result.Data.GetByteStream()).ReadToEnd();
+		    result.Data.GetByteStream().GetContentAsByteArray();
 	    }
 	    
 	    [TestMethod, Timeout(10000)]
@@ -79,7 +80,7 @@ namespace IntegrationTests.Download
 	
 		    Assert.IsNotNull(result);
 		    Assert.AreEqual(result.PrivacyType, (int) PrivacyType.Password);
-		    Assert.AreEqual(new StreamReader(result.Data.GetByteStream()).ReadToEnd(), new StreamReader(new FileStream(TestTextFile, FileMode.Open, FileAccess.Read)).ReadToEnd());
+		    Assert.AreEqual(result.Data.GetByteStream().GetContentAsString(), new FileStream(TestTextFile, FileMode.Open, FileAccess.Read).GetContentAsString());
 	    }
 	    
 	    [TestMethod, Timeout(10000), ExpectedException(typeof(CryptographicException))]
@@ -92,7 +93,7 @@ namespace IntegrationTests.Download
 	
 		    var result = UnitUnderTest.Download(param);
 	
-		    new StreamReader(result.Data.GetByteStream()).ReadToEnd();
+		    result.Data.GetByteStream().GetContentAsByteArray();
 	    }
 	    
    }

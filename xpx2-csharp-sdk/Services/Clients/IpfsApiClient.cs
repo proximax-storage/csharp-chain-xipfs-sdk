@@ -23,8 +23,13 @@ namespace IO.Proximax.SDK.Services.Clients
         {
             CheckParameter(byteStream != null, "byteStream is required");
 
-            return IpfsConnection.Ipfs.FileSystem.AddAsync(byteStream).ToObservable()
-                .Select(node => node.Id.Hash.ToBase58());
+            using (byteStream)
+            {
+                var fileSystemNode = IpfsConnection.Ipfs.FileSystem.AddAsync(byteStream)
+                    .GetAwaiter()
+                    .GetResult();
+                return Observable.Return(fileSystemNode.Id.Hash.ToBase58());
+            }
         }
 
         public override IObservable<string> AddPath(string path)

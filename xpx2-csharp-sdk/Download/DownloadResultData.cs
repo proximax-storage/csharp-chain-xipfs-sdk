@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.IO;
+using System.Text;
 using IO.Proximax.SDK.Models;
+using IO.Proximax.SDK.Utils;
+using static IO.Proximax.SDK.Utils.ParameterValidationUtils;
 
 namespace IO.Proximax.SDK.Download
 {
@@ -30,22 +33,19 @@ namespace IO.Proximax.SDK.Download
             return ByteStreamSupplier.Invoke();
         }
 
-        public string GetContentAsString()
+        public string GetContentAsString(Encoding encoding = null)
         {
-            // TODO
-            throw new NotImplementedException();
+            return GetByteStream().GetContentAsString(encoding);
         }
 
-        public string GetContentAsByteArray()
+        public byte[] GetContentAsByteArray()
         {
-            // TODO
-            throw new NotImplementedException();
+            return GetByteStream().GetContentAsByteArray();
         }
 
         public void SaveToFile(string file)
         {
-            // TODO
-            throw new NotImplementedException();
+            GetByteStream().SaveToFile(file);
         }
     }
 }

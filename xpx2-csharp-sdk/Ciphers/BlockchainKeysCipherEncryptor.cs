@@ -25,15 +25,13 @@ namespace IO.Proximax.SDK.Ciphers
             var key = GetSecretKey(salt, privateKey, publicKey);
             var aes = GetCipherAes(key, iv);
 
-            return
-                new ConcatenatedStream(
-                    new List<Stream>()
-                    {
-                        new MemoryStream(salt),
-                        new MemoryStream(iv),
-                        new CryptoStream(byteStream, aes.CreateEncryptor(), CryptoStreamMode.Read)    
-                    });
-            
+            return new ConcatenatedStream(
+                new List<Stream>()
+                {
+                    new MemoryStream(salt),
+                    new MemoryStream(iv),
+                    new CryptoStream(byteStream, aes.CreateEncryptor(), CryptoStreamMode.Read)    
+                });
         }
         
         public Stream DecryptStream(Stream byteStream, string privateKey, string publicKey)

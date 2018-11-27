@@ -25,8 +25,8 @@ namespace IO.Proximax.SDK.Services
         {
             CheckParameter(transferTransaction != null, "transferTransaction is required");
 
-            var payload = BlockchainMessageService.GetMessagePayload(transferTransaction, accountPrivateKey);
-            return JsonUtils.FromJson<ProximaxMessagePayloadModel>(payload);
+            return  BlockchainMessageService.GetMessagePayload(transferTransaction, accountPrivateKey)
+                .FromJson<ProximaxMessagePayloadModel>();
         }
     }
 }

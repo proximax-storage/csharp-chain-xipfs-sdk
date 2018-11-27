@@ -13,18 +13,15 @@ namespace IO.Proximax.SDK.Services
     public class FileDownloadService
     {
         private IFileRepository FileRepository { get; }
-        private DigestUtils DigestUtils { get; }
 
         public FileDownloadService(IFileStorageConnection fileStorageConnection)
         {
             FileRepository = FileRepositoryFactory.Create(fileStorageConnection);
-            DigestUtils = new DigestUtils();
         }
 
-        internal FileDownloadService(IFileRepository fileRepository, DigestUtils digestUtils)
+        internal FileDownloadService(IFileRepository fileRepository)
         {
             FileRepository = fileRepository;
-            DigestUtils = digestUtils;
         }
 
         public IObservable<Stream> GetByteStream(string dataHash, IPrivacyStrategy privacyStrategy, string digest) {
@@ -41,7 +38,7 @@ namespace IO.Proximax.SDK.Services
         private void ValidateDigest(string digest, string dataHash) {
             if (digest != null) {
                 FileRepository.GetByteStream(dataHash)
-                    .SelectMany(undecryptedStream => DigestUtils.ValidateDigest(undecryptedStream, digest))
+                    .Select(undecryptedStream => undecryptedStream.ValidateDigest(digest))
                     .Wait();
             }
         }

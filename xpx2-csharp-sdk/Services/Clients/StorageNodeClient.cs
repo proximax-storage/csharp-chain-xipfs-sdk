@@ -21,8 +21,11 @@ namespace IO.Proximax.SDK.Services.Clients
         {
             CheckParameter(byteStream != null, "byteStream is required");
 
-            // TODO
-            throw new NotImplementedException();
+            using (byteStream)
+            {
+                // TODO
+                throw new NotImplementedException();
+            }
         }
 
         public override IObservable<string> AddPath(string path)

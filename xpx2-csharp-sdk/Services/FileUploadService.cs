@@ -11,18 +11,10 @@ namespace IO.Proximax.SDK.Services
     public class FileUploadService
     {
         private IFileRepository FileRepository { get; }
-        private DigestUtils DigestUtils { get; }
 
         public FileUploadService(IFileRepository fileRepository)
         {
             FileRepository = fileRepository;
-            DigestUtils = new DigestUtils();
-        }
-
-        internal FileUploadService(IFileRepository fileRepository, DigestUtils digestUtils)
-        {
-            FileRepository = fileRepository;
-            DigestUtils = digestUtils;
         }
 
         public IObservable<FileUploadResponse> UploadByteStream(Func<Stream> byteStreamFunction,
@@ -33,12 +25,11 @@ namespace IO.Proximax.SDK.Services
             var computeDigestToUse = computeDigest ?? false;
             var privacyStrategyToUse = privacyStrategy ?? PlainPrivacyStrategy.Create();
 
-            var digestOb = ComputeDigest(byteStreamFunction, privacyStrategyToUse, computeDigestToUse);
+            var digest = ComputeDigest(byteStreamFunction, privacyStrategyToUse, computeDigestToUse);
             var dataHashOb =
                 FileRepository.AddByteStream(privacyStrategyToUse.EncryptStream(byteStreamFunction?.Invoke()));
 
-            return Observable.Zip(digestOb, dataHashOb,
-                (digest, dataHash) => new FileUploadResponse(dataHash, CurrentTimeMillis(), digest));
+            return dataHashOb.Select(dataHash => new FileUploadResponse(dataHash, CurrentTimeMillis(), digest));
         }
 
         public IObservable<FileUploadResponse> UploadPath(string path)
@@ -49,12 +40,12 @@ namespace IO.Proximax.SDK.Services
                 .Select(dataHash => new FileUploadResponse(dataHash, CurrentTimeMillis()));
         }
 
-        private IObservable<string> ComputeDigest(Func<Stream> byteStreamFunction,
+        private string ComputeDigest(Func<Stream> byteStreamFunction,
             IPrivacyStrategy privacyStrategy, bool computeDigest)
         {
             return computeDigest
-                ? DigestUtils.Digest(privacyStrategy.EncryptStream(byteStreamFunction.Invoke()))
-                : Observable.Return<string>(null);
+                ? privacyStrategy.EncryptStream(byteStreamFunction.Invoke()).Digest()
+                : null;
         }
 
         private long CurrentTimeMillis()

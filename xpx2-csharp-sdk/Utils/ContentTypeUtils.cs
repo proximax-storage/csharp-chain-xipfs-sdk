@@ -1,21 +1,22 @@
-﻿using System;
-using System.IO;
-using System.Reactive.Linq;
+﻿using System.IO;
 using MimeDetective.Extensions;
 using static IO.Proximax.SDK.Utils.ParameterValidationUtils;
 
 //TODO
 namespace IO.Proximax.SDK.Utils
 {
-    public class ContentTypeUtils
+    public static class ContentTypeUtils
     {
 
-        public IObservable<string> DetectContentType(Stream byteStream)
+        public static string DetectContentType(this Stream stream)
         {
-            CheckParameter(byteStream != null, "byteStream is required");
+            CheckParameter(stream != null, "stream is required");
 
-            var contentType = byteStream.GetFileType();
-            return Observable.Return(contentType?.Mime);
+            using (stream)
+            {
+                var contentType = stream.GetFileType();
+                return contentType?.Mime;
+            }
         }
     }
 }

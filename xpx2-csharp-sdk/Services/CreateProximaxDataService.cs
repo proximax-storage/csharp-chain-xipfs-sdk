@@ -14,18 +14,15 @@ namespace IO.Proximax.SDK.Services
     public class CreateProximaxDataService
     {
         private FileUploadService FileUploadService { get; }
-        private ContentTypeUtils ContentTypeUtils { get; }
 
         public CreateProximaxDataService(IFileStorageConnection fileStorageConnection)
         {
             FileUploadService = new FileUploadService(FileRepositoryFactory.Create(fileStorageConnection));
-            ContentTypeUtils = new ContentTypeUtils();
         }
 
-        internal CreateProximaxDataService(FileUploadService fileUploadService, ContentTypeUtils contentTypeUtils)
+        internal CreateProximaxDataService(FileUploadService fileUploadService)
         {
             FileUploadService = fileUploadService;
-            ContentTypeUtils = contentTypeUtils;
         }
 
         public IObservable<ProximaxDataModel> CreateData(UploadParameter uploadParam)
@@ -47,22 +44,21 @@ namespace IO.Proximax.SDK.Services
         private IObservable<ProximaxDataModel> UploadByteStream(UploadParameter uploadParam,
             IByteStreamParameterData byteStreamParamData)
         {
-            var detectedContentTypeOb = DetectContentType(uploadParam, byteStreamParamData);
+            var detectedContentType = DetectContentType(uploadParam, byteStreamParamData);
             var fileUploadResponseOb = FileUploadService.UploadByteStream(byteStreamParamData.GetByteStream,
                 uploadParam.PrivacyStrategy, uploadParam.ComputeDigest);
 
-            return Observable.Zip(fileUploadResponseOb, detectedContentTypeOb,
-                (fileUploadResponse, contentTypeOpt) =>
+            return fileUploadResponseOb.Select(fileUploadResponse =>
                     ProximaxDataModel.Create(byteStreamParamData, fileUploadResponse.DataHash,
-                        fileUploadResponse.Digest, contentTypeOpt, fileUploadResponse.Timestamp));
+                        fileUploadResponse.Digest, detectedContentType, fileUploadResponse.Timestamp));
         }
 
-        private IObservable<string> DetectContentType(UploadParameter uploadParam,
+        private string DetectContentType(UploadParameter uploadParam,
             IByteStreamParameterData byteStreamParamData)
         {
             return uploadParam.DetectContentType && byteStreamParamData.ContentType == null
-                ? ContentTypeUtils.DetectContentType(byteStreamParamData.GetByteStream())
-                : Observable.Return(byteStreamParamData.ContentType);
+                ? byteStreamParamData.GetByteStream().DetectContentType()
+                : byteStreamParamData.ContentType;
         }
 
         private Stream EncryptByteStream(UploadParameter uploadParam, IByteStreamParameterData byteStreamParamData)

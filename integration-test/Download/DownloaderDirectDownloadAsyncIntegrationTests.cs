@@ -6,6 +6,7 @@ using IO.Proximax.SDK.Async;
 using IO.Proximax.SDK.Connections;
 using IO.Proximax.SDK.Download;
 using IO.Proximax.SDK.Models;
+using IO.Proximax.SDK.Utils;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using static IntegrationTests.IntegrationTestConfig;
 
@@ -56,7 +57,7 @@ namespace IntegrationTests.Upload
 			
 			var result = taskCompletionSource.Task.Result;
 			Assert.IsNotNull(result);
-			Assert.IsNotNull(new StreamReader(result).ReadToEnd());
+			Assert.IsNotNull(result.GetContentAsByteArray());
 		}
 
 		[TestMethod, Timeout(10000)]
@@ -99,13 +100,13 @@ namespace IntegrationTests.Upload
 			
 			var result1 = taskCompletionSource1.Task.Result;
 			Assert.IsNotNull(result1);
-			Assert.IsNotNull(new StreamReader(result1).ReadToEnd());
+			Assert.IsNotNull(result1.GetContentAsByteArray());
 			var result2 = taskCompletionSource1.Task.Result;
 			Assert.IsNotNull(result2);
-			Assert.IsNotNull(new StreamReader(result2).ReadToEnd());
+			Assert.IsNotNull(result2.GetContentAsByteArray());
 			var result3 = taskCompletionSource1.Task.Result;
 			Assert.IsNotNull(result3);
-			Assert.IsNotNull(new StreamReader(result3).ReadToEnd());
+			Assert.IsNotNull(result3.GetContentAsByteArray());
 		}
 
 	}

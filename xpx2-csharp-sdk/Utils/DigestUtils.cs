@@ -1,39 +1,38 @@
 ﻿using System;
 using System.IO;
-using System.Reactive.Linq;
 using IO.Proximax.SDK.Exceptions;
 using static IO.Proximax.SDK.Utils.ParameterValidationUtils;
 
 //TODO
 namespace IO.Proximax.SDK.Utils
 {
-    public class DigestUtils
+    public static class DigestUtils
     {
-        public IObservable<string> Digest(Stream byteStream)
+        public static string Digest(this Stream stream)
         {
-            CheckParameter(byteStream != null, "byteStream is required");
+            CheckParameter(stream != null, "stream is required");
 
-            throw new NotImplementedException();
+            using (stream)
+            {
+                throw new NotImplementedException();
+            }
         }
 
-        public IObservable<bool> ValidateDigest(Stream byteStream, string expectedDigest)
+        public static bool ValidateDigest(this Stream stream, string expectedDigest)
         {
-            CheckParameter(byteStream != null, "byteStream is required");
+            CheckParameter(stream != null, "stream is required");
 
-            if (expectedDigest != null)
+            if (expectedDigest == null) return true;
+            
+            var actualDigest = Digest(stream);
+            if (!actualDigest.Equals(expectedDigest))
             {
-                return Digest(byteStream).Select(actualDigest => {
-                    if (!actualDigest.Equals(expectedDigest))
-                    {
-                        throw new DigestDoesNotMatchException($"Data digests do not match (actual: {actualDigest}, expected {expectedDigest})");
-                    }
-                    else
-                    {
-                        return true;
-                    }
-                });
+                throw new DigestDoesNotMatchException($"Data digests do not match (actual: {actualDigest}, expected {expectedDigest})");
             }
-            return Observable.Return<bool>(true);
+            else
+            {
+                return true;
+            }
         }
     }
 }

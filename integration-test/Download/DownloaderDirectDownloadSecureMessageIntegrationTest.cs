@@ -3,6 +3,7 @@ using IO.Proximax.SDK.Connections;
 using IO.Proximax.SDK.Download;
 using IO.Proximax.SDK.Exceptions;
 using IO.Proximax.SDK.Models;
+using IO.Proximax.SDK.Utils;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using static IntegrationTests.IntegrationTestConfig;
 using static IntegrationTests.TestSupport.Constants;
@@ -34,7 +35,7 @@ namespace IntegrationTests.Download
 			var result = UnitUnderTest.DirectDownload(param);
 	
 		    Assert.IsNotNull(result);
-		    Assert.AreEqual(new StreamReader(result).ReadToEnd(), TestString);
+		    Assert.AreEqual(result.GetContentAsString(), TestString);
 		}
 	
 	    [TestMethod, Timeout(10000)]
@@ -47,7 +48,7 @@ namespace IntegrationTests.Download
 			var result = UnitUnderTest.DirectDownload(param);
 	
 		    Assert.IsNotNull(result);
-		    Assert.AreEqual(new StreamReader(result).ReadToEnd(), TestString);
+		    Assert.AreEqual(result.GetContentAsString(), TestString);
 		}
 	
 	    [TestMethod, Timeout(10000), ExpectedException(typeof(DirectDownloadFailureException))]

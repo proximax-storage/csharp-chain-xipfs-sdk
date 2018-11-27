@@ -6,6 +6,7 @@ using IO.Proximax.SDK.Connections;
 using IO.Proximax.SDK.Download;
 using IO.Proximax.SDK.Exceptions;
 using IO.Proximax.SDK.Models;
+using IO.Proximax.SDK.Utils;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using static IntegrationTests.IntegrationTestConfig;
 using static IO.Proximax.SDK.Models.Constants;
@@ -41,7 +42,7 @@ namespace IntegrationTests.Download
 		    Assert.IsNotNull(result);
 		    Assert.AreEqual(result.TransactionHash, transactionHash);
 		    Assert.IsNotNull(result.Data);
-		    Assert.AreEqual(new StreamReader(result.Data.GetByteStream()).ReadToEnd(), TestString);
+		    Assert.AreEqual(result.Data.GetByteStream().GetContentAsString(), TestString);
 		    Assert.AreEqual(result.Data.ContentType, "text/plain");
 		    Assert.IsNotNull(result.Data.DataHash);
 		    Assert.AreEqual(result.Data.Description, "string description");
@@ -65,7 +66,7 @@ namespace IntegrationTests.Download
 		    Assert.IsNotNull(result);
 		    Assert.AreEqual(result.TransactionHash, transactionHash);
 		    Assert.IsNotNull(result.Data);
-		    Assert.AreEqual(new StreamReader(result.Data.GetByteStream()).ReadToEnd(), TestString);
+		    Assert.AreEqual(result.Data.GetByteStream().GetContentAsString(), TestString);
 		    Assert.AreEqual(result.Data.ContentType, "text/plain");
 		    Assert.IsNotNull(result.Data.DataHash);
 		    Assert.AreEqual(result.Data.Description, "string description");

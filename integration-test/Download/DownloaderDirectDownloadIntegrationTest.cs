@@ -7,6 +7,7 @@ using IO.Proximax.SDK.Connections;
 using IO.Proximax.SDK.Download;
 using IO.Proximax.SDK.Exceptions;
 using IO.Proximax.SDK.Models;
+using IO.Proximax.SDK.Utils;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using static IntegrationTests.IntegrationTestConfig;
 using static IO.Proximax.SDK.Models.Constants;
@@ -47,7 +48,7 @@ namespace IntegrationTests.Download
 			var result = UnitUnderTest.DirectDownload(param);
 	
 		    Assert.IsNotNull(result);
-		    Assert.AreEqual(new StreamReader(result).ReadToEnd(), Encoding.UTF8.GetString(TestByteArray));
+		    Assert.AreEqual(result.GetContentAsString(), Encoding.UTF8.GetString(TestByteArray));
 		}
 
 	    [TestMethod, Timeout(10000)]
@@ -59,7 +60,7 @@ namespace IntegrationTests.Download
 		    var result = UnitUnderTest.DirectDownload(param);
 	
 		    Assert.IsNotNull(result);
-			Assert.AreEqual(new StreamReader(result).ReadToEnd(), new StreamReader(new FileStream(TestTextFile, FileMode.Open, FileAccess.Read)).ReadToEnd());
+			Assert.AreEqual(result.GetContentAsString(), new FileStream(TestTextFile, FileMode.Open, FileAccess.Read).GetContentAsString());
 	    }
 
 	    [TestMethod, Timeout(10000)]
@@ -71,7 +72,7 @@ namespace IntegrationTests.Download
 		    var result = UnitUnderTest.DirectDownload(param);
 	
 		    Assert.IsNotNull(result);
-			Assert.AreEqual(new StreamReader(result).ReadToEnd(), new StreamReader(new FileStream(TestImagePngFile, FileMode.Open, FileAccess.Read)).ReadToEnd());
+			Assert.AreEqual(result.GetContentAsString(), new FileStream(TestImagePngFile, FileMode.Open, FileAccess.Read).GetContentAsString());
 	    }
 
 	    [TestMethod, Timeout(10000)]
@@ -83,7 +84,7 @@ namespace IntegrationTests.Download
 		    var result = UnitUnderTest.DirectDownload(param);
 	
 		    Assert.IsNotNull(result);
-			Assert.AreEqual(new StreamReader(result).ReadToEnd(), new StreamReader(new FileStream(TestTextFile, FileMode.Open, FileAccess.Read)).ReadToEnd());
+			Assert.AreEqual(result.GetContentAsString(), new FileStream(TestTextFile, FileMode.Open, FileAccess.Read).GetContentAsString());
 	    }
 
 	    [TestMethod, Timeout(10000)]
@@ -95,7 +96,7 @@ namespace IntegrationTests.Download
 		    var result = UnitUnderTest.DirectDownload(param);
 	
 		    Assert.IsNotNull(result);
-		    Assert.IsNotNull(new StreamReader(result).ReadToEnd());
+		    Assert.IsNotNull(result.GetContentAsByteArray());
 	    }
 
 	    [TestMethod, Timeout(10000)]
@@ -107,7 +108,7 @@ namespace IntegrationTests.Download
 		    var result = UnitUnderTest.DirectDownload(param);
 	
 		    Assert.IsNotNull(result);
-		    Assert.AreEqual(new StreamReader(result).ReadToEnd(), TestString);
+		    Assert.AreEqual(result.GetContentAsString(), TestString);
 	    }
 	    
 	    [TestMethod, Timeout(10000), ExpectedException(typeof(DirectDownloadFailureException))]
@@ -137,7 +138,7 @@ namespace IntegrationTests.Download
 			var result = UnitUnderTest.DirectDownload(param);
 	
 		    Assert.IsNotNull(result);
-		    Assert.AreEqual(new StreamReader(result).ReadToEnd(), Encoding.UTF8.GetString(TestByteArray));
+		    Assert.AreEqual(result.GetContentAsString(), Encoding.UTF8.GetString(TestByteArray));
 		}
 
 	    [TestMethod, Timeout(10000)]
@@ -149,10 +150,10 @@ namespace IntegrationTests.Download
 		    var result = UnitUnderTest.DirectDownload(param);
 	
 		    Assert.IsNotNull(result);
-			Assert.AreEqual(new StreamReader(result).ReadToEnd(), new StreamReader(new FileStream(TestTextFile, FileMode.Open, FileAccess.Read)).ReadToEnd());
+			Assert.AreEqual(result.GetContentAsString(), new FileStream(TestTextFile, FileMode.Open, FileAccess.Read).GetContentAsString());
 	    }
 
-	    [TestMethod, Timeout(10000)]
+	    [TestMethod, Timeout(30000)]
 	    public void ShouldDownloadUrlResourceByDataHash() {
 		    var dataHash = TestDataRepository
 			    .GetData("UploaderIntegrationTests.ShouldUploadUrlResource", "dataHash");
@@ -161,7 +162,7 @@ namespace IntegrationTests.Download
 		    var result = UnitUnderTest.DirectDownload(param);
 	
 		    Assert.IsNotNull(result);
-			Assert.AreEqual(new StreamReader(result).ReadToEnd(), new StreamReader(new FileStream(TestImagePngFile, FileMode.Open, FileAccess.Read)).ReadToEnd());
+			Assert.AreEqual(result.GetContentAsString(), new FileStream(TestImagePngFile, FileMode.Open, FileAccess.Read).GetContentAsString());
 	    }
 
 	    [TestMethod, Timeout(10000)]
@@ -173,7 +174,7 @@ namespace IntegrationTests.Download
 		    var result = UnitUnderTest.DirectDownload(param);
 	
 		    Assert.IsNotNull(result);
-			Assert.AreEqual(new StreamReader(result).ReadToEnd(), new StreamReader(new FileStream(TestTextFile, FileMode.Open, FileAccess.Read)).ReadToEnd());
+			Assert.AreEqual(result.GetContentAsString(), new FileStream(TestTextFile, FileMode.Open, FileAccess.Read).GetContentAsString());
 	    }
 
 	    [TestMethod, Timeout(10000)]
@@ -185,7 +186,7 @@ namespace IntegrationTests.Download
 		    var result = UnitUnderTest.DirectDownload(param);
 	
 		    Assert.IsNotNull(result);
-		    Assert.IsNotNull(new StreamReader(result).ReadToEnd());
+		    Assert.IsNotNull(result.GetContentAsByteArray());
 	    }
 
 	    [TestMethod, Timeout(10000)]
@@ -197,7 +198,7 @@ namespace IntegrationTests.Download
 		    var result = UnitUnderTest.DirectDownload(param);
 	
 		    Assert.IsNotNull(result);
-		    Assert.AreEqual(new StreamReader(result).ReadToEnd(), TestString);
+		    Assert.AreEqual(result.GetContentAsString(), TestString);
 	    }
 	    
 	    [TestMethod, Timeout(10000), ExpectedException(typeof(DirectDownloadFailureException))]

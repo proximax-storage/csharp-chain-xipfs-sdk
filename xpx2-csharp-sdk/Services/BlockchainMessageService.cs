@@ -35,7 +35,7 @@ namespace IO.Proximax.SDK.Services
         {
             CheckParameter(messagePayload != null, "messagePayload is required");
 
-            var jsonPayload = JsonUtils.ToJson(messagePayload);
+            var jsonPayload = messagePayload.ToJson();
 
             if (useBlockchainSecureMessage)
             {
