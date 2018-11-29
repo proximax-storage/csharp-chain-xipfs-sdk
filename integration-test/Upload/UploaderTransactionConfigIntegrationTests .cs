@@ -36,16 +36,16 @@ namespace IntegrationTests.Upload
 		[TestMethod, Timeout(60000)]
 		public void ShouldUploadWithSignerAsRecipientByDefault() {
 			var param = UploadParameter
-				.CreateForStringUpload(TestString, PrivateKey1)
+				.CreateForStringUpload(TestString, AccountPrivateKey1)
 				.Build();
 
 			var result = UnitUnderTest.Upload(param);
 
 			Assert.IsNotNull(result);
 			Assert.IsNotNull(result.TransactionHash);
-			var transaction = WaitForTransactionConfirmation(PrivateKey1, result.TransactionHash);
+			var transaction = WaitForTransactionConfirmation(AccountPrivateKey1, result.TransactionHash);
 			Assert.IsTrue(transaction is TransferTransaction);
-			Assert.AreEqual((transaction as TransferTransaction).Address.Plain, Address1);
+			Assert.AreEqual((transaction as TransferTransaction).Address.Plain, AccountAddress1);
 			
 			LogAndSaveResult(result, GetType().Name + ".ShouldUploadWithSignerAsRecipientByDefault");
 		}
@@ -62,8 +62,8 @@ namespace IntegrationTests.Upload
 		[TestMethod, Timeout(60000)]
 		public void ShouldUploadWithRecipientPublicKeyProvided() {
 			var param = UploadParameter
-				.CreateForStringUpload(TestString, PrivateKey1)
-				.WithRecipientPublicKey(PublicKey2)
+				.CreateForStringUpload(TestString, AccountPrivateKey1)
+				.WithRecipientPublicKey(AccountPublicKey2)
 				.Build();
 
 
@@ -71,9 +71,9 @@ namespace IntegrationTests.Upload
 
 			Assert.IsNotNull(result);
 			Assert.IsNotNull(result.TransactionHash);
-			var transaction = WaitForTransactionConfirmation(PrivateKey1, result.TransactionHash);
+			var transaction = WaitForTransactionConfirmation(AccountPrivateKey1, result.TransactionHash);
 			Assert.IsTrue(transaction is TransferTransaction);
-			Assert.AreEqual((transaction as TransferTransaction).Address.Plain, Address2);
+			Assert.AreEqual((transaction as TransferTransaction).Address.Plain, AccountAddress2);
 			
 			LogAndSaveResult(result, GetType().Name + ".ShouldUploadWithRecipientPublicKeyProvided");
 		}
@@ -81,17 +81,17 @@ namespace IntegrationTests.Upload
 		[TestMethod, Timeout(60000)]
 		public void ShouldUploadWithRecipientAddressProvided() {
 			var param = UploadParameter
-				.CreateForStringUpload(TestString, PrivateKey1)
-				.WithRecipientAddress(Address2)
+				.CreateForStringUpload(TestString, AccountPrivateKey1)
+				.WithRecipientAddress(AccountAddress2)
 				.Build();
 
 			var result = UnitUnderTest.Upload(param);
  
 			Assert.IsNotNull(result);
 			Assert.IsNotNull(result.TransactionHash);
-			var transaction = WaitForTransactionConfirmation(PrivateKey1, result.TransactionHash);
+			var transaction = WaitForTransactionConfirmation(AccountPrivateKey1, result.TransactionHash);
 			Assert.IsTrue(transaction is TransferTransaction);
-			Assert.AreEqual((transaction as TransferTransaction).Address.Plain, Address2);
+			Assert.AreEqual((transaction as TransferTransaction).Address.Plain, AccountAddress2);
 			
 			LogAndSaveResult(result, GetType().Name + ".ShouldUploadWithRecipientAddressProvided");
 		}
@@ -99,7 +99,7 @@ namespace IntegrationTests.Upload
 		[TestMethod, Timeout(30000)]
 		public void ShouldUploadWithTransactionDeadlinesProvided() {
 			var param = UploadParameter
-				.CreateForStringUpload(TestString, PrivateKey1)
+				.CreateForStringUpload(TestString, AccountPrivateKey1)
 				.WithTransactionDeadline(2)
 				.Build();
 
@@ -107,7 +107,7 @@ namespace IntegrationTests.Upload
 
 			Assert.IsNotNull(result);
 			Assert.IsNotNull(result.TransactionHash);
-			var transaction = WaitForTransactionConfirmation(PrivateKey1, result.TransactionHash);
+			var transaction = WaitForTransactionConfirmation(AccountPrivateKey1, result.TransactionHash);
 			Assert.IsTrue(transaction is TransferTransaction);
 			Assert.IsTrue((transaction as TransferTransaction).Deadline.GetInstant() <= Deadline.CreateHours(2).GetInstant());
 			
@@ -117,13 +117,13 @@ namespace IntegrationTests.Upload
 		[TestMethod, Timeout(30000)]
 		public void ShouldUploadWithTransactionMosaicsProvided() {
 			var param = UploadParameter
-				.CreateForStringUpload(TestString, PrivateKey1)
+				.CreateForStringUpload(TestString, AccountPrivateKey1)
 				.WithTransactionMosaics(new List<Mosaic> {new Mosaic(new MosaicId("prx:xpx"), 2)})
 				.Build();
 
 			var result = UnitUnderTest.Upload(param);
 
-			var transaction = WaitForTransactionConfirmation(PrivateKey1, result.TransactionHash);
+			var transaction = WaitForTransactionConfirmation(AccountPrivateKey1, result.TransactionHash);
 			Assert.IsTrue(transaction is TransferTransaction);
 			Assert.AreEqual((transaction as TransferTransaction).Mosaics.Count, 1);
 			Assert.AreEqual((transaction as TransferTransaction).Mosaics[0].MosaicId, new MosaicId("prx:xpx"));
@@ -135,13 +135,13 @@ namespace IntegrationTests.Upload
 		[TestMethod, Timeout(30000)]
 		public void ShouldUploadWithEmptyTransactionMosaicsProvided() {
 			var param = UploadParameter
-				.CreateForStringUpload(TestString, PrivateKey1)
+				.CreateForStringUpload(TestString, AccountPrivateKey1)
 				.WithTransactionMosaics(new List<Mosaic>())
 				.Build();
 
 			var result = UnitUnderTest.Upload(param);
 
-			var transaction = WaitForTransactionConfirmation(PrivateKey1, result.TransactionHash);
+			var transaction = WaitForTransactionConfirmation(AccountPrivateKey1, result.TransactionHash);
 			Assert.IsTrue(transaction is TransferTransaction);
 			Assert.AreEqual((transaction as TransferTransaction).Mosaics.Count, 0);
 			

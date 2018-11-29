@@ -29,7 +29,7 @@ namespace IntegrationTests.Download
 		public void ShouldDirectDownloadWithSecureMessageAsSender() {
 			var transactionHash = TestDataRepository
 					.GetData("UploaderSecureMessageIntegrationTests.ShouldUploadWithUseBlockchainSecureMessageAndRecipientPublicKey", "transactionHash");
-			var param = DirectDownloadParameter.CreateFromTransactionHash(transactionHash, PrivateKey1)
+			var param = DirectDownloadParameter.CreateFromTransactionHash(transactionHash, AccountPrivateKey1)
 				.Build();
 	
 			var result = UnitUnderTest.DirectDownload(param);
@@ -42,7 +42,7 @@ namespace IntegrationTests.Download
 		public void ShouldDirectDownloadWithSecureMessageAsRecipient() {
 			var transactionHash = TestDataRepository
 					.GetData("UploaderSecureMessageIntegrationTests.ShouldUploadWithUseBlockchainSecureMessageAndRecipientPublicKey", "transactionHash");
-		    var param = DirectDownloadParameter.CreateFromTransactionHash(transactionHash, PrivateKey1)
+		    var param = DirectDownloadParameter.CreateFromTransactionHash(transactionHash, AccountPrivateKey1)
 			    .Build();
 	
 			var result = UnitUnderTest.DirectDownload(param);

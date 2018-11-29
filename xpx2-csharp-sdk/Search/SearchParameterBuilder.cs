@@ -1,4 +1,5 @@
 ﻿using IO.Proximax.SDK.Models;
+using static IO.Proximax.SDK.Utils.ParameterValidationUtils;
 
 namespace IO.Proximax.SDK.Search
 {
@@ -41,6 +42,9 @@ namespace IO.Proximax.SDK.Search
 
         public SearchParameterBuilder WithResultSize(int? resultSize)
         {
+            CheckParameter(resultSize == null || (resultSize >= 1 && resultSize <= 20),
+                "result size should be between 1 and 20");
+            
             ResultSize = resultSize;
             return this;
         }

@@ -44,7 +44,7 @@ namespace IntegrationTests.Download
 		    var transactionHash = TestDataRepository
 			    .GetData("UploaderPrivacyStrategyIntegrationTests.ShouldUploadFileWithSecuredWithNemKeysPrivacyStrategy", "transactionHash");
 		    var param = DirectDownloadParameter.CreateFromTransactionHash(transactionHash)
-			    .WithNemKeysPrivacy(PrivateKey1, PublicKey2)
+			    .WithNemKeysPrivacy(AccountPrivateKey1, AccountPublicKey2)
 			    .Build();
 	
 		    var result = UnitUnderTest.DirectDownload(param);
@@ -58,7 +58,7 @@ namespace IntegrationTests.Download
 		    var transactionHash = TestDataRepository
 			    .GetData("UploaderPrivacyStrategyIntegrationTests.ShouldUploadFileWithSecuredWithNemKeysPrivacyStrategy", "transactionHash");
 		    var param = DirectDownloadParameter.CreateFromTransactionHash(transactionHash)
-			    .WithNemKeysPrivacy(PrivateKey1, PublicKey1)
+			    .WithNemKeysPrivacy(AccountPrivateKey1, AccountPublicKey1)
 			    .Build();
 	
 		    var result = UnitUnderTest.DirectDownload(param);
@@ -112,7 +112,7 @@ namespace IntegrationTests.Download
 		    var dataHash = TestDataRepository
 			    .GetData("UploaderPrivacyStrategyIntegrationTests.ShouldUploadFileWithSecuredWithNemKeysPrivacyStrategy", "dataHash");
 		    var param = DirectDownloadParameter.CreateFromDataHash(dataHash)
-			    .WithNemKeysPrivacy(PrivateKey1, PublicKey2)
+			    .WithNemKeysPrivacy(AccountPrivateKey1, AccountPublicKey2)
 			    .Build();
 	
 		    var result = UnitUnderTest.DirectDownload(param);
@@ -126,7 +126,7 @@ namespace IntegrationTests.Download
 		    var dataHash = TestDataRepository
 			    .GetData("UploaderPrivacyStrategyIntegrationTests.ShouldUploadFileWithSecuredWithNemKeysPrivacyStrategy", "dataHash");
 		    var param = DirectDownloadParameter.CreateFromDataHash(dataHash)
-			    .WithNemKeysPrivacy(PrivateKey1, PublicKey1)
+			    .WithNemKeysPrivacy(AccountPrivateKey1, AccountPublicKey1)
 			    .Build();
 	
 		    var result = UnitUnderTest.DirectDownload(param);

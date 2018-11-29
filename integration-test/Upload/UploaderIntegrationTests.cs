@@ -37,7 +37,7 @@ namespace IntegrationTests.Upload
 		public void ShouldReturnVersion()
 		{
 			var param = UploadParameter.CreateForStringUpload(
-					TestString, PrivateKey1)
+					TestString, AccountPrivateKey1)
 				.Build();
 
 			var result = UnitUnderTest.Upload(param);
@@ -52,7 +52,7 @@ namespace IntegrationTests.Upload
 		public void ShouldUploadByteArray()
 		{
 			var param = UploadParameter.CreateForByteArrayUpload(
-					TestByteArray, PrivateKey1)
+					TestByteArray, AccountPrivateKey1)
 				.Build();
 
 			var result = UnitUnderTest.Upload(param);
@@ -75,7 +75,7 @@ namespace IntegrationTests.Upload
 			var param = UploadParameter.CreateForByteArrayUpload(
 					ByteArrayParameterData.Create(TestByteArray, "byte array description", "byte array",
 						"text/plain", new Dictionary<string, string> {{"bytearraykey", "bytearrayval"}}),
-					PrivateKey1)
+					AccountPrivateKey1)
 				.Build();
 
 			var result = UnitUnderTest.Upload(param);
@@ -96,7 +96,7 @@ namespace IntegrationTests.Upload
 		[TestMethod, Timeout(10000)]
 		public void ShouldUploadFile()
 		{
-			var param = UploadParameter.CreateForFileUpload(TestTextFile, PrivateKey1)
+			var param = UploadParameter.CreateForFileUpload(TestTextFile, AccountPrivateKey1)
 				.Build();
 
 			var result = UnitUnderTest.Upload(param);
@@ -119,7 +119,7 @@ namespace IntegrationTests.Upload
 			var param = UploadParameter.CreateForFileUpload(
 					FileParameterData.Create(TestTextFile, "file description", "file name",
 						"text/plain", new Dictionary<string, string> {{"filekey", "filename"}}),
-					PrivateKey1)
+					AccountPrivateKey1)
 				.Build();
 
 			var result = UnitUnderTest.Upload(param);
@@ -141,7 +141,7 @@ namespace IntegrationTests.Upload
 		public void ShouldUploadUrlResource()
 		{
 			var param = UploadParameter.CreateForUrlResourceUpload(
-					FileUrlFromRelativePath(TestImagePngFile), PrivateKey1)
+					FileUrlFromRelativePath(TestImagePngFile), AccountPrivateKey1)
 				.Build();
 
 			var result = UnitUnderTest.Upload(param);
@@ -164,7 +164,7 @@ namespace IntegrationTests.Upload
 			var param = UploadParameter.CreateForUrlResourceUpload(
 					UrlResourceParameterData.Create(FileUrlFromRelativePath(TestImagePngFile), "url description",
 						"url name", "image/png", new Dictionary<string, string> {{"urlkey", "urlval"}}),
-					PrivateKey1)
+					AccountPrivateKey1)
 				.Build();
 
 			var result = UnitUnderTest.Upload(param);
@@ -185,7 +185,7 @@ namespace IntegrationTests.Upload
 		public void ShouldUploadStream()
 		{
 			var param = UploadParameter.CreateForStreamUpload(
-					() => new FileStream(TestTextFile, FileMode.Open, FileAccess.Read), PrivateKey1)
+					() => new FileStream(TestTextFile, FileMode.Open, FileAccess.Read), AccountPrivateKey1)
 				.Build();
 
 			var result = UnitUnderTest.Upload(param);
@@ -209,7 +209,7 @@ namespace IntegrationTests.Upload
 					StreamParameterData.Create(() => new FileStream(TestTextFile, FileMode.Open, FileAccess.Read), 
 						"stream description",
 						"stream name", "text/plain", new Dictionary<string, string> {{"streamkey", "streamval"}}),
-					PrivateKey1)
+					AccountPrivateKey1)
 				.Build();
 
 			var result = UnitUnderTest.Upload(param);
@@ -230,7 +230,7 @@ namespace IntegrationTests.Upload
 		public void ShouldUploadFilesAsZip()
 		{
 			var param = UploadParameter.CreateForFilesAsZipUpload(
-					new List<string> {TestTextFile, TestHtmlFile}, PrivateKey1)
+					new List<string> {TestTextFile, TestHtmlFile}, AccountPrivateKey1)
 				.Build();
 
 			var result = UnitUnderTest.Upload(param);
@@ -253,7 +253,7 @@ namespace IntegrationTests.Upload
 			var param = UploadParameter.CreateForFilesAsZipUpload(
 					FilesAsZipParameterData.Create(new List<string> {TestTextFile, TestHtmlFile}, "zip description",
 						"zip name", new Dictionary<string, string> {{"zipkey", "zipvalue"}}),
-					PrivateKey1)
+					AccountPrivateKey1)
 				.Build();
 
 			var result = UnitUnderTest.Upload(param);
@@ -273,7 +273,7 @@ namespace IntegrationTests.Upload
 		[TestMethod, Timeout(10000)]
 		public void ShouldUploadString()
 		{
-			var param = UploadParameter.CreateForStringUpload(TestString, PrivateKey1)
+			var param = UploadParameter.CreateForStringUpload(TestString, AccountPrivateKey1)
 				.Build();
 
 			var result = UnitUnderTest.Upload(param);
@@ -296,7 +296,7 @@ namespace IntegrationTests.Upload
 			var param = UploadParameter.CreateForStringUpload(
 					StringParameterData.Create(TestString, Encoding.UTF8, "string description", "string name",
 						"text/plain", new Dictionary<string, string> {{"keystring", "valstring"}}),
-					PrivateKey1)
+					AccountPrivateKey1)
 				.Build();
 
 			var result = UnitUnderTest.Upload(param);
@@ -316,7 +316,7 @@ namespace IntegrationTests.Upload
 		[TestMethod, Timeout(10000)]
 		public void ShouldUploadPath()
 		{
-			var param = UploadParameter.CreateForPathUpload(TestPathFile, PrivateKey1)
+			var param = UploadParameter.CreateForPathUpload(TestPathFile, AccountPrivateKey1)
 				.Build();
 
 			var result = UnitUnderTest.Upload(param);
@@ -339,7 +339,7 @@ namespace IntegrationTests.Upload
 			var param = UploadParameter.CreateForPathUpload(
 					PathParameterData.Create(TestPathFile, "path description", "path name",
 						new Dictionary<string, string> {{"pathkey", "pathval"}}),
-					PrivateKey1)
+					AccountPrivateKey1)
 				.Build();
 
 			var result = UnitUnderTest.Upload(param);

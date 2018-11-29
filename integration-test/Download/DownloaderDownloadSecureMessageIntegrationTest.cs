@@ -34,7 +34,7 @@ namespace IntegrationTests.Download
 			var transactionHash = TestDataRepository
 					.GetData("UploaderSecureMessageIntegrationTests.ShouldUploadWithUseBlockchainSecureMessageAndRecipientPublicKey", "transactionHash");
 			var param = DownloadParameter.Create(transactionHash)
-				.WithAccountPrivateKey(PrivateKey1)
+				.WithAccountPrivateKey(AccountPrivateKey1)
 				.Build();
 	
 			var result = UnitUnderTest.Download(param);
@@ -58,7 +58,7 @@ namespace IntegrationTests.Download
 			var transactionHash = TestDataRepository
 					.GetData("UploaderSecureMessageIntegrationTests.ShouldUploadWithUseBlockchainSecureMessageAndRecipientPublicKey", "transactionHash");
 			var param = DownloadParameter.Create(transactionHash)
-				.WithAccountPrivateKey(PrivateKey2)
+				.WithAccountPrivateKey(AccountPrivateKey2)
 				.Build();
 	
 			var result = UnitUnderTest.Download(param);

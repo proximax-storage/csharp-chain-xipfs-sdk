@@ -32,7 +32,7 @@ namespace IntegrationTests.Upload
 			var param = UploadParameter.CreateForStringUpload(
 					StringParameterData.Create(TestString, Encoding.UTF8, "string description", "string name",
 						"text/plain", new Dictionary<string, string> {{"keystring", "valstring"}}),
-					PrivateKey1)
+					AccountPrivateKey1)
 				.WithUseBlockchainSecureMessage(true)
 				.Build();
 
@@ -50,8 +50,8 @@ namespace IntegrationTests.Upload
 			var param = UploadParameter.CreateForStringUpload(
 					StringParameterData.Create(TestString, Encoding.UTF8, "string description", "string name",
 						"text/plain", new Dictionary<string, string> {{"keystring", "valstring"}}),
-					PrivateKey1)
-				.WithRecipientPublicKey(PublicKey2)
+					AccountPrivateKey1)
+				.WithRecipientPublicKey(AccountPublicKey2)
 				.WithUseBlockchainSecureMessage(true)
 				.Build();
 
@@ -69,8 +69,8 @@ namespace IntegrationTests.Upload
 			var param = UploadParameter.CreateForStringUpload(
 					StringParameterData.Create(TestString, Encoding.UTF8, "string description", "string name",
 						"text/plain", new Dictionary<string, string> {{"keystring", "valstring"}}),
-					PrivateKey1)
-				.WithRecipientAddress(Address2)
+					AccountPrivateKey1)
+				.WithRecipientAddress(AccountAddress2)
 				.WithUseBlockchainSecureMessage(true)
 				.Build();
 

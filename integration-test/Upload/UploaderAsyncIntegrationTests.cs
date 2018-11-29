@@ -31,7 +31,7 @@ namespace IntegrationTests.Upload
 		[TestMethod, Timeout(30000)]
 		public void ShouldUploadAsynchronouslyWithoutCallback() {
 			var param = UploadParameter
-				.CreateForFileUpload(TestPdfFile2, PrivateKey1)
+				.CreateForFileUpload(TestPdfFile2, AccountPrivateKey1)
 				.Build();
 
 			var asyncTask = UnitUnderTest.UploadAsync(param, null);
@@ -45,7 +45,7 @@ namespace IntegrationTests.Upload
 		[TestMethod, Timeout(30000)]
 		public void ShouldUploadAsynchronouslyWithSuccessCallback() {
 			var param = UploadParameter
-				.CreateForFileUpload(TestTextFile, PrivateKey1)
+				.CreateForFileUpload(TestTextFile, AccountPrivateKey1)
 				.Build();
 			var taskCompletionSource = new TaskCompletionSource<UploadResult>();
 			var asyncCallbacks = AsyncCallbacks<UploadResult>.Create<UploadResult>(
@@ -62,7 +62,7 @@ namespace IntegrationTests.Upload
 		[TestMethod, Timeout(10000)]
 		public void ShouldUploadAsynchronouslyWithFailureCallback() {
 			var param = UploadParameter
-				.CreateForFileUpload(TestTextFile, PrivateKey1)
+				.CreateForFileUpload(TestTextFile, AccountPrivateKey1)
 				.WithPrivacyStrategy(new NotImplementedPrivacyStrategy())
 				.Build();
 			var taskCompletionSource = new TaskCompletionSource<Exception>();

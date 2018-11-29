@@ -35,7 +35,7 @@ namespace IntegrationTests.Upload
 		[TestMethod, Timeout(10000)]
 		public void ShouldUploadFileWithPlainPrivacyStrategy()
 		{
-			var param = UploadParameter.CreateForFileUpload(TestTextFile, PrivateKey1)
+			var param = UploadParameter.CreateForFileUpload(TestTextFile, AccountPrivateKey1)
 				.WithPlainPrivacy()
 				.Build();
 
@@ -52,8 +52,8 @@ namespace IntegrationTests.Upload
 		[TestMethod, Timeout(10000)]
 		public void ShouldUploadFileWithSecuredWithNemKeysPrivacyStrategy()
 		{
-			var param = UploadParameter.CreateForFileUpload(TestTextFile, PrivateKey1)
-				.WithNemKeysPrivacy(PrivateKey1, PublicKey2)
+			var param = UploadParameter.CreateForFileUpload(TestTextFile, AccountPrivateKey1)
+				.WithNemKeysPrivacy(AccountPrivateKey1, AccountPublicKey2)
 				.Build();
 
 			var result = UnitUnderTest.Upload(param);
@@ -69,7 +69,7 @@ namespace IntegrationTests.Upload
 		[TestMethod, Timeout(10000)]
 		public void ShouldUploadFileWithSecuredWithPasswordPrivacyStrategy()
 		{
-			var param = UploadParameter.CreateForFileUpload(TestTextFile, PrivateKey1)
+			var param = UploadParameter.CreateForFileUpload(TestTextFile, AccountPrivateKey1)
 				.WithPasswordPrivacy(TestPassword)
 				.Build();
 

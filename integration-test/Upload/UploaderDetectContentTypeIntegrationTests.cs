@@ -26,7 +26,7 @@ namespace IntegrationTests.Upload
 		[TestMethod, Timeout(30000)]
 		public void ShouldUploadWithEnabledDetectContentType() {
 			var param = UploadParameter
-				.CreateForFileUpload(TestPdfFile2, PrivateKey1)
+				.CreateForFileUpload(TestPdfFile2, AccountPrivateKey1)
 				.WithDetectContentType(true)
 				.Build();
 
@@ -41,7 +41,7 @@ namespace IntegrationTests.Upload
 		[TestMethod, Timeout(30000)]
 		public void ShouldUploadWithDisabledDetectContentType() {
 			var param = UploadParameter
-				.CreateForFileUpload(TestPdfFile2, PrivateKey1)
+				.CreateForFileUpload(TestPdfFile2, AccountPrivateKey1)
 				.WithDetectContentType(false)
 				.Build();
 
