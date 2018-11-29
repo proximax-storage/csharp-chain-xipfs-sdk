@@ -30,4 +30,23 @@ namespace IO.Proximax.SDK.Models
             }
         }
     }
+    
+    public static class BlockchainNetworkTypeConverter
+    {
+        public static BlockchainNetworkType GetNetworkType(string network)
+        {
+            switch (network)
+            {
+                case "MAIN_NET": return BlockchainNetworkType.MainNet;
+                case "TEST_NET": return BlockchainNetworkType.TestNet;
+                case "PRIVATE": return BlockchainNetworkType.Private;
+                case "PRIVATE_TEST": return BlockchainNetworkType.PrivateTest;
+                case "MIJIN": return BlockchainNetworkType.Mijin;
+                case "MIJIN_TEST": return BlockchainNetworkType.MijinTest;
+                default:
+                    throw new NetworkTypeInvalidException("Invalid network");
+            }
+        }
+    }
+    
 }

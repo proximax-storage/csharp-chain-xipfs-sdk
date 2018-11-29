@@ -1,4 +1,8 @@
-﻿namespace IO.Proximax.SDK.Connections
+﻿using System.Reactive.Linq;
+using IO.Proximax.SDK.Models;
+using IO.Proximax.SDK.Services.Clients;
+
+namespace IO.Proximax.SDK.Connections
 {
     public class ConnectionConfig
     {
@@ -20,8 +24,15 @@
 
         public static ConnectionConfig CreateWithStorageConnection(StorageConnection storageConnection)
         {
-            // TODO
-            return new ConnectionConfig(null, storageConnection);
+            var storageNodeClient = new StorageNodeClient(storageConnection);
+            var blockchainNetwork = storageNodeClient.GetNodeInfo().Wait().BlockchainNetwork;
+            var blockchainNetworkConnection = new BlockchainNetworkConnection(
+                BlockchainNetworkTypeConverter.GetNetworkType(blockchainNetwork.NetworkType),
+                blockchainNetwork.Host,
+                blockchainNetwork.Port,
+               HttpProtocolConverter.GetHttpProtocol(blockchainNetwork.Protocol)
+            );
+            return new ConnectionConfig(blockchainNetworkConnection, storageConnection);
         }
 
         public static ConnectionConfig CreateWithStorageConnection(

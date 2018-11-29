@@ -11,7 +11,6 @@ using IO.Proximax.SDK.Services;
 using IO.Proximax.SDK.Utils;
 using static IO.Proximax.SDK.Utils.ParameterValidationUtils;
 
-// TODO 
 namespace IO.Proximax.SDK.Download
 {
     public class Downloader

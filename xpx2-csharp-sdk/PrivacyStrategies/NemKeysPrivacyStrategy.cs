@@ -3,7 +3,6 @@ using IO.Proximax.SDK.Ciphers;
 using IO.Proximax.SDK.Models;
 using static IO.Proximax.SDK.Utils.ParameterValidationUtils;
 
-// TODO
 namespace IO.Proximax.SDK.PrivacyStrategies
 {
     public sealed class NemKeysPrivacyStrategy : IPrivacyStrategy

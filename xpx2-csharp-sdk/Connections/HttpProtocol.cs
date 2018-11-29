@@ -21,4 +21,19 @@ namespace IO.Proximax.SDK.Connections
             }
         }
     }
+    
+    public static class HttpProtocolConverter
+    {
+        public static HttpProtocol GetHttpProtocol(string httpProtocol)
+        {
+            switch (httpProtocol)
+            {
+                case "HTTP": return HttpProtocol.Http;
+                case "HTTPS": return HttpProtocol.Https;
+                default:
+                    throw new NetworkTypeInvalidException("Invalid protocol");
+            }
+        }
+    }
+
 }

@@ -4,7 +4,6 @@ using IO.Proximax.SDK.Ciphers;
 using IO.Proximax.SDK.Utils;
 using static IO.Proximax.SDK.Utils.ParameterValidationUtils;
 
-// TODO
 namespace IO.Proximax.SDK.PrivacyStrategies
 {
     public sealed class PasswordPrivacyStrategy : IPrivacyStrategy

@@ -14,7 +14,6 @@ using IO.Proximax.SDK.Services.Clients.Catapult;
 using IO.Proximax.SDK.Utils;
 using static IO.Proximax.SDK.Utils.ParameterValidationUtils;
 
-// TODO 
 namespace IO.Proximax.SDK.Search
 {
     public class Searcher
