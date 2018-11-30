@@ -8,7 +8,7 @@ using IO.Proximax.SDK.Search;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using static IntegrationTests.IntegrationTestConfig;
 
-namespace IntegrationTests.Upload
+namespace IntegrationTests.Search
 {
 	[TestClass]
 	public class SearcherAsyncIntegrationTests

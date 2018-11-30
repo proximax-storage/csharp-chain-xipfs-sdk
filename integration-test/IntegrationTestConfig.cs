@@ -14,6 +14,11 @@ namespace IntegrationTests
         public const int BlockchainApiPort = 3000;
         public const HttpProtocol BlockchainApiProtocol = HttpProtocol.Http;
         public static readonly string BlockchainRestApiUrl = new UriBuilder("http", BlockchainApiHost, BlockchainApiPort).Uri.AbsoluteUri;
+        public const string StorageNodeApiHost = "127.0.0.1";    
+        public const int StorageNodeApiPort = 8081;    
+        public const HttpProtocol StorageNodeApiProtocol = HttpProtocol.Http;    
+        public const string StorageNodeApiBearer = "11111";    
+        public const string StorageNodeApiNemAddress = "nem:test";    
     
         public const string AccountPrivateKey1 = "97226FCCBD876D399BA2A70E640AD2C2C97AD5CE57A40EE9455C226D3C39AD49";
         public const string AccountPublicKey1 = "632479641258F56F961473CD729F6357563D276CE7B68D5AD8F9F7FA071BB963";

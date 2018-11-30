@@ -4,7 +4,7 @@ using IO.Proximax.SDK.Search;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using static IntegrationTests.IntegrationTestConfig;
 
-namespace IntegrationTests.Download
+namespace IntegrationTests.Search
 {
     [TestClass]
     public class SearcherTransactionFilterIntegrationTest
