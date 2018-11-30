@@ -57,7 +57,7 @@ namespace IO.Proximax.SDK.Services.Clients
                 using (var httpClient = new HttpClient())
                 {
                     httpClient.DefaultRequestHeaders.Add(HeaderCredentials, HeaderCredentialsVal);
-                    return httpClient.GetStreamAsync(ApiUrl + "/download/file").GetAwaiter().GetResult();
+                    return httpClient.GetStreamAsync(ApiUrl + $"/download/file?dataHash={dataHash}").GetAwaiter().GetResult();
                 }
             });
         }
