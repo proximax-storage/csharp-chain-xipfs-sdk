@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using IO.Proximax.SDK.Connections;
 using IO.Proximax.SDK.Models;
+using IO.Proximax.SDK.PrivacyStrategies;
 using IO.Proximax.SDK.Upload;
 using IO.Proximax.SDK.Utils;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -32,7 +34,7 @@ namespace IntegrationTests.Upload
 			);
 		}
 
-		[TestMethod, Timeout(10000)]
+		[TestMethod, Timeout(30000)]
 		public void ShouldUploadFileWithPlainPrivacyStrategy()
 		{
 			var param = UploadParameter.CreateForFileUpload(TestTextFile, AccountPrivateKey1)
@@ -49,7 +51,7 @@ namespace IntegrationTests.Upload
 			LogAndSaveResult(result, GetType().Name + ".ShouldUploadFileWithPlainPrivacyStrategy");
 		}
 
-		[TestMethod, Timeout(10000)]
+		[TestMethod, Timeout(30000)]
 		public void ShouldUploadFileWithSecuredWithNemKeysPrivacyStrategy()
 		{
 			var param = UploadParameter.CreateForFileUpload(TestTextFile, AccountPrivateKey1)
@@ -66,7 +68,7 @@ namespace IntegrationTests.Upload
 			LogAndSaveResult(result, GetType().Name + ".ShouldUploadFileWithSecuredWithNemKeysPrivacyStrategy");
 		}
 
-		[TestMethod, Timeout(10000)]
+		[TestMethod, Timeout(30000)]
 		public void ShouldUploadFileWithSecuredWithPasswordPrivacyStrategy()
 		{
 			var param = UploadParameter.CreateForFileUpload(TestTextFile, AccountPrivateKey1)
@@ -83,5 +85,35 @@ namespace IntegrationTests.Upload
 			LogAndSaveResult(result, GetType().Name + ".ShouldUploadFileWithSecuredWithPasswordPrivacyStrategy");
 		}
 
+		[TestMethod, Timeout(30000)]
+		public void ShouldUploadFileWithCustomPrivacyStrategy()
+		{
+			var param = UploadParameter.CreateForFileUpload(TestTextFile, AccountPrivateKey1)
+				.WithPrivacyStrategy(new MyPrivacyStrategy())
+				.Build();
+
+			var result = UnitUnderTest.Upload(param);
+
+			Assert.IsNotNull(result);
+			Assert.IsNotNull(result.TransactionHash);
+			Assert.IsNotNull(result.Data.DataHash);
+			Assert.AreEqual(result.PrivacyType, (int) PrivacyType.Custom);
+
+			LogAndSaveResult(result, GetType().Name + ".ShouldUploadFileWithCustomPrivacyStrategy");
+		}
+
+	}
+
+	public class MyPrivacyStrategy: ICustomPrivacyStrategy
+	{
+		public override Stream EncryptStream(Stream data)
+		{
+			return data;
+		}
+
+		public override Stream DecryptStream(Stream data)
+		{
+			return data;
+		}
 	}
 }
