@@ -14,7 +14,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\xpx2-csharp-sdk\io.proximax.sdk.csproj" />
+      <ProjectReference Include="..\proximax-storage-sdk\proximax.storage.sdk.csproj" />
     </ItemGroup>
 
     <ItemGroup>

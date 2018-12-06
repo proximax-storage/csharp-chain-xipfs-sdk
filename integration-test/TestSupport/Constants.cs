@@ -15,21 +15,22 @@ namespace IntegrationTests.TestSupport
                                          "In non lectus interdum massa tempor dapibus. " +
                                          "Etiam eu malesuada turpis, tempor gravida mi. Ut vitae dapibus tellus, at viverra nibh. " +
                                          "Nam bibendum, urna condimentum ultrices dapibus, nisl quam accumsan urna, id feugiat diam ligula rhoncus elit.";
-        
-        public static readonly byte[] TestByteArray = Encoding.UTF8.GetBytes("Lorem ipsum dolor sit amet, consectetur adipiscing elit. "+
-                                                                      "Aenean congue sodales massa, non faucibus mauris blandit at. "+
-                                                                      "Cras vulputate volutpat nulla. Vivamus id nunc vel quam tincidunt finibus eu in justo. "+
-                                                                      "Proin ut erat vitae dolor rutrum imperdiet sit amet sit amet nibh. "+
-                                                                      "Aenean pulvinar enim elit, efficitur luctus turpis commodo ac. "+
-                                                                      "Donec auctor lacus quis velit lacinia, faucibus commodo est bibendum. "+
-                                                                      "Nulla vitae ante quis ex pretium viverra. Proin sodales felis elit, non imperdiet turpis lacinia sed. "+
-                                                                      "Cras vitae blandit lectus, et mollis magna. "+
-                                                                      "Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; "+
-                                                                      "Vivamus auctor massa sit amet condimentum egestas. "+
-                                                                      "Morbi arcu nibh, tincidunt nec pretium eu, scelerisque vitae sem. "+
-                                                                      "Donec commodo dui dapibus, sollicitudin lorem et, efficitur purus.");
 
-        public const string TestPdfFile1 =  @"Resources\TestFiles\test_pdf_file_1.pdf";
+        public static readonly byte[] TestByteArray = Encoding.UTF8.GetBytes(
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. " +
+            "Aenean congue sodales massa, non faucibus mauris blandit at. " +
+            "Cras vulputate volutpat nulla. Vivamus id nunc vel quam tincidunt finibus eu in justo. " +
+            "Proin ut erat vitae dolor rutrum imperdiet sit amet sit amet nibh. " +
+            "Aenean pulvinar enim elit, efficitur luctus turpis commodo ac. " +
+            "Donec auctor lacus quis velit lacinia, faucibus commodo est bibendum. " +
+            "Nulla vitae ante quis ex pretium viverra. Proin sodales felis elit, non imperdiet turpis lacinia sed. " +
+            "Cras vitae blandit lectus, et mollis magna. " +
+            "Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; " +
+            "Vivamus auctor massa sit amet condimentum egestas. " +
+            "Morbi arcu nibh, tincidunt nec pretium eu, scelerisque vitae sem. " +
+            "Donec commodo dui dapibus, sollicitudin lorem et, efficitur purus.");
+
+        public const string TestPdfFile1 = @"Resources\TestFiles\test_pdf_file_1.pdf";
         public const string TestPdfFile2 = @"Resources\TestFiles\test_pdf_file_2.pdf";
         public const string TestZipFile = @"Resources\TestFiles\test_zip_file.zip";
         public const string TestVideoMp4File = @"Resources\TestFiles\test_large_video.mp4";
@@ -39,8 +40,7 @@ namespace IntegrationTests.TestSupport
         public const string TestHtmlFile = @"Resources\TestFiles\test_html_file.html";
         public const string TestImagePngFile = @"Resources\TestFiles\test_image_file.png";
         public const string TestPathFile = @"Resources\TestPath";
-    
-        public const string TestPassword = "hkcymenwcxpzkoyowuagcuhvrhavtdcrxbfqganecoxuirxekq"; 
-        
+
+        public const string TestPassword = "hkcymenwcxpzkoyowuagcuhvrhavtdcrxbfqganecoxuirxekq";
     }
 }

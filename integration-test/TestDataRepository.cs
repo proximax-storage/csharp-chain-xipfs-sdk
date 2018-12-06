@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using IO.Proximax.SDK.Upload;
-using IO.Proximax.SDK.Utils;
+using Proximax.Storage.SDK.Upload;
+using Proximax.Storage.SDK.Utils;
 
 namespace IntegrationTests
 {
@@ -11,7 +11,8 @@ namespace IntegrationTests
         private const string TestDataJsonFile = @"test_data.json";
         private static readonly Dictionary<string, string> TestDataMap = LoadTestDataMap();
 
-        public static void LogAndSaveResult(UploadResult result, string testMethodName) {
+        public static void LogAndSaveResult(UploadResult result, string testMethodName)
+        {
             Console.WriteLine("transaction hash: " + result.TransactionHash);
             Console.WriteLine("data hash: " + result.Data.DataHash);
             Console.WriteLine("data digest: " + result.Data.Digest);
@@ -23,11 +24,13 @@ namespace IntegrationTests
             SaveTestDataMap();
         }
 
-        public static string GetData(string testMethodName, string dataName) {
+        public static string GetData(string testMethodName, string dataName)
+        {
             return TestDataMap.GetValueOrDefault(testMethodName + "." + dataName);
         }
 
-        private static void SaveTestDataMap() {
+        private static void SaveTestDataMap()
+        {
             lock (TestDataJsonFile)
             {
                 using (var streamWriter =
@@ -49,7 +52,8 @@ namespace IntegrationTests
             }
         }
 
-        private static Dictionary<string, string> LoadTestDataMap() {
+        private static Dictionary<string, string> LoadTestDataMap()
+        {
             lock (TestDataJsonFile)
             {
                 using (var streamReader =

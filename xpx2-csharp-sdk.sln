@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2003
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "xpx2-csharp-sdk", "xpx2-csharp-sdk\io.proximax.sdk.csproj", "{73F2D530-DE69-446A-A898-B44ED30C0732}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "proximax-storage-sdk", "proximax-storage-sdk\proximax.storage.sdk.csproj", "{73F2D530-DE69-446A-A898-B44ED30C0732}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "integration-test", "integration-test\integration-test.csproj", "{13CE7CFD-7644-4C68-991F-5CAB4D7EBC89}"
 EndProject

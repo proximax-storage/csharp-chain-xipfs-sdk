@@ -1,73 +1,79 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using IO.Proximax.SDK.Async;
-using IO.Proximax.SDK.Connections;
-using IO.Proximax.SDK.Models;
-using IO.Proximax.SDK.Search;
+using Proximax.Storage.SDK.Async;
+using Proximax.Storage.SDK.Connections;
+using Proximax.Storage.SDK.Models;
+using Proximax.Storage.SDK.Search;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using static IntegrationTests.IntegrationTestConfig;
 
 namespace IntegrationTests.Search
 {
-	[TestClass]
-	public class SearcherAsyncIntegrationTests
-	{
-		private Searcher UnitUnderTest { get; set; }
+    [TestClass]
+    public class SearcherAsyncIntegrationTests
+    {
+        private Searcher UnitUnderTest { get; set; }
 
-		[TestInitialize]
-		public void TestInitialize()
-		{
-			UnitUnderTest = new Searcher(
-				ConnectionConfig.CreateWithLocalIpfsConnection(
-					new BlockchainNetworkConnection(BlockchainNetworkType.MijinTest, BlockchainApiHost, BlockchainApiPort, BlockchainApiProtocol),
-					new IpfsConnection(IpfsApiHost, IpfsApiPort, BlockchainApiProtocol))
-			);
-		}
+        [TestInitialize]
+        public void TestInitialize()
+        {
+            UnitUnderTest = new Searcher(
+                ConnectionConfig.CreateWithLocalIpfsConnection(
+                    new BlockchainNetworkConnection(BlockchainNetworkType.MijinTest, BlockchainApiHost,
+                        BlockchainApiPort, BlockchainApiProtocol),
+                    new IpfsConnection(IpfsApiHost, IpfsApiPort, BlockchainApiProtocol))
+            );
+        }
 
-		[TestMethod, Timeout(30000)]
-		public void ShouldSearchAsynchronouslyWithoutCallback() {
-			var param = SearchParameter.CreateForAddress(AccountAddress1).Build();
-	
-			var asyncTask = UnitUnderTest.SearchAsync(param);
+        [TestMethod, Timeout(30000)]
+        public void ShouldSearchAsynchronouslyWithoutCallback()
+        {
+            var param = SearchParameter.CreateForAddress(AccountAddress1).Build();
 
-			while (!asyncTask.IsDone()) {
-				Thread.Sleep(50);
-			}
-	
-			Assert.IsTrue(asyncTask.IsDone());
-		}
+            var asyncTask = UnitUnderTest.SearchAsync(param);
 
-		[TestMethod, Timeout(30000)]
-		public void ShouldSearchAsynchronouslyWithSuccessCallback() {
-			var param = SearchParameter.CreateForAddress(AccountAddress1).Build();
-	
-			var taskCompletionSource = new TaskCompletionSource<SearchResult>();
-			var asyncCallbacks = AsyncCallbacks<SearchResult>.Create<SearchResult>(
-				searchResult => taskCompletionSource.SetResult(searchResult), null);
+            while (!asyncTask.IsDone())
+            {
+                Thread.Sleep(50);
+            }
 
-			UnitUnderTest.SearchAsync(param, asyncCallbacks);
-			taskCompletionSource.Task.Wait(5000);
-			
-			var result = taskCompletionSource.Task.Result;
-			Assert.IsNotNull(result);
-			Assert.IsNotNull(result.Results);
-			Assert.AreEqual(result.Results.Count, 10);
-		}
+            Assert.IsTrue(asyncTask.IsDone());
+        }
 
-		[TestMethod, Timeout(10000)]
-		public void ShouldSearchAsynchronouslyWithFailureCallback() {
-			var param = SearchParameter.CreateForAddress("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA").Build();
-			var taskCompletionSource = new TaskCompletionSource<Exception>();
-			var asyncCallbacks = AsyncCallbacks<SearchResult>.Create<SearchResult>(
-				null, ex => taskCompletionSource.SetResult(ex));
+        [TestMethod, Timeout(30000)]
+        public void ShouldSearchAsynchronouslyWithSuccessCallback()
+        {
+            var param = SearchParameter.CreateForAddress(AccountAddress1).Build();
 
-			UnitUnderTest.SearchAsync(param, asyncCallbacks);
-			taskCompletionSource.Task.Wait(5000);
+            var taskCompletionSource = new TaskCompletionSource<SearchResult>();
+            var asyncCallbacks = AsyncCallbacks<SearchResult>.Create<SearchResult>(
+                searchResult => taskCompletionSource.SetResult(searchResult), null);
 
-			var exception = taskCompletionSource.Task.Result;
-			
-			Assert.IsInstanceOfType(exception, exception.GetType());
-		}
-	}
+            UnitUnderTest.SearchAsync(param, asyncCallbacks);
+            taskCompletionSource.Task.Wait(5000);
+
+            var result = taskCompletionSource.Task.Result;
+            Assert.IsNotNull(result);
+            Assert.IsNotNull(result.Results);
+            Assert.AreEqual(result.Results.Count, 10);
+        }
+
+        [TestMethod, Timeout(10000)]
+        public void ShouldSearchAsynchronouslyWithFailureCallback()
+        {
+            var param = SearchParameter.CreateForAddress("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+                .Build();
+            var taskCompletionSource = new TaskCompletionSource<Exception>();
+            var asyncCallbacks = AsyncCallbacks<SearchResult>.Create<SearchResult>(
+                null, ex => taskCompletionSource.SetResult(ex));
+
+            UnitUnderTest.SearchAsync(param, asyncCallbacks);
+            taskCompletionSource.Task.Wait(5000);
+
+            var exception = taskCompletionSource.Task.Result;
+
+            Assert.IsInstanceOfType(exception, exception.GetType());
+        }
+    }
 }
