@@ -81,7 +81,7 @@ namespace ProximaX.Sirius.Storage.SDK.Services.Clients.Catapult
                 }
                 finally
                 {
-                    //this.CloseListener(listener);
+                    this.CloseListener(listener);
                 }
             }
         }
