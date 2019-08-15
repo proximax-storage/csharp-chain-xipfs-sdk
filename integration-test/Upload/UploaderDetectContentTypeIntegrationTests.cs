@@ -1,6 +1,6 @@
-using Proximax.Storage.SDK.Connections;
-using Proximax.Storage.SDK.Models;
-using Proximax.Storage.SDK.Upload;
+using ProximaX.Sirius.Storage.SDK.Connections;
+using ProximaX.Sirius.Storage.SDK.Models;
+using ProximaX.Sirius.Storage.SDK.Upload;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using static IntegrationTests.IntegrationTestConfig;
 

@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reactive.Linq;
-using io.nem2.sdk.Infrastructure.Buffers.Model;
-using io.nem2.sdk.Infrastructure.HttpRepositories;
-using io.nem2.sdk.Model.Accounts;
-using io.nem2.sdk.Model.Transactions;
+
 using Proximax.Storage.SDK.Connections;
 using Proximax.Storage.SDK.Exceptions;
 using Proximax.Storage.SDK.Models;
+using ProximaX.Sirius.Chain.Sdk.Infrastructure;
+using ProximaX.Sirius.Chain.Sdk.Model.Accounts;
+using ProximaX.Sirius.Chain.Sdk.Model.Transactions;
 using static Proximax.Storage.SDK.Utils.ParameterValidationUtils;
 
 namespace Proximax.Storage.SDK.Services.Clients.Catapult

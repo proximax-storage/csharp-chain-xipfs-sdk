@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Reactive.Linq;
 using System.Reactive.Threading.Tasks;
-using io.nem2.sdk.Infrastructure.HttpRepositories;
-using io.nem2.sdk.Infrastructure.Listeners;
-using io.nem2.sdk.Model.Accounts;
-using io.nem2.sdk.Model.Transactions;
 using Proximax.Storage.SDK.Connections;
 using Proximax.Storage.SDK.Exceptions;
+using ProximaX.Sirius.Chain.Sdk.Infrastructure;
+using ProximaX.Sirius.Chain.Sdk.Infrastructure.Listener;
+using ProximaX.Sirius.Chain.Sdk.Model.Accounts;
+using ProximaX.Sirius.Chain.Sdk.Model.Blockchain;
+using ProximaX.Sirius.Chain.Sdk.Model.Transactions;
 using static Proximax.Storage.SDK.Utils.ParameterValidationUtils;
 
 namespace Proximax.Storage.SDK.Services.Clients.Catapult
@@ -16,6 +17,9 @@ namespace Proximax.Storage.SDK.Services.Clients.Catapult
         private const string StatusForSuccessfulUnconfirmedTransaction = "SUCCESS";
 
         private TransactionHttp TransactionHttp { get; set; }
+
+        private BlockHttp BlockHttp { get; set; }
+
         private string BlockchainRestApiHost { get; set; }
         private int BlockchainRestApiPort { get; set; }
         private Listener Listener { get; set; }
@@ -23,6 +27,7 @@ namespace Proximax.Storage.SDK.Services.Clients.Catapult
         public TransactionClient(BlockchainNetworkConnection blockchainNetworkConnection)
         {
             TransactionHttp = new TransactionHttp(blockchainNetworkConnection.RestApiUrl);
+            BlockHttp = new BlockHttp(blockchainNetworkConnection.RestApiUrl);
             var uri = new Uri(blockchainNetworkConnection.RestApiUrl);
             BlockchainRestApiHost = uri.Host;
             BlockchainRestApiPort = uri.Port;
@@ -84,6 +89,11 @@ namespace Proximax.Storage.SDK.Services.Clients.Catapult
             CheckParameter(transactionHash != null, "transactionHash is required");
 
             return TransactionHttp.GetTransaction(transactionHash);
+        }
+
+        public IObservable<BlockInfo> GetNemesisBlockInfo()
+        {
+            return BlockHttp.GetBlockByHeight(1);
         }
 
 

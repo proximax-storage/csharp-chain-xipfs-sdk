@@ -1,15 +1,16 @@
-﻿using io.nem2.sdk.Model.Accounts;
-using io.nem2.sdk.Model.Blockchain;
-using io.nem2.sdk.Model.Transactions;
+﻿
+using ProximaX.Sirius.Chain.Sdk.Model.Accounts;
+using ProximaX.Sirius.Chain.Sdk.Model.Blockchain;
+using ProximaX.Sirius.Chain.Sdk.Model.Transactions;
 using static Proximax.Storage.SDK.Utils.ParameterValidationUtils;
 
 namespace Proximax.Storage.SDK.Utils
 {
     public class NemUtils
     {
-        private NetworkType.Types NetworkType { get; set; }
+        private NetworkType NetworkType { get; set; }
 
-        public NemUtils(NetworkType.Types networkType)
+        public NemUtils(NetworkType networkType)
         {
             NetworkType = networkType;
         }
@@ -42,12 +43,12 @@ namespace Proximax.Storage.SDK.Utils
             return Account.CreateFromPrivateKey(privateKey, NetworkType);
         }
 
-        public SignedTransaction SignTransaction(string signerPrivateKey, Transaction transaction)
+        public SignedTransaction SignTransaction(string signerPrivateKey, Transaction transaction,string generationHash)
         {
             CheckParameter(signerPrivateKey != null, "signerPrivateKey is required");
             CheckParameter(transaction != null, "transaction is required");
 
-            return GetAccount(signerPrivateKey).Sign(transaction);
+            return GetAccount(signerPrivateKey).Sign(transaction, generationHash);
         }
     }
 }

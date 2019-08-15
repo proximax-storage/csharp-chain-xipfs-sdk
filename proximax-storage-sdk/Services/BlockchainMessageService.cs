@@ -1,20 +1,21 @@
 ﻿using System;
-using io.nem2.sdk.Model.Accounts;
-using io.nem2.sdk.Model.Blockchain;
-using io.nem2.sdk.Model.Transactions;
-using io.nem2.sdk.Model.Transactions.Messages;
+
 using Proximax.Storage.SDK.Connections;
 using Proximax.Storage.SDK.Exceptions;
 using Proximax.Storage.SDK.Models;
 using Proximax.Storage.SDK.Services.Clients.Catapult;
 using Proximax.Storage.SDK.Utils;
+using ProximaX.Sirius.Chain.Sdk.Model.Accounts;
+using ProximaX.Sirius.Chain.Sdk.Model.Blockchain;
+using ProximaX.Sirius.Chain.Sdk.Model.Transactions;
+using ProximaX.Sirius.Chain.Sdk.Model.Transactions.Messages;
 using static Proximax.Storage.SDK.Utils.ParameterValidationUtils;
 
 namespace Proximax.Storage.SDK.Services
 {
     public class BlockchainMessageService
     {
-        private NetworkType.Types NetworkType { get; }
+        private NetworkType NetworkType { get; }
         private AccountClient AccountClient { get; }
 
         public BlockchainMessageService(BlockchainNetworkConnection blockchainNetworkConnection)
@@ -23,7 +24,7 @@ namespace Proximax.Storage.SDK.Services
             NetworkType = blockchainNetworkConnection.NetworkType;
         }
 
-        internal BlockchainMessageService(NetworkType.Types networkType, AccountClient accountClient)
+        internal BlockchainMessageService(NetworkType networkType, AccountClient accountClient)
         {
             NetworkType = networkType;
             AccountClient = accountClient;
@@ -62,7 +63,8 @@ namespace Proximax.Storage.SDK.Services
                         throw new MissingPrivateKeyOnDownloadException(
                             "accountPrivateKey is required to download a secure message");
                     var retrieverKeyPair = KeyPair.CreateFromPrivateKey(accountPrivateKey);
-                    return secureMessage.GetDecodedPayload(accountPrivateKey,
+                    
+                    return secureMessage.DecryptPayload(accountPrivateKey,
                         GetTransactionOtherPartyPublicKey(retrieverKeyPair, transferTransaction));
                 default:
                     throw new NotSupportedException(

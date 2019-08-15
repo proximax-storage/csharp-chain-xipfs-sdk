@@ -1,10 +1,10 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Proximax.Storage.SDK.Async;
-using Proximax.Storage.SDK.Connections;
-using Proximax.Storage.SDK.Models;
-using Proximax.Storage.SDK.Search;
+using ProximaX.Sirius.Storage.SDK.Async;
+using ProximaX.Sirius.Storage.SDK.Connections;
+using ProximaX.Sirius.Storage.SDK.Models;
+using ProximaX.Sirius.Storage.SDK.Search;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using static IntegrationTests.IntegrationTestConfig;
 

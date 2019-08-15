@@ -1,6 +1,6 @@
 using System;
 using System.IO;
-using Proximax.Storage.SDK.Utils;
+using ProximaX.Sirius.Storage.SDK.Utils;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using static UnitTests.TestSupport.Constants;
 

@@ -2,22 +2,24 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
-    <RootNamespace>Proximax.Storage.SDK</RootNamespace>
+    <RootNamespace>ProximaX.Storage.SDK</RootNamespace>
     <Authors>Tyrone Villaluna</Authors>
     <Company>ProximaX</Company>
     <RepositoryUrl>https://github.com/proximax-storage/xpx2-csharp-sdk</RepositoryUrl>
     <PackageProjectUrl>https://github.com/proximax-storage/xpx2-csharp-sdk</PackageProjectUrl>
     <Company>ProximaX</Company>
-    <AssemblyVersion>0.0.2</AssemblyVersion>
-    <FileVersion>0.0.2</FileVersion>
-    <Version>0.0.2</Version>
+    <AssemblyVersion>0.0.2.0</AssemblyVersion>
+    <FileVersion>0.0.2.0</FileVersion>
+    <Version>0.2.0-beta</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <description>ProximaX SDK</description>
+    <description>ProximaX Storage SDK</description>
+    <AssemblyName>ProximaX.Storage.SDK</AssemblyName>
+    <PackageId>csharp-chain-xipfs-sdk</PackageId>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Ipfs.Api" Version="0.23.2" />
-    <PackageReference Include="proximax.nem2.sdk" Version="0.8.10" />
+    <PackageReference Include="csharp-xpx-chain-sdk" Version="0.4.0-beta" />
+    <PackageReference Include="Ipfs.Api" Version="0.23.6" />
   </ItemGroup>
 
 </Project>

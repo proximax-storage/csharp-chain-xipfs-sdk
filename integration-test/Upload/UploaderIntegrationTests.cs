@@ -2,11 +2,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using Proximax.Storage.SDK.Connections;
-using Proximax.Storage.SDK.Models;
-using Proximax.Storage.SDK.Upload;
+using ProximaX.Sirius.Storage.SDK.Connections;
+using ProximaX.Sirius.Storage.SDK.Models;
+using ProximaX.Sirius.Storage.SDK.Upload;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using static Proximax.Storage.SDK.Models.Constants;
+using static ProximaX.Sirius.Storage.SDK.Models.Constants;
 using static IntegrationTests.IntegrationTestConfig;
 using static IntegrationTests.TestDataRepository;
 using static IntegrationTests.TestSupport.Constants;
@@ -30,7 +30,7 @@ namespace IntegrationTests.Upload
             );
         }
 
-        [TestMethod, Timeout(10000)]
+        [TestMethod, Timeout(100000)]
         public void ShouldReturnVersion()
         {
             var param = UploadParameter.CreateForStringUpload(

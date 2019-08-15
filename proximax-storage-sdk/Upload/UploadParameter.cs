@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using io.nem2.sdk.Model.Mosaics;
 using Proximax.Storage.SDK.PrivacyStrategies;
+using ProximaX.Sirius.Chain.Sdk.Model.Mosaics;
 using static Proximax.Storage.SDK.Models.Constants;
 
 namespace Proximax.Storage.SDK.Upload

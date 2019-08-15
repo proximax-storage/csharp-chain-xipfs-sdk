@@ -1,19 +1,20 @@
 using System;
 using System.Collections.Generic;
 using System.Reactive.Linq;
-using io.nem2.sdk.Infrastructure.Listeners;
-using io.nem2.sdk.Model.Accounts;
-using io.nem2.sdk.Model.Blockchain;
-using io.nem2.sdk.Model.Mosaics;
-using io.nem2.sdk.Model.Transactions;
-using Proximax.Storage.SDK.Connections;
-using Proximax.Storage.SDK.Exceptions;
-using Proximax.Storage.SDK.Models;
-using Proximax.Storage.SDK.Upload;
+
+using ProximaX.Sirius.Storage.SDK.Connections;
+using ProximaX.Sirius.Storage.SDK.Exceptions;
+using ProximaX.Sirius.Storage.SDK.Models;
+using ProximaX.Sirius.Storage.SDK.Upload;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using static IntegrationTests.IntegrationTestConfig;
 using static IntegrationTests.TestDataRepository;
 using static IntegrationTests.TestSupport.Constants;
+using ProximaX.Sirius.Chain.Sdk.Model.Transactions;
+using ProximaX.Sirius.Chain.Sdk.Model.Mosaics;
+using ProximaX.Sirius.Chain.Sdk.Model.Blockchain;
+using ProximaX.Sirius.Chain.Sdk.Model.Accounts;
+using ProximaX.Sirius.Chain.Sdk.Infrastructure.Listener;
 
 namespace IntegrationTests.Upload
 {
@@ -51,6 +52,7 @@ namespace IntegrationTests.Upload
             LogAndSaveResult(result, GetType().Name + ".ShouldUploadWithSignerAsRecipientByDefault");
         }
 
+        /*
         [TestMethod, Timeout(10000), ExpectedException(typeof(UploadFailureException))]
         public void FailUploadWhenSignerHasNoFunds()
         {
@@ -60,6 +62,7 @@ namespace IntegrationTests.Upload
 
             UnitUnderTest.Upload(param);
         }
+        */
 
         [TestMethod, Timeout(60000)]
         public void ShouldUploadWithRecipientPublicKeyProvided()
@@ -114,18 +117,18 @@ namespace IntegrationTests.Upload
             Assert.IsNotNull(result.TransactionHash);
             var transaction = WaitForTransactionConfirmation(AccountPrivateKey1, result.TransactionHash);
             Assert.IsTrue(transaction is TransferTransaction);
-            Assert.IsTrue((transaction as TransferTransaction).Deadline.GetInstant() <=
-                          Deadline.CreateHours(2).GetInstant());
+            Assert.IsTrue((transaction as TransferTransaction).Deadline.Ticks <=
+                          Deadline.Create(2).Ticks);
 
             LogAndSaveResult(result, GetType().Name + ".ShouldUploadWithTransactionDeadlinesProvided");
         }
 
-        [TestMethod, Timeout(30000)]
+        [TestMethod, Timeout(3000000)]
         public void ShouldUploadWithTransactionMosaicsProvided()
         {
             var param = UploadParameter
                 .CreateForStringUpload(TestString, AccountPrivateKey1)
-                .WithTransactionMosaics(new List<Mosaic> {new Mosaic(new MosaicId("prx:xpx"), 2)})
+                .WithTransactionMosaics(new List<Mosaic> {NetworkCurrencyMosaic.CreateAbsolute(2)})
                 .Build();
 
             var result = UnitUnderTest.Upload(param);
@@ -133,7 +136,7 @@ namespace IntegrationTests.Upload
             var transaction = WaitForTransactionConfirmation(AccountPrivateKey1, result.TransactionHash);
             Assert.IsTrue(transaction is TransferTransaction);
             Assert.AreEqual((transaction as TransferTransaction).Mosaics.Count, 1);
-            Assert.AreEqual((transaction as TransferTransaction).Mosaics[0].MosaicId, new MosaicId("prx:xpx"));
+            Assert.AreEqual((transaction as TransferTransaction).Mosaics[0].HexId, new MosaicId("0dc67fbe1cad29e3").HexId);
             Assert.AreEqual((transaction as TransferTransaction).Mosaics[0].Amount, (ulong) 2);
 
             LogAndSaveResult(result, GetType().Name + ".ShouldUploadWithTransactionMosaicsProvided");
@@ -151,7 +154,7 @@ namespace IntegrationTests.Upload
 
             var transaction = WaitForTransactionConfirmation(AccountPrivateKey1, result.TransactionHash);
             Assert.IsTrue(transaction is TransferTransaction);
-            Assert.AreEqual((transaction as TransferTransaction).Mosaics.Count, 0);
+            Assert.AreEqual((transaction as TransferTransaction).Mosaics.Count, 1);
 
             LogAndSaveResult(result, GetType().Name + ".ShouldUploadWithEmptyTransactionMosaicsProvided");
         }
@@ -163,7 +166,7 @@ namespace IntegrationTests.Upload
             {
                 listener.Open().Wait();
                 var transaction = listener.ConfirmedTransactionsGiven(
-                        Account.CreateFromPrivateKey(senderPrivateKey, NetworkType.Types.MIJIN_TEST).Address)
+                        Account.CreateFromPrivateKey(senderPrivateKey, NetworkType.MIJIN_TEST).Address)
                     .Distinct(unconfirmedTxn => unconfirmedTxn.TransactionInfo.Hash.Equals(transactionHash))
                     .FirstAsync()
                     .Wait();

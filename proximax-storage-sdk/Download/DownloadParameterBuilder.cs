@@ -1,5 +1,5 @@
-﻿using io.nem2.sdk.Model.Accounts;
-using Proximax.Storage.SDK.PrivacyStrategies;
+﻿using Proximax.Storage.SDK.PrivacyStrategies;
+using ProximaX.Sirius.Chain.Sdk.Model.Accounts;
 using static Proximax.Storage.SDK.Utils.ParameterValidationUtils;
 
 namespace Proximax.Storage.SDK.Download

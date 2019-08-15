@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reactive.Linq;
-using io.nem2.sdk.Model.Accounts;
-using io.nem2.sdk.Model.Mosaics;
-using io.nem2.sdk.Model.Transactions;
-using io.nem2.sdk.Model.Transactions.Messages;
+
 using Proximax.Storage.SDK.Connections;
 using Proximax.Storage.SDK.Exceptions;
 using Proximax.Storage.SDK.Models;
 using Proximax.Storage.SDK.Services.Clients.Catapult;
 using Proximax.Storage.SDK.Utils;
+using ProximaX.Sirius.Chain.Sdk.Model.Accounts;
+using ProximaX.Sirius.Chain.Sdk.Model.Mosaics;
+using ProximaX.Sirius.Chain.Sdk.Model.Transactions;
+using ProximaX.Sirius.Chain.Sdk.Model.Transactions.Messages;
 using static Proximax.Storage.SDK.Utils.ParameterValidationUtils;
 
 namespace Proximax.Storage.SDK.Services
@@ -18,6 +19,7 @@ namespace Proximax.Storage.SDK.Services
     {
         private BlockchainNetworkConnection BlockchainNetworkConnection { get; }
         private BlockchainMessageService BlockchainMessageService { get; }
+
         private TransactionClient TransactionClient { get; }
         private NemUtils NemUtils { get; }
 
@@ -47,7 +49,7 @@ namespace Proximax.Storage.SDK.Services
             {
                 var transaction = GetTransaction(transactionHash);
 
-                if (!(transaction.TransactionType.Equals(TransactionTypes.Types.Transfer) &&
+                if (!(transaction.TransactionType.Equals(TransactionType.TRANSFER) &&
                       transaction is TransferTransaction))
                     throw new NotSupportedException("Expecting a transfer transaction");
 
@@ -71,8 +73,9 @@ namespace Proximax.Storage.SDK.Services
                 recipientPublicKey, recipientAddress, useBlockchainSecureMessage);
             var recipient = GetRecipient(signerPrivateKey, recipientPublicKey, recipientAddress);
             var transaction = CreateTransaction(recipient, transactionDeadline, transactionMosaics, message);
-            var signedTransaction = NemUtils.SignTransaction(signerPrivateKey, transaction);
-
+            var generationHash = TransactionClient.GetNemesisBlockInfo().Wait().GenerationHash;
+            var signedTransaction = NemUtils.SignTransaction(signerPrivateKey, transaction, generationHash);
+            
             TransactionClient.Announce(signedTransaction, NemUtils.GetAddressFromPrivateKey(signerPrivateKey));
 
             return Observable.Return(signedTransaction.Hash);
@@ -98,11 +101,12 @@ namespace Proximax.Storage.SDK.Services
             List<Mosaic> transactionMosaics, IMessage message)
         {
             return TransferTransaction.Create(
-                BlockchainNetworkConnection.NetworkType,
-                Deadline.CreateHours(transactionDeadline),
+                Deadline.Create(transactionDeadline),
                 recipientAddress,
-                transactionMosaics ?? new List<Mosaic> {new Mosaic(new MosaicId("prx:xpx"), 1)},
-                message);
+                transactionMosaics ?? new List<Mosaic> { NetworkCurrencyMosaic.CreateRelative(0) },
+                message,
+                BlockchainNetworkConnection.NetworkType
+                );
         }
 
         private Transaction GetTransaction(string transactionHash)

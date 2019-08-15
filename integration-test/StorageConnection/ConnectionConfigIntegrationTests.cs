@@ -1,4 +1,4 @@
-using Proximax.Storage.SDK.Connections;
+using ProximaX.Sirius.Storage.SDK.Connections;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using static IntegrationTests.IntegrationTestConfig;
 
@@ -11,7 +11,7 @@ namespace IntegrationTests.StorageConnection
         public void ShouldInitializeBlockchainNetworkConnectionWithJustStorageConnection()
         {
             var connectionConfig = ConnectionConfig.CreateWithStorageConnection(
-                new Proximax.Storage.SDK.Connections.StorageConnection(
+                new ProximaX.Sirius.Storage.SDK.Connections.StorageConnection(
                     StorageNodeApiHost,
                     StorageNodeApiPort,
                     StorageNodeApiProtocol,

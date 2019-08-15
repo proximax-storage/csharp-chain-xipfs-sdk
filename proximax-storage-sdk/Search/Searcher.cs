@@ -2,9 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
-using io.nem2.sdk.Model.Accounts;
-using io.nem2.sdk.Model.Blockchain;
-using io.nem2.sdk.Model.Transactions;
 using Proximax.Storage.SDK.Async;
 using Proximax.Storage.SDK.Connections;
 using Proximax.Storage.SDK.Exceptions;
@@ -12,6 +9,9 @@ using Proximax.Storage.SDK.Models;
 using Proximax.Storage.SDK.Services;
 using Proximax.Storage.SDK.Services.Clients.Catapult;
 using Proximax.Storage.SDK.Utils;
+using ProximaX.Sirius.Chain.Sdk.Model.Accounts;
+using ProximaX.Sirius.Chain.Sdk.Model.Blockchain;
+using ProximaX.Sirius.Chain.Sdk.Model.Transactions;
 using static Proximax.Storage.SDK.Utils.ParameterValidationUtils;
 
 namespace Proximax.Storage.SDK.Search
@@ -20,7 +20,7 @@ namespace Proximax.Storage.SDK.Search
     {
         private const int BatchTransactionSize = 100;
 
-        private NetworkType.Types NetworkType { get; }
+        private NetworkType NetworkType { get; }
         private AccountClient AccountClient { get; }
         private RetrieveProximaxMessagePayloadService RetrieveProximaxMessagePayloadService { get; }
 
@@ -34,7 +34,7 @@ namespace Proximax.Storage.SDK.Search
         }
 
         // constructor for unit testing purposes
-        internal Searcher(NetworkType.Types networkType,
+        internal Searcher(NetworkType networkType,
             AccountClient accountClient,
             RetrieveProximaxMessagePayloadService retrieveProximaxMessagePayloadService)
         {

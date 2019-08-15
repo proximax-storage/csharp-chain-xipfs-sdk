@@ -1,18 +1,25 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using Proximax.Storage.SDK.Upload;
-using Proximax.Storage.SDK.Utils;
+using ProximaX.Sirius.Storage.SDK.Upload;
+using ProximaX.Sirius.Storage.SDK.Utils;
 
 namespace IntegrationTests
 {
     public static class TestDataRepository
     {
         private const string TestDataJsonFile = @"test_data.json";
-        private static readonly Dictionary<string, string> TestDataMap = LoadTestDataMap();
+        private static readonly Dictionary<string, string> TestDataMap;
+
+        static TestDataRepository()
+        {
+            TestDataMap = LoadTestDataMap();
+        }
 
         public static void LogAndSaveResult(UploadResult result, string testMethodName)
         {
+
+
             Console.WriteLine("transaction hash: " + result.TransactionHash);
             Console.WriteLine("data hash: " + result.Data.DataHash);
             Console.WriteLine("data digest: " + result.Data.Digest);
@@ -56,22 +63,18 @@ namespace IntegrationTests
         {
             lock (TestDataJsonFile)
             {
-                using (var streamReader =
-                    new StreamReader(new FileStream(TestDataJsonFile, FileMode.Open, FileAccess.Read)))
+                try
                 {
-                    try
+                    using (var streamReader =
+                    new StreamReader(new FileStream(TestDataJsonFile, FileMode.Open, FileAccess.Read)))
                     {
                         return streamReader.ReadToEndAsync().Result.FromJson<Dictionary<string, string>>();
                     }
-                    catch (IOException e)
-                    {
-                        Console.WriteLine(e);
-                        return new Dictionary<string, string>();
-                    }
-                    finally
-                    {
-                        streamReader?.Close();
-                    }
+                }
+                catch (IOException e)
+                {
+                    Console.WriteLine(e);
+                    return new Dictionary<string, string>();
                 }
             }
         }

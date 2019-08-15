@@ -1,30 +1,30 @@
-﻿using io.nem2.sdk.Model.Blockchain;
-using Proximax.Storage.SDK.Exceptions;
+﻿using Proximax.Storage.SDK.Exceptions;
+using ProximaX.Sirius.Chain.Sdk.Model.Blockchain;
 
 namespace Proximax.Storage.SDK.Models
 {
     public enum BlockchainNetworkType
     {
-        MainNet = NetworkType.Types.MAIN_NET,
-        TestNet = NetworkType.Types.TEST_NET,
-        Private = NetworkType.Types.PRIVATE,
-        PrivateTest = NetworkType.Types.PRIVATE_TEST,
-        Mijin = NetworkType.Types.MIJIN,
-        MijinTest = NetworkType.Types.MIJIN_TEST
+        MainNet = NetworkType.MAIN_NET,
+        TestNet = NetworkType.TEST_NET,
+        Private = NetworkType.PRIVATE,
+        PrivateTest = NetworkType.PRIVATE_TEST,
+        Mijin = NetworkType.MIJIN,
+        MijinTest = NetworkType.MIJIN_TEST
     }
 
     static class BlockchainNetworkTypeMethods
     {
-        public static NetworkType.Types GetNetworkType(this BlockchainNetworkType type)
+        public static NetworkType GetNetworkType(this BlockchainNetworkType type)
         {
             switch (type)
             {
-                case BlockchainNetworkType.MainNet: return NetworkType.Types.MAIN_NET;
-                case BlockchainNetworkType.TestNet: return NetworkType.Types.TEST_NET;
-                case BlockchainNetworkType.Private: return NetworkType.Types.PRIVATE;
-                case BlockchainNetworkType.PrivateTest: return NetworkType.Types.PRIVATE_TEST;
-                case BlockchainNetworkType.Mijin: return NetworkType.Types.MIJIN;
-                case BlockchainNetworkType.MijinTest: return NetworkType.Types.MIJIN_TEST;
+                case BlockchainNetworkType.MainNet: return NetworkType.MAIN_NET;
+                case BlockchainNetworkType.TestNet: return NetworkType.TEST_NET;
+                case BlockchainNetworkType.Private: return NetworkType.PRIVATE;
+                case BlockchainNetworkType.PrivateTest: return NetworkType.PRIVATE_TEST;
+                case BlockchainNetworkType.Mijin: return NetworkType.MIJIN;
+                case BlockchainNetworkType.MijinTest: return NetworkType.MIJIN_TEST;
                 default:
                     throw new NetworkTypeInvalidException("Invalid network type");
             }
@@ -37,7 +37,8 @@ namespace Proximax.Storage.SDK.Models
         {
             switch (network)
             {
-                case "MAIN_NET": return BlockchainNetworkType.MainNet;
+                case "PUBLIC": return BlockchainNetworkType.MainNet;
+                case "PUBLICTEST": return BlockchainNetworkType.TestNet;
                 case "TEST_NET": return BlockchainNetworkType.TestNet;
                 case "PRIVATE": return BlockchainNetworkType.Private;
                 case "PRIVATE_TEST": return BlockchainNetworkType.PrivateTest;
