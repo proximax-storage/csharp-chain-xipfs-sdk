@@ -18,7 +18,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="csharp-xpx-chain-sdk" Version="0.4.0-beta" />
+    <PackageReference Include="csharp-xpx-chain-sdk" Version="0.4.0" />
     <PackageReference Include="Ipfs.Api" Version="0.23.6" />
   </ItemGroup>
 
