@@ -47,7 +47,7 @@ namespace IntegrationTests.Upload
             Assert.IsNotNull(result.TransactionHash);
             var transaction = WaitForTransactionConfirmation(AccountPrivateKey1, result.TransactionHash);
             Assert.IsTrue(transaction is TransferTransaction);
-            Assert.AreEqual((transaction as TransferTransaction).Address.Plain, AccountAddress1);
+            Assert.AreEqual((transaction as TransferTransaction).Recipient.Address.Plain, AccountAddress1);
 
             LogAndSaveResult(result, GetType().Name + ".ShouldUploadWithSignerAsRecipientByDefault");
         }
@@ -79,7 +79,7 @@ namespace IntegrationTests.Upload
             Assert.IsNotNull(result.TransactionHash);
             var transaction = WaitForTransactionConfirmation(AccountPrivateKey1, result.TransactionHash);
             Assert.IsTrue(transaction is TransferTransaction);
-            Assert.AreEqual((transaction as TransferTransaction).Address.Plain, AccountAddress2);
+            Assert.AreEqual((transaction as TransferTransaction).Recipient.Address.Plain, AccountAddress2);
 
             LogAndSaveResult(result, GetType().Name + ".ShouldUploadWithRecipientPublicKeyProvided");
         }
@@ -98,7 +98,7 @@ namespace IntegrationTests.Upload
             Assert.IsNotNull(result.TransactionHash);
             var transaction = WaitForTransactionConfirmation(AccountPrivateKey1, result.TransactionHash);
             Assert.IsTrue(transaction is TransferTransaction);
-            Assert.AreEqual((transaction as TransferTransaction).Address.Plain, AccountAddress2);
+            Assert.AreEqual((transaction as TransferTransaction).Recipient.Address.Plain, AccountAddress2);
 
             LogAndSaveResult(result, GetType().Name + ".ShouldUploadWithRecipientAddressProvided");
         }

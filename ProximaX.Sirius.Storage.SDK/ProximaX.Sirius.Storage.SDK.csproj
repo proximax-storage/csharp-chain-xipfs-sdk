@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <PackageId>csharp-chain-xipfs-sdk</PackageId>
-    <Version>0.2.0-beta</Version>
+    <Version>0.2.1</Version>
     <Authors>Proximax IO</Authors>
     <Company>Proximax IO</Company>
     <Product>csharp-chain-xipfs-sdk</Product>
@@ -18,7 +18,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="csharp-xpx-chain-sdk" Version="0.4.0" />
+    <PackageReference Include="csharp-xpx-chain-sdk" Version="0.5.0" />
     <PackageReference Include="Ipfs.Api" Version="0.23.6" />
   </ItemGroup>
 

@@ -113,7 +113,7 @@ namespace ProximaX.Sirius.Storage.SDK.Services
             TransferTransaction transferTransaction)
         {
             var senderAccount = transferTransaction.Signer;
-            var recipient = transferTransaction.Address;
+            var recipient = transferTransaction.Recipient.Address;
             var retrieverAddress = Address.CreateFromPublicKey(retrieverKeyPair.PublicKeyString, NetworkType);
 
             if (retrieverAddress.Plain.Equals(recipient.Plain))
