@@ -22,6 +22,8 @@ namespace ProximaX.Sirius.Storage.SDK.Services.Clients.Catapult
 
         private string BlockchainRestApiHost { get; set; }
         private int BlockchainRestApiPort { get; set; }
+
+        private bool UseSSL { get; set; }
         private Listener Listener { get; set; }
 
         public TransactionClient(BlockchainNetworkConnection blockchainNetworkConnection)
@@ -31,6 +33,7 @@ namespace ProximaX.Sirius.Storage.SDK.Services.Clients.Catapult
             var uri = new Uri(blockchainNetworkConnection.RestApiUrl);
             BlockchainRestApiHost = uri.Host;
             BlockchainRestApiPort = uri.Port;
+            UseSSL = blockchainNetworkConnection.HttpProtocol == HttpProtocol.Https;
         }
 
         internal TransactionClient(TransactionHttp transactionHttp, Listener listener)
@@ -101,7 +104,7 @@ namespace ProximaX.Sirius.Storage.SDK.Services.Clients.Catapult
 
         private Listener GetListener()
         {
-            return Listener ?? new Listener(BlockchainRestApiHost, BlockchainRestApiPort);
+            return Listener ?? new Listener(BlockchainRestApiHost, BlockchainRestApiPort, UseSSL);
         }
 
         private IObservable<string> GetAddedUnconfirmedTransactionStatus(Address address, string transactionHash,

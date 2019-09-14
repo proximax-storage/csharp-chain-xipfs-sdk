@@ -24,7 +24,7 @@ namespace IntegrationTests.Upload
         {
             UnitUnderTest = new Uploader(
                 ConnectionConfig.CreateWithLocalIpfsConnection(
-                    new BlockchainNetworkConnection(BlockchainNetworkType.MijinTest, BlockchainApiHost,
+                    new BlockchainNetworkConnection(BlockchainNetworkType.TestNet, BlockchainApiHost,
                         BlockchainApiPort, BlockchainApiProtocol),
                     new IpfsConnection(IpfsApiHost, IpfsApiPort, BlockchainApiProtocol))
             );
