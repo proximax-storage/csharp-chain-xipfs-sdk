@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29201.188
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "integration-test", "integration-test\integration-test.csproj", "{13CE7CFD-7644-4C68-991F-5CAB4D7EBC89}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "unit-test", "unit-test\unit-test.csproj", "{ABBC7840-94ED-446E-B506-6543AD0A0B0E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProximaX.Sirius.Storage.SDK", "ProximaX.Sirius.Storage.SDK\ProximaX.Sirius.Storage.SDK.csproj", "{E62DACD4-2357-4539-97DA-B53F32DC829B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{13CE7CFD-7644-4C68-991F-5CAB4D7EBC89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13CE7CFD-7644-4C68-991F-5CAB4D7EBC89}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13CE7CFD-7644-4C68-991F-5CAB4D7EBC89}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13CE7CFD-7644-4C68-991F-5CAB4D7EBC89}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ABBC7840-94ED-446E-B506-6543AD0A0B0E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ABBC7840-94ED-446E-B506-6543AD0A0B0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ABBC7840-94ED-446E-B506-6543AD0A0B0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ABBC7840-94ED-446E-B506-6543AD0A0B0E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E62DACD4-2357-4539-97DA-B53F32DC829B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E62DACD4-2357-4539-97DA-B53F32DC829B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E62DACD4-2357-4539-97DA-B53F32DC829B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E62DACD4-2357-4539-97DA-B53F32DC829B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B8107D1C-3C30-4E6D-949F-12B10C9A53F7}
+	EndGlobalSection
+EndGlobal

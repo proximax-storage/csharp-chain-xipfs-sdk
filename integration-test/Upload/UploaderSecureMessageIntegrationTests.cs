@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using System.Text;
-using Proximax.Storage.SDK.Connections;
-using Proximax.Storage.SDK.Models;
-using Proximax.Storage.SDK.Upload;
+using ProximaX.Sirius.Storage.SDK.Connections;
+using ProximaX.Sirius.Storage.SDK.Models;
+using ProximaX.Sirius.Storage.SDK.Upload;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using static Proximax.Storage.SDK.Models.Constants;
+using static ProximaX.Sirius.Storage.SDK.Models.Constants;
 using static IntegrationTests.IntegrationTestConfig;
 using static IntegrationTests.TestDataRepository;
 using static IntegrationTests.TestSupport.Constants;

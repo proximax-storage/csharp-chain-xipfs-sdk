@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using Proximax.Storage.SDK.Connections;
-using Proximax.Storage.SDK.Download;
-using Proximax.Storage.SDK.Exceptions;
-using Proximax.Storage.SDK.Models;
-using Proximax.Storage.SDK.Utils;
+using ProximaX.Sirius.Storage.SDK.Connections;
+using ProximaX.Sirius.Storage.SDK.Download;
+using ProximaX.Sirius.Storage.SDK.Exceptions;
+using ProximaX.Sirius.Storage.SDK.Models;
+using ProximaX.Sirius.Storage.SDK.Utils;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using static IntegrationTests.IntegrationTestConfig;
-using static Proximax.Storage.SDK.Models.Constants;
+using static ProximaX.Sirius.Storage.SDK.Models.Constants;
 using static IntegrationTests.TestSupport.Constants;
 
 namespace IntegrationTests.Download
@@ -71,8 +71,8 @@ namespace IntegrationTests.Download
             Assert.IsNotNull(result.Data.DataHash);
             Assert.IsNull(result.Data.Description);
             Assert.IsNull(result.Data.Name);
-            Assert.IsNotNull(result.Data.Metadata);
-            Assert.AreEqual(result.Data.Metadata.Count, 0);
+            Assert.IsNull(result.Data.Metadata);
+            //Assert.AreEqual(result.Data.Metadata.Count, 0);
             Assert.IsNotNull(result.Data.Timestamp);
         }
 
@@ -118,8 +118,8 @@ namespace IntegrationTests.Download
             Assert.IsNotNull(result.Data.DataHash);
             Assert.IsNull(result.Data.Description);
             Assert.AreEqual(result.Data.Name, "test_text_file.txt");
-            Assert.IsNotNull(result.Data.Metadata);
-            Assert.AreEqual(result.Data.Metadata.Count, 0);
+            Assert.IsNull(result.Data.Metadata);
+           // Assert.AreEqual(result.Data.Metadata.Count, 0);
             Assert.IsNotNull(result.Data.Timestamp);
         }
 
@@ -164,8 +164,7 @@ namespace IntegrationTests.Download
             Assert.IsNotNull(result.Data.DataHash);
             Assert.IsNull(result.Data.Description);
             Assert.IsNull(result.Data.Name);
-            Assert.IsNotNull(result.Data.Metadata);
-            Assert.AreEqual(result.Data.Metadata.Count, 0);
+            Assert.IsNull(result.Data.Metadata);
             Assert.IsNotNull(result.Data.Timestamp);
         }
 
@@ -210,8 +209,8 @@ namespace IntegrationTests.Download
             Assert.IsNotNull(result.Data.DataHash);
             Assert.IsNull(result.Data.Description);
             Assert.IsNull(result.Data.Name);
-            Assert.IsNotNull(result.Data.Metadata);
-            Assert.AreEqual(result.Data.Metadata.Count, 0);
+            Assert.IsNull(result.Data.Metadata);
+            //Assert.AreEqual(result.Data.Metadata.Count, 0);
             Assert.IsNotNull(result.Data.Timestamp);
         }
 
@@ -299,7 +298,7 @@ namespace IntegrationTests.Download
             Assert.IsNotNull(result.Data.DataHash);
             Assert.IsNull(result.Data.Description);
             Assert.IsNull(result.Data.Name);
-            Assert.AreEqual(result.Data.Metadata.Count, 0);
+            Assert.IsNull(result.Data.Metadata);
             Assert.IsNotNull(result.Data.Timestamp);
         }
 
