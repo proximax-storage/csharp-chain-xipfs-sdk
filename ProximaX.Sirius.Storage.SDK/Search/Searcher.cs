@@ -69,14 +69,28 @@ namespace ProximaX.Sirius.Storage.SDK.Search
                 {
                     var fromTransactionId = param.FromTransactionId;
                     var results = new List<SearchResultItem>();
-                    var publicAccount = GetPublicAccount(param.AccountPrivateKey, param.AccountPublicKey,
-                        param.AccountAddress);
 
+
+                    IList<Transaction> transactions = new List<Transaction>();
                     while (results.Count < param.ResultSize)
                     {
-                        var transactions = AccountClient.GetTransactions(param.TransactionFilter, BatchTransactionSize,
-                            publicAccount,
-                            fromTransactionId).Wait();
+
+                        if (!string.IsNullOrEmpty(param.AccountAddress) && param.TransactionFilter == TransactionFilter.Incoming)
+                        {
+                            var address = Address.CreateFromRawAddress(param.AccountAddress);
+
+                            transactions = AccountClient.GetTransactions(param.TransactionFilter, BatchTransactionSize,
+                              address,
+                              fromTransactionId).Wait();
+                        }
+                        else if (!string.IsNullOrEmpty(param.AccountPublicKey))
+                        {
+                            var publicAccount = GetPublicAccount(param.AccountPrivateKey, param.AccountPublicKey, param.AccountAddress);
+
+                            transactions = AccountClient.GetTransactions(param.TransactionFilter, BatchTransactionSize,
+                              publicAccount,
+                              fromTransactionId).Wait();
+                        }
 
                         var resultSet = transactions.AsParallel()
                             .Select(txn => ConvertToResultItemIfMatchingCriteria(txn, param))

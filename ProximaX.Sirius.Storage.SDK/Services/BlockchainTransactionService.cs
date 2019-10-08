@@ -49,7 +49,7 @@ namespace ProximaX.Sirius.Storage.SDK.Services
             {
                 var transaction = GetTransaction(transactionHash);
 
-                if (!(transaction.TransactionType.Equals(TransactionType.TRANSFER) &&
+                if (!(transaction.TransactionType.Equals(EntityType.TRANSFER) &&
                       transaction is TransferTransaction))
                     throw new NotSupportedException("Expecting a transfer transaction");
 

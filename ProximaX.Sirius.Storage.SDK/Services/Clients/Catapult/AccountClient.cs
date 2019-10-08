@@ -72,5 +72,19 @@ namespace ProximaX.Sirius.Storage.SDK.Services.Clients.Catapult
                     throw new Exception($"Unknown transactionFilter {transactionFilter}");
             }
         }
+
+        public IObservable<IList<Transaction>> GetTransactions(TransactionFilter transactionFilter, int resultSize,
+         Address address, string fromTransactionId = null)
+        {
+            var queryParams = new QueryParams(resultSize, fromTransactionId);
+
+            switch (transactionFilter)
+            {
+                case TransactionFilter.Incoming:
+                    return AccountHttp.IncomingTransactions(address, queryParams);
+                default:
+                    throw new Exception($"Unknown transactionFilter {transactionFilter}");
+            }
+        }
     }
 }
