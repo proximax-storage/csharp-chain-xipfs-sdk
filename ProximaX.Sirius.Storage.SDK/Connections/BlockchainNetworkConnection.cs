@@ -2,6 +2,7 @@
 using ProximaX.Sirius.Storage.SDK.Models;
 using ProximaX.Sirius.Chain.Sdk.Model.Blockchain;
 using static ProximaX.Sirius.Storage.SDK.Utils.ParameterValidationUtils;
+using ProximaX.Sirius.Chain.Sdk.Model.Fees;
 
 namespace ProximaX.Sirius.Storage.SDK.Connections
 {
@@ -14,6 +15,9 @@ namespace ProximaX.Sirius.Storage.SDK.Connections
         public HttpProtocol HttpProtocol { get; }
 
         public string GenerationHash { get; }
+
+        public FeeCalculationStrategyType FeeCalculationStrategy { get; private set; }
+
         public BlockchainNetworkConnection(BlockchainNetworkType networkType, string apiHost = "localhost",
             int apiPort = 3000,
             HttpProtocol apiProtocol = HttpProtocol.Http)
@@ -26,7 +30,13 @@ namespace ProximaX.Sirius.Storage.SDK.Connections
             ApiPort = apiPort;
             HttpProtocol = apiProtocol;
             RestApiUrl = new UriBuilder(HttpProtocol.GetProtocol(), apiHost, apiPort).Uri.AbsoluteUri.TrimEnd('/');
-         
+            FeeCalculationStrategy = FeeCalculationStrategyType.ZERO;
+        }
+
+        public BlockchainNetworkConnection SetFeeCalculationStrategyType(FeeCalculationStrategyType feeCalculationStrategyType)
+        {
+            FeeCalculationStrategy = feeCalculationStrategyType;
+            return this;
         }
     }
 }
