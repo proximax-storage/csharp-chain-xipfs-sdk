@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <PackageId>csharp-chain-xipfs-sdk</PackageId>
-    <Version>0.2.2</Version>
+    <Version>0.2.3</Version>
     <Authors>Proximax IO</Authors>
     <Company>Proximax IO</Company>
     <Product>csharp-chain-xipfs-sdk</Product>
@@ -12,8 +12,8 @@
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageProjectUrl>https://github.com/proximax-storage/csharp-chain-xipfs-sdk.git</PackageProjectUrl>
     <RepositoryUrl>https://github.com/proximax-storage/csharp-chain-xipfs-sdk.git</RepositoryUrl>
-    <AssemblyVersion>0.0.2.2</AssemblyVersion>
-    <FileVersion>0.0.2.2</FileVersion>
+    <AssemblyVersion>0.0.2.3</AssemblyVersion>
+    <FileVersion>0.0.2.3</FileVersion>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
