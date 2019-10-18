@@ -12,6 +12,8 @@ using ProximaX.Sirius.Chain.Sdk.Model.Mosaics;
 using ProximaX.Sirius.Chain.Sdk.Model.Transactions;
 using ProximaX.Sirius.Chain.Sdk.Model.Transactions.Messages;
 using static ProximaX.Sirius.Storage.SDK.Utils.ParameterValidationUtils;
+using ProximaX.Sirius.Chain.Sdk.Model.Transactions.Builders;
+using ProximaX.Sirius.Chain.Sdk.Model.Fees;
 
 namespace ProximaX.Sirius.Storage.SDK.Services
 {
@@ -49,7 +51,7 @@ namespace ProximaX.Sirius.Storage.SDK.Services
             {
                 var transaction = GetTransaction(transactionHash);
 
-                if (!(transaction.TransactionType.Equals(TransactionType.TRANSFER) &&
+                if (!(transaction.TransactionType.Equals(EntityType.TRANSFER) &&
                       transaction is TransferTransaction))
                     throw new NotSupportedException("Expecting a transfer transaction");
 
@@ -101,13 +103,21 @@ namespace ProximaX.Sirius.Storage.SDK.Services
             List<Mosaic> transactionMosaics, IMessage message)
         {
             var mosaics = (transactionMosaics == null || transactionMosaics.Count <= 0) ? new List<Mosaic> { NetworkCurrencyMosaic.CreateRelative(0) } : transactionMosaics;
-            return TransferTransaction.Create(
-                Deadline.Create(transactionDeadline),
-                recipientAddress,
-                mosaics ,
-                message,
-                BlockchainNetworkConnection.NetworkType
-                );
+
+            var recipient = Recipient.From(recipientAddress);
+
+            var builder = new TransferTransactionBuilder();
+           
+            var transferTransaction = builder
+                .SetNetworkType(BlockchainNetworkConnection.NetworkType)
+                .SetDeadline(Deadline.Create(transactionDeadline))
+                .SetMosaics(mosaics)
+                .SetRecipient(recipient)
+                .SetMessage(message)
+                .SetFeeCalculationStrategy(BlockchainNetworkConnection.FeeCalculationStrategy)
+                .Build();
+
+            return transferTransaction;
         }
 
         private Transaction GetTransaction(string transactionHash)
