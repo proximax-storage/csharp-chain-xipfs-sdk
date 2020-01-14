@@ -102,7 +102,7 @@ namespace ProximaX.Sirius.Storage.SDK.Services
         private TransferTransaction CreateTransaction(Address recipientAddress, int transactionDeadline,
             List<Mosaic> transactionMosaics, IMessage message)
         {
-            var mosaics = (transactionMosaics == null || transactionMosaics.Count <= 0) ? new List<Mosaic> { NetworkCurrencyMosaic.CreateRelative(0) } : transactionMosaics;
+            var mosaics = (transactionMosaics == null || transactionMosaics.Count <= 0) ? new List<Mosaic> { } : transactionMosaics;
 
             var recipient = Recipient.From(recipientAddress);
 
